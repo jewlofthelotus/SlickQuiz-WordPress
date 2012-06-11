@@ -1,0 +1,131 @@
+<?php
+
+// Stop direct call
+if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
+    die( 'You are not allowed to call this page directly.' );
+}
+
+if ( !class_exists( 'SlickQuizAdmin' ) ) {
+    class SlickQuizAdmin extends SlickQuizModel
+    {
+
+        var $quizzes = array();
+
+
+        function list_all_quizzes()
+        {
+            global $quizzes;
+
+            $quizzes = $this->get_all_quizzes();
+
+            if (count($quizzes) > 0) {
+                foreach ($quizzes as $quiz) {
+                    echo  $this->generate_quiz_row($quiz);
+                }
+            } else {
+                echo "<tr><td colspan=7>You have not created any quizzes yet.</td></tr>";
+            }
+        }
+
+        function generate_quiz_row( $quiz )
+        {
+            $id           = $quiz->id;
+            $status       = $this->get_quiz_status( $quiz );
+            $statusButton = $this->get_quiz_status_button( $quiz );
+            $qCount       = $status == self::PUBLISHED ? $quiz->publishedQCount : $quiz->workingQCount;
+            $actions      = '';
+            $quizRow      = '';
+
+            if ( $status == self::PUBLISHED ) {
+                $actions .= '<a class="unpublish_quiz unpublish" title="Unpublish Quiz" '
+                         . 'href="' . admin_url( 'admin-ajax.php?id=' ) . $id . '">'
+                         . '<img id="unpublishquiz-' . $id . '" '
+                         . 'src="' . plugins_url( '/images/remove.png' , dirname( __FILE__ ) ) . '"'
+                         . ' width="16" height="16" alt="Unpublish Quiz" /></a> ';
+            }
+            $actions .= '<a class="delete_quiz delete" title="Delete Quiz" '
+                     . 'href="' . admin_url( 'admin-ajax.php?id=' ) . $id . '">'
+                     . '<img id="deletequiz-' . $id . '" '
+                     . 'src="' . plugins_url( '/images/bin_closed.png' , dirname( __FILE__ ) ) . '"'
+                     . ' width="16" height="16" alt="Delete Quiz" /></a> ';
+            $actions .= '<a class="preview_quiz preview" title="Preview Quiz" '
+                     . 'href="' . admin_url( 'admin.php?page=slickquiz-preview&id=' ) . $id . '&readOnly">'
+                     . '<img id="previewquiz-' . $id . '" '
+                     . 'src="' . plugins_url( '/images/view.png' , dirname( __FILE__ ) ) . '"'
+                     . ' width="16" height="16" alt="Preview Quiz" /></a> &nbsp; ';
+            $actions .= '<a class="edit_quiz" title="Edit Quiz" '
+                     . 'href="' . admin_url( 'admin.php?page=slickquiz-edit&id=' ) . $id . '">'
+                     . '<img id="editquiz-' . $id . '" '
+                     . 'src="' . plugins_url( '/images/edit.png' , dirname( __FILE__ ) ) . '"'
+                     . ' width="16" height="16" alt="Edit Quiz" /></a> &nbsp; ';
+
+            $quizRow .= '<tr>';
+            $quizRow .= '<td class="table_id">' . $quiz->id . '</td>';
+            $quizRow .= '<td class="table_name">' . $quiz->name . '</td>';
+            $quizRow .= '<td class="table_count">' . $qCount . '</td>';
+            $quizRow .= '<td class="table_updated">' . $quiz->lastUpdatedDate . '</td>';
+            $quizRow .= '<td class="table_pubDate">' . $quiz->publishedDate . '</td>';
+            $quizRow .= '<td class="table_status">' . $statusButton . '</td>';
+            $quizRow .= '<td class="table_actions">' . $actions . '</td>';
+            $quizRow .= '</tr>';
+
+            return $quizRow;
+        }
+
+        function get_quiz_count()
+        {
+            global $quizzes;
+            echo count( $quizzes );
+        }
+
+        function show_alert_messages()
+        {
+            if ( isset( $_GET['success'] ) )
+                echo '<p class="success">Your quiz has been published.</p>';
+
+            if ( isset( $_GET['unpublished'] ) )
+                echo '<p class="success">Your quiz has been unpublished.</p>';
+        }
+
+    }
+}
+
+if ( class_exists( 'SlickQuizAdmin' ) ) {
+    global $slickQuizAdmin;
+    $slickQuizAdmin = new SlickQuizAdmin();
+}
+
+?>
+
+<div class="wrap quizList">
+    <?php $slickQuizAdmin->show_alert_messages(); ?>
+
+    <h2>SlickQuiz Management <a href="<?php echo admin_url( 'admin.php?page=slickquiz-new' ); ?>" class="add-new-h2" title="Create a new Quiz">Add New Quiz</a></h2>
+
+    <p class="statusLegend">
+        <strong>Statuses:</strong> &nbsp;&nbsp;&nbsp;
+        <img title="Published" src="<?php echo plugins_url( '/images/activate.png' , dirname( __FILE__ ) ); ?>"> Published &nbsp;&nbsp;&nbsp;
+        <img title="Unpublished Changes" src="<?php echo plugins_url( '/images/alert.png' , dirname( __FILE__ ) ); ?>"> Unpublished Changes &nbsp;&nbsp;&nbsp;
+        <img title="Not Published" src="<?php echo plugins_url( '/images/suspend.png' , dirname( __FILE__ ) ); ?>"> Not Published &nbsp;&nbsp;&nbsp;
+    </p>
+
+    <table id="record_view" class="wp-list-table widefat quizzes">
+        <thead>
+            <tr>
+                <th scope="col" class="table_id">ID</th>
+                <th scope="col" class="table_name">Name</th>
+                <th scope="col" class="table_count">Question Count</th>
+                <th scope="col" class="table_updated">Last Updated On</th>
+                <th scope="col" class="table_pubDate">Published On</th>
+                <th scope="col" class="table_status">Status</th>
+                <th scope="col" class="table_actions"></th>
+            </tr>
+        </thead>
+         <tbody>
+            <?php $slickQuizAdmin->list_all_quizzes(); ?>
+        </tbody>
+    </table>
+    <div class="tablenav bottom">
+        <div class="tablenav-pages one-page"><span class="displaying-num"><?php $slickQuizAdmin->get_quiz_count() ?> item</span>
+    </div>
+</div>
