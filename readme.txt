@@ -1,13 +1,13 @@
 === SlickQuiz ===
 Contributors: jewlofthelotus
-Tags: quiz, jquery, slickquiz, javascript, education
+Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 2.0.2
 Tested up to: 3.3.1
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
-This plugin is for displaying and managing pretty, dynamic quizzes. It uses the SlickQuiz jQuery plugin.
+SlickQuiz is a plugin for displaying and managing pretty, dynamic quizzes. It uses the SlickQuiz jQuery plugin.
 
 == Description ==
 
@@ -24,6 +24,8 @@ Managing and creating new quizzes is simple and intuitive.
 * Customize the quiz start button text, as well as score and ranking text.
 
 NOTE: Do not place the same quiz on the page multiple times, things will break.
+
+Created by [Julie Bellinson](http://jewlofthelotus.com/) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
 
 == Installation ==
 
