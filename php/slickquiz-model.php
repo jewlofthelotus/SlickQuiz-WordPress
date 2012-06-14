@@ -119,7 +119,7 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
             $data    = json_decode( stripcslashes( $json ) );
             $set     = array();
             $now     = date( 'Y-m-d H:i:s' );
-            $user_id = $user_id ?: get_current_user_id();
+            $user_id = $user_id ? $user_id : get_current_user_id();
 
             $set['createdDate']     = $now;
             $set['createdBy']       = $user_id;
