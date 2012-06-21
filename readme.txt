@@ -1,8 +1,8 @@
 === SlickQuiz ===
 Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
-Requires at least: 2.0.2
-Tested up to: 3.3.1
+Requires at least: 3.0
+Tested up to: 3.4
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
