@@ -23,6 +23,8 @@ Managing and creating new quizzes is simple and intuitive.
 * Customize error messages for missing or unpublished quizzes.
 * Customize the quiz start button text, as well as score and ranking text.
 
+NOTE: If the Preview window does not appear from the create / edit page, you may need to allow popups for your domain.
+
 NOTE: Do not place the same quiz on the page multiple times, things will break.
 
 Created by [Julie Bellinson](http://jewlofthelotus.com/) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
