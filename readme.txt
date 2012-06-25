@@ -51,10 +51,20 @@ No questions yet.
 
 == Changelog ==
 
+= 1.0.1 =
+* Updating the SlickQuiz jQuery plugin to commit 93a16427269df6f80215b02b44a9a1ddfd1d94b8. Includes:
+** Optional "Back" buttons
+** Optional randomly sorted questions and answers
+** Easier answer selection (you can now click the text to select the checkbox / radio button)
+* Bug fixes!
+
 = 1.0 =
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Updating the SlickQuiz jQuery plugin. New back button and random sorting options. Bug fixes!
 
 = 1.0 =
 This is the first version of the plugin

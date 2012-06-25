@@ -5,19 +5,21 @@
              element = element;
 
         var plugin = this;
-        plugin.config = {
-            checkAnswerText:  'Check My Answer!',
-            nextQuestionText: 'Next &raquo;'
-        }
 
-        plugin.config = $.extend({}, options);
+        plugin.config = $.extend( {
+            checkAnswerText:  'Check My Answer!',
+            nextQuestionText: 'Next &raquo;',
+            backButtonText: '',
+            randomSort: false
+        }, options);
 
         var selector = $(element).attr('id');
 
         var triggers = {
             starter:         '#' + selector + ' .startQuiz',
             checker:         '#' + selector + ' .checkAnswer',
-            next:            '#' + selector + ' .nextQuestion'
+            next:            '#' + selector + ' .nextQuestion',
+            back:            '#' + selector + ' .backToQuestion'
         }
 
         var targets = {
@@ -33,7 +35,9 @@
         // Set via json option or quizJSON variable (see slickQuiz-config.js)
         var quizValues = (plugin.config.json ? plugin.config.json : typeof quizJSON != 'undefined' ? quizJSON : null);
 
-        var questions = quizValues.questions;
+        var questions = plugin.config.randomSort ?
+                        quizValues.questions.sort(function() { return (Math.round(Math.random())-0.5); }) :
+                        quizValues.questions;
 
         var levels = {
             1: quizValues.info.level1, // 80-100%
@@ -79,13 +83,25 @@
 
                     // Now let's append the answers with checkboxes or radios depending on truth count
                     answerHTML = $('<ul class="answers"></ul>');
-                    for (i in question.a) {
-                        answer = question.a[i];
+
+                    answers = plugin.config.randomSort ?
+                        question.a.sort(function() { return (Math.round(Math.random())-0.5); }) :
+                        question.a;
+
+                    for (i in answers) {
+                        answer = answers[i];
+                        optionId = inputName + i.toString();
 
                         // If question has >1 true answers, use checkboxes; otherwise, radios
-                        input = '<input type="' + (truths > 1 ? 'checkbox' : 'radio') + '" name="' + inputName + '" /> ';
+                        var input = '<input id="' + optionId + '" name="' + inputName
+                            + '" type="' + (truths > 1 ? 'checkbox' : 'radio') + '"></input>';
 
-                        answerHTML.append('<li>' + input + '<span>' + answer.option + '</span></li>')
+                        var optionLabel = '<label for="' + optionId + '">' + answer.option + '</label>';
+
+                        var answerContent = $('<li></li>')
+                            .append(input)
+                            .append(optionLabel);
+                        answerHTML.append(answerContent)
                     };
 
                     // Append answers to question
@@ -99,9 +115,12 @@
                     // Append responses to question
                     questionHTML.append(responseHTML);
 
-                    // Appends check answer / next question buttons
-                    questionHTML.append('<a href="" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
+                    // Appends check answer / back / next question buttons
+                    if (plugin.config.backButtonText && plugin.config.backButtonText != '') {
+                        questionHTML.append('<a href="" class="button backToQuestion">' + plugin.config.backButtonText + '</a>');
+                    }
                     questionHTML.append('<a href="" class="button nextQuestion">' + plugin.config.nextQuestionText + '</a>');
+                    questionHTML.append('<a href="" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
 
                     // Append question & answers to quiz
                     quiz.append(questionHTML);
@@ -111,6 +130,11 @@
 
                 // Add the quiz content to the page
                 $(targets.quizArea).append(quiz);
+
+                // Add secret searchable copy, PLEASE feel free to remove this if you'd like
+                $(targets.quizArea).append('<div style="' +
+                    'border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; ' +
+                    'padding: 0; position: absolute; width: 1px;">Powered By SlickQuiz</div>');
 
                 // Toggle the start button
                 $(triggers.starter).fadeIn(500);
@@ -145,7 +169,7 @@
                 // Collect the answers submitted
                 selectedAnswers = []
                 answerInputs.each( function() {
-                    inputValue = $(this).next('span').html();
+                    inputValue = $(this).next('label').html();
                     selectedAnswers.push(inputValue);
                 });
 
@@ -164,7 +188,8 @@
                 }
 
                 $(checkButton).hide();
-                $(checkButton).next('.nextQuestion').fadeIn(300);
+                questionLI.find('.nextQuestion').fadeIn(300);
+                questionLI.find('.backToQuestion').fadeIn(300);
             },
 
             // Moves to the next question OR completes the quiz if on last question
@@ -173,10 +198,54 @@
 
                 if (nextQuestion.length) {
                     $(nextButton).parent().fadeOut(300, function(){
-                        nextQuestion.fadeIn(500);
+                        nextQuestion.find('.backToQuestion').show().end().fadeIn(500);
                     });
                 } else {
                     plugin.method.completeQuiz();
+                }
+            },
+
+            // Go back to the last question
+            backToQuestion: function(backButton) {
+                questionLI = $(backButton).parent();
+                answers    = questionLI.find('.answers');
+
+                // Back to previous question
+                if (answers.css('display') === 'block' ) {
+                    prevQuestion = questionLI.prev('.question');
+
+                    questionLI.fadeOut(300, function() {
+                        prevQuestion.removeClass('correctResponse');
+                        prevQuestion.find('.responses, .responses li').hide()
+                        prevQuestion.find('.answers').show();
+                        prevQuestion.find('.checkAnswer').show();
+                        prevQuestion.find('.nextQuestion').hide();
+
+                        if (prevQuestion.attr('id') != 'question0') {
+                            prevQuestion.find('.backToQuestion').show();
+                        } else {
+                            prevQuestion.find('.backToQuestion').hide();
+                        }
+
+                        prevQuestion.fadeIn(500);
+                    });
+
+                // Back to question from responses
+                } else {
+                    questionLI.find('.responses').fadeOut(300, function(){
+                        questionLI.removeClass('correctResponse');
+                        questionLI.find('.responses li').hide();
+                        answers.fadeIn(500);
+                        questionLI.find('.checkAnswer').fadeIn(500);
+                        questionLI.find('.nextQuestion').hide();
+
+                        // if question is first, don't show back button on question
+                        if (questionLI.attr('id') != 'question0') {
+                            questionLI.find('.backToQuestion').show();
+                        } else {
+                            questionLI.find('.backToQuestion').hide();
+                        }
+                    });
                 }
             },
 
@@ -256,6 +325,12 @@
             $(triggers.checker).live('click', function(e) {
                 e.preventDefault();
                 plugin.method.checkAnswer(this);
+            });
+
+            // Bind "back" button
+            $(triggers.back).live('click', function(e) {
+                e.preventDefault();
+                plugin.method.backToQuestion(this);
             });
 
             // Bind "next question" button

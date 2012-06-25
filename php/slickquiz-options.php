@@ -49,18 +49,6 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
 
     <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
         <div>
-            <label>Message to display if requested quiz is <em>DISABLED</em>:</label>
-            <input type="text" name="slickQuizOptions[disabled_quiz_message]"
-                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'disabled_quiz_message' ) ), 'SlickQuizPlugin' ); ?>" />
-        </div>
-
-        <div>
-            <label>Message to display if requested quiz is <em>MISSING</em>:</label>
-            <input type="text" name="slickQuizOptions[missing_quiz_message]"
-                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'missing_quiz_message' ) ), 'SlickQuizPlugin' ); ?>" />
-        </div>
-
-        <div>
             <label>Text to display on the Quiz <em>START</em> button:</label>
             <input type="text" name="slickQuizOptions[start_button_text]"
                 value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'start_button_text' ) ), 'SlickQuizPlugin' ); ?>" />
@@ -79,6 +67,21 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
         </div>
 
         <div>
+            <label>Text to display on the <em>BACK</em> buttons:<br />
+                <small><em>(If left blank, no BACK buttons will be displayed.)</em></small></label>
+            <input type="text" name="slickQuizOptions[back_button_text]"
+                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'back_button_text' ) ), 'SlickQuizPlugin' ); ?>" />
+        </div>
+
+        <div>
+            <label>Randomly sort questions and answers?</label>
+            <input type="radio" name="slickQuizOptions[random_sort]" value="0"
+                <?php $slickQuizOptions->get_admin_option( 'random_sort' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+            <input type="radio" name="slickQuizOptions[random_sort]" value="1"
+                <?php $slickQuizOptions->get_admin_option( 'random_sort' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+        </div>
+
+        <div>
             <label>Text to display next to <em>SCORE</em> result:</label>
             <input type="text" name="slickQuizOptions[your_score_text]"
                 value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'your_score_text' ) ), 'SlickQuizPlugin' ); ?>" />
@@ -88,6 +91,18 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
             <label>Text to display next to <em>RANKING</em> result:</label>
             <input type="text" name="slickQuizOptions[your_ranking_text]"
                 value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'your_ranking_text' ) ), 'SlickQuizPlugin' ); ?>" />
+        </div>
+
+        <div>
+            <label>Message to display if requested quiz is <em>DISABLED</em>:</label>
+            <input type="text" name="slickQuizOptions[disabled_quiz_message]"
+                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'disabled_quiz_message' ) ), 'SlickQuizPlugin' ); ?>" />
+        </div>
+
+        <div>
+            <label>Message to display if requested quiz is <em>MISSING</em>:</label>
+            <input type="text" name="slickQuizOptions[missing_quiz_message]"
+                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'missing_quiz_message' ) ), 'SlickQuizPlugin' ); ?>" />
         </div>
 
         <div class="submit">

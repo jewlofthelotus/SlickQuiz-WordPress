@@ -10,6 +10,8 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
     {
 
         var $mainPluginFile = '';
+        var $quiz = null;
+        var $status = null;
 
 
         // Constructor
@@ -27,6 +29,9 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             // Filter the post/page/widget content for the shortcode, load resources ONLY if present
             add_filter( 'the_content', array( &$this, 'load_resources' ) );
             add_filter( 'widget_text', array( &$this, 'load_resources' ) );
+
+            // Make sure dynamic quiz script gets loaded below jQuery
+            add_filter( 'wp_footer', array( &$this, 'load_quiz_script' ), 5000 );
         }
 
         // Add Admin JS and styles
@@ -49,6 +54,32 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             return $content;
         }
 
+        function load_quiz_script()
+        {
+            global $mainPluginFile, $quiz, $status;
+
+            $out = '';
+
+            if ( $quiz ) {
+                if ( $status && $status != self::NOT_PUBLISHED ) {
+                    $out = '
+                        <script type="text/javascript">
+                            jQuery(document).ready(function($) {
+                                $("#slickQuiz' . $quiz->id . '").slickQuiz({
+                                    json:             ' . $quiz->publishedJson . ',
+                                    checkAnswerText:  "' . $this->get_admin_option( 'check_answer_text' ) . '",
+                                    nextQuestionText: "' . $this->get_admin_option( 'next_question_text' ) . '",
+                                    backButtonText:   "' . $this->get_admin_option( 'back_button_text' ) . '",
+                                    randomSort:       ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . '
+                                });
+                            });
+                        </script>';
+                }
+            }
+
+            echo $out;
+        }
+
         function show_slickquiz_handler( $atts )
         {
             extract( shortcode_atts( array(
@@ -62,7 +93,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
         function show_slickquiz( $id )
         {
-            global $mainPluginFile;
+            global $mainPluginFile, $quiz, $status;
 
             $quiz = $this->get_quiz_by_id( $id );
 
@@ -88,16 +119,6 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                     <h3 class="quizLevel">' . $this->get_admin_option( 'your_ranking_text' ) . ' <span>&nbsp;</span></h3>
                                 </div>
                             </div>
-
-                            <script type="text/javascript">
-                                jQuery(document).ready(function($) {
-                                    $("#slickQuiz' . $quiz->id . '").slickQuiz({
-                                        json:             ' . $quiz->publishedJson . ',
-                                        checkAnswerText:  "' . $this->get_admin_option( 'check_answer_text' ) . '",
-                                        nextQuestionText: "' . $this->get_admin_option( 'next_question_text' ) . '"
-                                    });
-                                });
-                            </script>
                         </div>';
                 }
             } else {

@@ -341,6 +341,7 @@ p.toggleSets a {
 a.startQuiz {
     display: none;
 }
+a.backToQuestion,
 a.nextQuestion {
     display: none;
     float: left;

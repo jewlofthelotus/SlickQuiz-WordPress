@@ -2,20 +2,17 @@
 * * *
 
 ## Overview
-* * *
 
 A jQuery plugin for creating pretty, dynamic quizzes.
 
 
 ## Demo And Usage
-* * *
 
 See index.html for demo and suggested HTML structure (the element class names are the important part).
 
 See js/slickQuiz-config.js to set up your quiz copy and questions.
 
 To initialize your quiz:
-
 
     $(function () {
         $('#slickQuiz').slickQuiz();
@@ -29,10 +26,12 @@ To initialize your quiz:
 
 **`nextQuestionText`** (String) - the text to use on the next question button
 
+**`backButtonText`** (String) - the text to use on the back button, if left null / blank (default) - no back button will be displayed
+
+**`randomSort`** (Boolean) - whether or not to randomly sort questions and their answers, defaults to false
 
 
 ## Advanced Usage
-* * *
 
 Want to manage your quizzes in a content management system?
 
@@ -47,7 +46,6 @@ Alternatively, you can pass the JSON right into the plugin using the "json" opti
 
 
 ## Base HTML Structure
-* * *
 
 The slickQuiz ID and class names are what are important here:
 
@@ -67,7 +65,6 @@ The slickQuiz ID and class names are what are important here:
 
 
 ## Base Config Options
-* * *
 
 See js/slickQuiz-config.js
 
@@ -97,5 +94,4 @@ See js/slickQuiz-config.js
     }
 
 
-* * *
 Created by [Julie Bellinson](http://jewlofthelotus.com) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI

@@ -185,6 +185,8 @@ if ( !class_exists( 'SlickQuiz' ) ) {
                 'start_button_text'     => 'Get Started!',
                 'check_answer_text'     => 'Check My Answer!',
                 'next_question_text'    => 'Next &raquo;',
+                'back_button_text'      => '',
+                'random_sort'           => '',
                 'your_score_text'       => 'Your Score:',
                 'your_ranking_text'     => 'Your Ranking:'
             );
