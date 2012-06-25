@@ -52,10 +52,10 @@ No questions yet.
 == Changelog ==
 
 = 1.0.1 =
-* Updating the SlickQuiz jQuery plugin to commit 93a16427269df6f80215b02b44a9a1ddfd1d94b8. Includes:
-** Optional "Back" buttons
-** Optional randomly sorted questions and answers
-** Easier answer selection (you can now click the text to select the checkbox / radio button)
+* Updating the SlickQuiz jQuery plugin to commit 93a16427269df6f80215b02b44a9a1ddfd1d94b8.
+* Includes: Optional "Back" buttons
+* Includes: Optional randomly sorted questions and answers
+* Includes: Easier answer selection (you can now click the text to select the checkbox / radio button)
 * Bug fixes!
 
 = 1.0 =
