@@ -9,7 +9,6 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
     class SlickQuizFront extends SlickQuizModel
     {
 
-        var $mainPluginFile = '';
         var $quiz = null;
         var $status = null;
 
@@ -17,9 +16,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
         // Constructor
         function __construct()
         {
-            global $mainPluginFile, $pluginOptions;
-
-            $mainPluginFile = substr( __DIR__, 0, -strlen( basename( __DIR__ ) ) ) . 'slickquiz.php';
+            global $pluginOptions;
 
             $this->get_admin_options();
 
@@ -37,11 +34,12 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
         // Add Admin JS and styles
         function load_resources( $content )
         {
-            global $mainPluginFile;
-
             // Only load resources when a shortcode is on the page
             preg_match( '/\[slickquiz[^\]]*\]/is', $content, $matches );
             if ( count( $matches) == 0 ) return $content;
+
+            // $mainPluginFile = substr( __DIR__, 0, -strlen( basename( __DIR__ ) ) ) . 'slickquiz.php';
+            $mainPluginFile = dirname(dirname(__FILE__)) . '/slickquiz.php';
 
             // Scripts
             wp_enqueue_script( 'jquery' );
@@ -56,7 +54,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
         function load_quiz_script()
         {
-            global $mainPluginFile, $quiz, $status;
+            global $quiz, $status;
 
             $out = '';
 
@@ -93,7 +91,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
         function show_slickquiz( $id )
         {
-            global $mainPluginFile, $quiz, $status;
+            global $quiz, $status;
 
             $quiz = $this->get_quiz_by_id( $id );
 
