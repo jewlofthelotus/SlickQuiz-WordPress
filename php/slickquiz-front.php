@@ -38,7 +38,6 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             preg_match( '/\[slickquiz[^\]]*\]/is', $content, $matches );
             if ( count( $matches) == 0 ) return $content;
 
-            // $mainPluginFile = substr( __DIR__, 0, -strlen( basename( __DIR__ ) ) ) . 'slickquiz.php';
             $mainPluginFile = dirname(dirname(__FILE__)) . '/slickquiz.php';
 
             // Scripts

@@ -16,7 +16,7 @@ if ( !class_exists( 'SlickQuizPreview' ) ) {
             $this->get_admin_options();
 
             // Load Resources
-            $mainPluginFile = substr( __DIR__, 0, -strlen( basename( __DIR__ ) ) ) . 'slickquiz.php';
+            $mainPluginFile = dirname(dirname(__FILE__)) . '/slickquiz.php';
             wp_enqueue_script( 'slickquiz_js', plugins_url( '/slickquiz/js/slickQuiz.js', $mainPluginFile ) );
             wp_enqueue_style( 'slickquiz_css', plugins_url( '/slickquiz/css/slickQuiz.css', $mainPluginFile ) );
         }
