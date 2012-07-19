@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.0.12
+Stable tag: 1.0.13
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -51,6 +51,9 @@ No questions yet.
 
 == Changelog ==
 
+= 1.0.13 =
+* Added hasOwnProperty method to jQuery for...in loops to resolve issues with prototype modifications (BUG FIX!)
+
 = 1.0.12 =
 * Adjusted selectors to work with themes and plugins that modify the quiz layout
 
@@ -65,6 +68,9 @@ No questions yet.
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.0.13 =
+* Added hasOwnProperty method to jQuery for...in loops to resolve issues with prototype modifications (BUG FIX!)
 
 = 1.0.12 =
 * Adjusted selectors to work with themes and plugins that modify the quiz layout
