@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.1
+Stable tag: 1.0.14
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -23,7 +23,7 @@ Managing and creating new quizzes is simple and intuitive.
 * Customize error messages for missing or unpublished quizzes.
 * Customize the quiz start button text, as well as score and ranking text.
 
-NOTE: If the Preview window does not appear from the create / edit page, you may need to allow popups for your domain.
+NOTE: If the Preview window does not appear from the create / edit page, *you may need to allow popups for your domain.*
 
 NOTE: Do not place the same quiz on the page multiple times, things will break.
 
@@ -33,7 +33,7 @@ Created by [Julie Bellinson](http://jewlofthelotus.com/) - Software Engineer at 
 
 1. Upload the SlickQuiz plugin folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Create and publish a quiz through the SlickQuiz Management interface.
+1. Create and publish a quiz through the SlickQuiz Management interface. (You may need to allow popups to see the SlickQuiz Preview window.)
 1. Place [slickquiz id=X] in your templates, where X is the ID of the quiz you created.
 1. To use the [slickquiz] shortcode in the sidebar Text widget, add add_filter( 'widget_text', 'do_shortcode' ) to your theme.
 
@@ -51,7 +51,7 @@ No questions yet.
 
 == Changelog ==
 
-= 1.1 =
+= 1.0.14 =
 * Resolving issue where IE thought every answer was wrong (BUG FIX!)
 
 = 1.0.13 =
@@ -72,7 +72,7 @@ This is the initial setup of the plugin.
 
 == Upgrade Notice ==
 
-= 1.1 =
+= 1.0.14 =
 * Resolving issue where IE thought every answer was wrong (BUG FIX!)
 
 = 1.0.13 =
