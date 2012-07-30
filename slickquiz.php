@@ -4,7 +4,7 @@
 Plugin Name: SlickQuiz
 Plugin URI: http://www.jewlofthelotus.com/2011/12/23/slickquiz-jquery-plugin-now-on-github/
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.0.14
+Version: 1.0.15
 Author: Julie Bellinson, Software Engineer at Quicken Loans
 Author URI: http://www.quickenloans.com
 License: GPLv3 or later
@@ -80,7 +80,7 @@ if ( !class_exists( 'SlickQuiz' ) ) {
         function add_menu()
         {
              add_menu_page( 'SlickQuizzes', 'SlickQuizzes', 'administrator', 'slickquiz', array( &$this, 'direct_route' ) );
-             add_submenu_page( 'slickquiz', 'Add New Quiz', 'Add New Quiz', 'administrator', 'slickquiz-new', array( &$this, 'direct_route') );
+             add_submenu_page( 'slickquiz', 'Add Quiz', 'Add Quiz', 'administrator', 'slickquiz-new', array( &$this, 'direct_route') );
              add_submenu_page( 'slickquiz', 'Options', 'Options', 'administrator', 'slickquiz-options', array( &$this, 'direct_route') );
         }
 
@@ -186,9 +186,10 @@ if ( !class_exists( 'SlickQuiz' ) ) {
                 'check_answer_text'     => 'Check My Answer!',
                 'next_question_text'    => 'Next &raquo;',
                 'back_button_text'      => '',
-                'random_sort'           => '',
                 'your_score_text'       => 'Your Score:',
-                'your_ranking_text'     => 'Your Ranking:'
+                'your_ranking_text'     => 'Your Ranking:',
+                'random_sort'           => '0',
+                'disable_next'          => '0'
             );
 
             $pluginOptions = get_option( $this->adminOptionsName );

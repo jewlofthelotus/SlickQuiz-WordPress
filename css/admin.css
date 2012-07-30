@@ -370,19 +370,3 @@ a.checkAnswer {
     font-size: 18px;
     color: #0C4569;
 }
-
-
-/* Quiz Options Page */
-.quizOptions div {
-    margin: 20px 0;
-}
-.quizOptions label {
-    display: block;
-    font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 3px;
-}
-.quizOptions input[type="text"] {
-    width: 50%;
-    font-size: 14px;
-}

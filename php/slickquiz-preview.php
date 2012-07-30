@@ -87,7 +87,8 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
                 checkAnswerText:  "<?php $slickQuizPreview->get_admin_option( 'check_answer_text', true ) ?>",
                 nextQuestionText: "<?php $slickQuizPreview->get_admin_option( 'next_question_text', true ) ?>",
                 backButtonText:   "<?php $slickQuizPreview->get_admin_option( 'back_button_text', true ) ?>",
-                randomSort:       <?php echo( $slickQuizPreview->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) ?>
+                randomSort:       <?php echo( $slickQuizPreview->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) ?>,
+                disableNext:      <?php echo( $slickQuizPreview->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) ?>
             });
         });
     </script>

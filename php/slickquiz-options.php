@@ -48,65 +48,117 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
     <h2>SlickQuiz Options</h2>
 
     <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
-        <div>
-            <label>Text to display on the Quiz <em>START</em> button:</label>
-            <input type="text" name="slickQuizOptions[start_button_text]"
-                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'start_button_text' ) ), 'SlickQuizPlugin' ); ?>" />
-        </div>
+        <h3 class="title">Default Text Copy</h3>
 
-        <div>
-            <label>Text to display on the <em>CHECK ANSWER</em> buttons:</label>
-            <input type="text" name="slickQuizOptions[check_answer_text]"
-                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'check_answer_text' ) ), 'SlickQuizPlugin' ); ?>" />
-        </div>
+        <table class="form-table">
+            <tbody>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[start_button_text]"><em>START</em> button text</label>
+                    </th>
+                    <td>
+                        <input  type="text" name="slickQuizOptions[start_button_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'start_button_text' ) ), 'SlickQuizPlugin' ); ?>" />
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[check_answer_text]"><em>CHECK ANSWER</em> button text</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[check_answer_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'check_answer_text' ) ), 'SlickQuizPlugin' ); ?>" />
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[next_question_text]"><em>NEXT QUESTION</em> button text</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[next_question_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'next_question_text' ) ), 'SlickQuizPlugin' ); ?>" />
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[back_button_text]"><em>BACK</em> button text</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[back_button_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'back_button_text' ) ), 'SlickQuizPlugin' ); ?>" /><br />
+                        <small><em>(If left blank, no BACK buttons will be displayed.)</em></small></label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[your_score_text]"><em>SCORE</em> result text</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[your_score_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'your_score_text' ) ), 'SlickQuizPlugin' ); ?>" />
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[your_ranking_text]"><em>RANKING</em> result text</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[your_ranking_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'your_ranking_text' ) ), 'SlickQuizPlugin' ); ?>" />
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[disabled_quiz_message]">Message to display if quiz is <em>DISABLED</em>:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[disabled_quiz_message]" class="large-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'disabled_quiz_message' ) ), 'SlickQuizPlugin' ); ?>" />
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[missing_quiz_message]">Message to display if quiz is <em>MISSING</em>:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[missing_quiz_message]" class="large-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'missing_quiz_message' ) ), 'SlickQuizPlugin' ); ?>" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-        <div>
-            <label>Text to display on the <em>NEXT QUESTION</em> buttons:</label>
-            <input type="text" name="slickQuizOptions[next_question_text]"
-                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'next_question_text' ) ), 'SlickQuizPlugin' ); ?>" />
-        </div>
+        <h3 class="title">Additional Options</h3>
 
-        <div>
-            <label>Text to display on the <em>BACK</em> buttons:<br />
-                <small><em>(If left blank, no BACK buttons will be displayed.)</em></small></label>
-            <input type="text" name="slickQuizOptions[back_button_text]"
-                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'back_button_text' ) ), 'SlickQuizPlugin' ); ?>" />
-        </div>
+        <table class="form-table">
+            <tbody>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[random_sort]">Randomly sort questions and answers?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[random_sort]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'random_sort' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[random_sort]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'random_sort' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[disable_next]">Disable NEXT button if no answers are selected?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[disable_next]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'disable_next' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[disable_next]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'disable_next' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-        <div>
-            <label>Randomly sort questions and answers?</label>
-            <input type="radio" name="slickQuizOptions[random_sort]" value="0"
-                <?php $slickQuizOptions->get_admin_option( 'random_sort' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
-            <input type="radio" name="slickQuizOptions[random_sort]" value="1"
-                <?php $slickQuizOptions->get_admin_option( 'random_sort' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
-        </div>
-
-        <div>
-            <label>Text to display next to <em>SCORE</em> result:</label>
-            <input type="text" name="slickQuizOptions[your_score_text]"
-                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'your_score_text' ) ), 'SlickQuizPlugin' ); ?>" />
-        </div>
-
-        <div>
-            <label>Text to display next to <em>RANKING</em> result:</label>
-            <input type="text" name="slickQuizOptions[your_ranking_text]"
-                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'your_ranking_text' ) ), 'SlickQuizPlugin' ); ?>" />
-        </div>
-
-        <div>
-            <label>Message to display if requested quiz is <em>DISABLED</em>:</label>
-            <input type="text" name="slickQuizOptions[disabled_quiz_message]"
-                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'disabled_quiz_message' ) ), 'SlickQuizPlugin' ); ?>" />
-        </div>
-
-        <div>
-            <label>Message to display if requested quiz is <em>MISSING</em>:</label>
-            <input type="text" name="slickQuizOptions[missing_quiz_message]"
-                value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'missing_quiz_message' ) ), 'SlickQuizPlugin' ); ?>" />
-        </div>
-
-        <div class="submit">
-            <input type="submit" name="slickQuizOptionsSubmit" value="<?php _e('Update Options', 'SlickQuizPlugin') ?>" />
-        </div>
+        <p class="submit">
+            <input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Update Options', 'SlickQuizPlugin') ?>" />
+        </p>
     </form>
 </div>

@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.0.14
+Stable tag: 1.0.15
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -17,11 +17,13 @@ Managing and creating new quizzes is simple and intuitive.
 
 * Quiz questions can have single or multiple correct responses.
 * Correct and Incorrect response messages.
-* Results will include a score and ranking (for example: Savant, Genius, Pretty Smart, Not Smart, etc.)
+* Results will include a score and ranking (example rankings: Savant, Genius, Pretty Smart, Not Smart, etc.)
 * Unlimited questions, unlimited answers
 * Make changes to your quiz without having to publish them immediately.
 * Customize error messages for missing or unpublished quizzes.
 * Customize the quiz start button text, as well as score and ranking text.
+* Randomly sort questions and answers
+* Prevent submitting questions without answers
 
 NOTE: If the Preview window does not appear from the create / edit page, *you may need to allow popups for your domain.*
 
@@ -51,6 +53,10 @@ No questions yet.
 
 == Changelog ==
 
+= 1.0.15 =
+* Cleaning up options page
+* Added option to prevent submitting a question with no answers selected
+
 = 1.0.14 =
 * Resolving issue where IE thought every answer was wrong (BUG FIX!)
 
@@ -71,6 +77,10 @@ No questions yet.
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.0.15 =
+* Cleaning up options page
+* Added option to prevent submitting a question with no answers selected
 
 = 1.0.14 =
 * Resolving issue where IE thought every answer was wrong (BUG FIX!)

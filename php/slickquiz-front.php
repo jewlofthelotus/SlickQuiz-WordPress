@@ -67,7 +67,8 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                     checkAnswerText:  "' . $this->get_admin_option( 'check_answer_text' ) . '",
                                     nextQuestionText: "' . $this->get_admin_option( 'next_question_text' ) . '",
                                     backButtonText:   "' . $this->get_admin_option( 'back_button_text' ) . '",
-                                    randomSort:       ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . '
+                                    randomSort:       ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . ',
+                                    disableNext:      ' . ( $this->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) . '
                                 });
                             });
                         </script>';
