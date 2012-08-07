@@ -83,12 +83,14 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
     <script type="text/javascript">
         jQuery(document).ready(function($) {
             $('.SlickQuiz').slickQuiz({
-                json:             <?php $slickQuizPreview->get_quiz_json(); ?>,
-                checkAnswerText:  "<?php $slickQuizPreview->get_admin_option( 'check_answer_text', true ) ?>",
-                nextQuestionText: "<?php $slickQuizPreview->get_admin_option( 'next_question_text', true ) ?>",
-                backButtonText:   "<?php $slickQuizPreview->get_admin_option( 'back_button_text', true ) ?>",
-                randomSort:       <?php echo( $slickQuizPreview->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) ?>,
-                disableNext:      <?php echo( $slickQuizPreview->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) ?>
+                json:                <?php $slickQuizPreview->get_quiz_json(); ?>,
+                checkAnswerText:     "<?php $slickQuizPreview->get_admin_option( 'check_answer_text', true ) ?>",
+                nextQuestionText:    "<?php $slickQuizPreview->get_admin_option( 'next_question_text', true ) ?>",
+                backButtonText:      "<?php $slickQuizPreview->get_admin_option( 'back_button_text', true ) ?>",
+                randomSortQuestions: <?php echo( $slickQuizPreview->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) ?>,
+                randomSortAnswers:   <?php echo( $slickQuizPreview->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) ?>,
+                randomSort:          <?php echo( $slickQuizPreview->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) ?>,
+                disableNext:         <?php echo( $slickQuizPreview->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) ?>
             });
         });
     </script>

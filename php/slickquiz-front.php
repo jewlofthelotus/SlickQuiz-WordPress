@@ -11,6 +11,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
         var $quiz = null;
         var $status = null;
+        var $pageQuizzes = array();
 
 
         // Constructor
@@ -27,7 +28,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             add_filter( 'the_content', array( &$this, 'load_resources' ) );
             add_filter( 'widget_text', array( &$this, 'load_resources' ) );
 
-            // Make sure dynamic quiz script gets loaded below jQuery
+            // Make sure dynamic quiz scripts gets loaded below jQuery
             add_filter( 'wp_footer', array( &$this, 'load_quiz_script' ), 5000 );
         }
 
@@ -53,26 +54,35 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
         function load_quiz_script()
         {
-            global $quiz, $status;
+            global $pageQuizzes;
 
             $out = '';
 
-            if ( $quiz ) {
-                if ( $status && $status != self::NOT_PUBLISHED ) {
-                    $out = '
-                        <script type="text/javascript">
-                            jQuery(document).ready(function($) {
-                                $("#slickQuiz' . $quiz->id . '").slickQuiz({
-                                    json:             ' . $quiz->publishedJson . ',
-                                    checkAnswerText:  "' . $this->get_admin_option( 'check_answer_text' ) . '",
-                                    nextQuestionText: "' . $this->get_admin_option( 'next_question_text' ) . '",
-                                    backButtonText:   "' . $this->get_admin_option( 'back_button_text' ) . '",
-                                    randomSort:       ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . ',
-                                    disableNext:      ' . ( $this->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) . '
+            if ( count( $pageQuizzes ) ) {
+
+                foreach ( $pageQuizzes as $id => $quizStat ) {
+                    $quiz   = $quizStat[0];
+                    $status = $quizStat[1];
+
+                    if ( $status && $status != self::NOT_PUBLISHED ) {
+                        $out .= '
+                            <script type="text/javascript">
+                                jQuery(document).ready(function($) {
+                                    $("#slickQuiz' . $quiz->id . '").slickQuiz({
+                                        json:                ' . $quiz->publishedJson . ',
+                                        checkAnswerText:     "' . $this->get_admin_option( 'check_answer_text' ) . '",
+                                        nextQuestionText:    "' . $this->get_admin_option( 'next_question_text' ) . '",
+                                        backButtonText:      "' . $this->get_admin_option( 'back_button_text' ) . '",
+                                        randomSortQuestions: ' . ( $this->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) . ',
+                                        randomSortAnswers:   ' . ( $this->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) . ',
+                                        randomSort:          ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . ',
+                                        disableNext:         ' . ( $this->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) . '
+                                    });
                                 });
-                            });
-                        </script>';
+                            </script>';
+                    }
                 }
+
             }
 
             echo $out;
@@ -91,12 +101,14 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
         function show_slickquiz( $id )
         {
-            global $quiz, $status;
+            global $quiz, $status, $pageQuizzes;
 
             $quiz = $this->get_quiz_by_id( $id );
 
             if ( $quiz ) {
                 $status = $this->get_quiz_status( $quiz );
+
+                $pageQuizzes[$id] = array( $quiz, $status );
 
                 if ( $status == self::NOT_PUBLISHED ) {
                     $out = "<p class='quiz-$id notPublished'>" . $this->get_admin_option( 'disabled_quiz_message' ) . "</p>";

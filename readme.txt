@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.0.15
+Stable tag: 1.0.16
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -24,6 +24,7 @@ Managing and creating new quizzes is simple and intuitive.
 * Customize the quiz start button text, as well as score and ranking text.
 * Randomly sort questions and answers
 * Prevent submitting questions without answers
+* Multiple quizzes on the same page
 
 NOTE: If the Preview window does not appear from the create / edit page, *you may need to allow popups for your domain.*
 
@@ -41,7 +42,13 @@ Created by [Julie Bellinson](http://jewlofthelotus.com/) - Software Engineer at 
 
 == Frequently Asked Questions ==
 
-No questions yet.
+= Is there a way to save or email user scores and answers? =
+
+Not yet, but there have been many requests for features like this.  I'm working out the best way to set it up and will push out an update when it's available. Thanks for your patience!
+
+= Is there any social integration? Twitter? Facebook? =
+
+Not yet, but again - that's in the feature queue. Stay tuned!
 
 == Screenshots ==
 
@@ -52,6 +59,11 @@ No questions yet.
 5. The plugin options allow you to alter messages and quiz features.
 
 == Changelog ==
+
+= 1.0.16 =
+* Adding random sort ONLY questions / ONLY answers options
+* Resolved styling issue with answer labels
+* Resolved a secret BUG that prevented multiple quizzes on the same page
 
 = 1.0.15 =
 * Cleaning up options page
@@ -77,6 +89,11 @@ No questions yet.
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.0.16 =
+* Adding random sort ONLY questions / ONLY answers options
+* Resolved styling issue with answer labels
+* Resolved a secret BUG that prevented multiple quizzes on the same page
 
 = 1.0.15 =
 * Cleaning up options page
