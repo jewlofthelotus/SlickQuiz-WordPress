@@ -168,13 +168,37 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[disable_next]">Disable NEXT button if no answers are selected?</label>
+                        <label for="slickQuizOptions[disable_next]">Prevent submitting a question if no answers have been selected?</label>
                     </th>
                     <td>
                         <input type="radio" name="slickQuizOptions[disable_next]" value="0"
                             <?php $slickQuizOptions->get_admin_option( 'disable_next' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
                         <input type="radio" name="slickQuizOptions[disable_next]" value="1"
                             <?php $slickQuizOptions->get_admin_option( 'disable_next' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[completion_responses]">Display correct / incorrect response messaging <em>upon quiz completion</em> (rather than after each question)?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[completion_responses]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'completion_responses' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[completion_responses]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'completion_responses' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[disable_responses]">Disable correct / incorrect response messaging <em>entirely</em>?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[disable_responses]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'disable_responses' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[disable_responses]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'disable_responses' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                        <br /><small><em>(<strong>NOTE:</strong> Selecting "Yes" will override the above selection to display messaging upon quiz completion.<br />
+                            It will also prevent messaging from displaying after each question.)</em></small>
                     </td>
                 </tr>
             </tbody>

@@ -102,6 +102,10 @@ if ( class_exists( 'SlickQuizAdmin' ) ) {
 
     <h2>SlickQuiz Management <a href="<?php echo admin_url( 'admin.php?page=slickquiz-new' ); ?>" class="add-new-h2" title="Create a new Quiz">Add New Quiz</a></h2>
 
+    <p>To place a quiz on a post, page, or in the sidebar text widget - insert the following into the content, where "X" is the ID of the quiz you want to display.</p>
+
+    <code>[slickquiz id=X]</code>
+
     <p class="statusLegend">
         <strong>Statuses:</strong> &nbsp;&nbsp;&nbsp;
         <img title="Published" src="<?php echo plugins_url( '/images/activate.png' , dirname( __FILE__ ) ); ?>"> Published &nbsp;&nbsp;&nbsp;

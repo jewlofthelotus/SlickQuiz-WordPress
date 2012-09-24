@@ -6,15 +6,38 @@
 
         var plugin = this;
 
-        plugin.config = $.extend( {
+        var defaults = {
             checkAnswerText:  'Check My Answer!',
             nextQuestionText: 'Next &raquo;',
             backButtonText: '',
             randomSort: false,
             randomSortQuestions: false,
             randomSortAnswers: false,
-            disableNext: false
-        }, options);
+            preventUnanswered: false,
+            completionResponseMessaging: false,
+            disableResponseMessaging: false
+        };
+
+        // Reassign user-submitted deprecated options
+        var depMsg = '';
+
+        if (options && typeof options.disableNext != 'undefined') {
+            if (typeof options.preventUnanswered == 'undefined') {
+                options.preventUnanswered = options.disableNext;
+            }
+            depMsg += 'The \'disableNext\' option has been deprecated, please use \'preventUnanswered\' in it\'s place.\n\n';
+        }
+
+        if (depMsg != '') {
+            if (typeof console != 'undefined') {
+                console.warn(depMsg);
+            } else {
+                alert(depMsg);
+            }
+        }
+        // End of deprecation reassignment
+
+        plugin.config = $.extend(defaults, options);
 
         var selector = $(element).attr('id');
 
@@ -61,23 +84,23 @@
                 $(targets.quizResultsCopy).append(quizValues.info.results);
 
                 // Setup questions
-                quiz  = $('<ol class="questions"></ol>');
-                count = 1;
+                var quiz  = $('<ol class="questions"></ol>'),
+                    count = 1;
 
                 // Loop through questions object
                 for (i in questions) {
                     if (questions.hasOwnProperty(i)) {
-                        question = questions[i];
+                        var question = questions[i];
 
-                        questionHTML = $('<li class="question" id="question' + (count - 1) + '"></li>');
+                        var questionHTML = $('<li class="question" id="question' + (count - 1) + '"></li>');
                         questionHTML.append('<div class="questionCount">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
                         questionHTML.append('<h3>' + count + '. ' + question.q + '</h3>');
 
                         // Count the number of true values
-                        truths = 0;
+                        var truths = 0;
                         for (i in question.a) {
                             if (question.a.hasOwnProperty(i)) {
-                                answer = question.a[i];
+                                var answer = question.a[i];
                                 if (answer.correct) {
                                     truths++;
                                 }
@@ -85,19 +108,19 @@
                         };
 
                         // prepare a name for the answer inputs based on the question
-                        inputName  = 'question' + (count - 1);
+                        var inputName  = 'question' + (count - 1);
 
                         // Now let's append the answers with checkboxes or radios depending on truth count
-                        answerHTML = $('<ul class="answers"></ul>');
+                        var answerHTML = $('<ul class="answers"></ul>');
 
-                        answers = plugin.config.randomSort || plugin.config.randomSortAnswers ?
+                        var answers = plugin.config.randomSort || plugin.config.randomSortAnswers ?
                             question.a.sort(function() { return (Math.round(Math.random())-0.5); }) :
                             question.a;
 
                         for (i in answers) {
                             if (answers.hasOwnProperty(i)) {
-                                answer = answers[i];
-                                optionId = inputName + '_' + i.toString();
+                                var answer   = answers[i],
+                                    optionId = inputName + '_' + i.toString();
 
                                 // If question has >1 true answers, use checkboxes; otherwise, radios
                                 var input = '<input id="' + optionId + '" name="' + inputName
@@ -115,20 +138,30 @@
                         // Append answers to question
                         questionHTML.append(answerHTML);
 
-                        // Now let's append the correct / incorrect response messages
-                        responseHTML = $('<ul class="responses"></ul>');
-                        responseHTML.append('<li class="correct">' + question.correct + '</li>');
-                        responseHTML.append('<li class="incorrect">' + question.incorrect + '</li>');
+                        // If response messaging is NOT disabled, add it
+                        if (!plugin.config.disableResponseMessaging) {
+                            // Now let's append the correct / incorrect response messages
+                            var responseHTML = $('<ul class="responses"></ul>');
+                            responseHTML.append('<li class="correct">' + question.correct + '</li>');
+                            responseHTML.append('<li class="incorrect">' + question.incorrect + '</li>');
 
-                        // Append responses to question
-                        questionHTML.append(responseHTML);
+                            // Append responses to question
+                            questionHTML.append(responseHTML);
+                        }
 
                         // Appends check answer / back / next question buttons
                         if (plugin.config.backButtonText && plugin.config.backButtonText != '') {
                             questionHTML.append('<a href="" class="button backToQuestion">' + plugin.config.backButtonText + '</a>');
                         }
-                        questionHTML.append('<a href="" class="button nextQuestion">' + plugin.config.nextQuestionText + '</a>');
-                        questionHTML.append('<a href="" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
+
+                        // If response messaging is disabled or hidden until the quiz is completed,
+                        // make the nextQuestion button the checkAnswer button, as well
+                        if (plugin.config.disableResponseMessaging || plugin.config.completionResponseMessaging) {
+                            questionHTML.append('<a href="" class="button nextQuestion checkAnswer">' + plugin.config.nextQuestionText + '</a>');
+                        } else {
+                            questionHTML.append('<a href="" class="button nextQuestion">' + plugin.config.nextQuestionText + '</a>');
+                            questionHTML.append('<a href="" class="button checkAnswer">' + plugin.config.checkAnswerText + '</a>');
+                        }
 
                         // Append question & answers to quiz
                         quiz.append(questionHTML);
@@ -140,11 +173,6 @@
                 // Add the quiz content to the page
                 $(targets.quizArea).append(quiz);
 
-                // Add secret searchable copy, PLEASE feel free to remove this if you'd like
-                $(targets.quizArea).append('<div style="' +
-                    'border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; ' +
-                    'padding: 0; position: absolute; width: 1px;">Powered By SlickQuiz</div>');
-
                 // Toggle the start button
                 $(triggers.starter).fadeIn(500);
             },
@@ -152,7 +180,7 @@
             // Starts the quiz (hides start button and displays first question)
             startQuiz: function(startButton) {
                 $(startButton).fadeOut(300, function(){
-                    firstQuestion = $('#' + selector + ' .questions li').first();
+                    var firstQuestion = $('#' + selector + ' .questions li').first();
                     if (firstQuestion.length) {
                         firstQuestion.fadeIn(500);
                     }
@@ -161,15 +189,15 @@
 
             // Validates the response selection(s), displays explanations & next question button
             checkAnswer: function(checkButton) {
-                questionLI   = $($(checkButton).parents('li.question')[0]);
-                answerInputs = questionLI.find('input:checked');
-                answers      = questions[parseInt(questionLI.attr('id').replace(/(question)/, ''))].a;
+                var questionLI   = $($(checkButton).parents('li.question')[0]),
+                    answerInputs = questionLI.find('input:checked'),
+                    answers      = questions[parseInt(questionLI.attr('id').replace(/(question)/, ''))].a;
 
                 // Collect the true answers needed for a correct response
-                trueAnswers = [];
+                var trueAnswers = [];
                 for (i in answers) {
                     if (answers.hasOwnProperty(i)) {
-                        answer = answers[i];
+                        var answer = answers[i];
 
                         if (answer.correct) {
                             trueAnswers.push(answer.option);
@@ -178,40 +206,62 @@
                 }
 
                 // Collect the answers submitted
-                selectedAnswers = []
+                var selectedAnswers = []
                 answerInputs.each( function() {
-                    inputValue = $(this).next('label').html();
+                    // If we're in jQuery Mobile, grab value from nested span
+                    if ($('.ui-mobile').length > 0) {
+                        var inputValue = $(this).next('label').find('span.ui-btn-text').html();
+                    } else {
+                        var inputValue = $(this).next('label').html();
+                    }
+
                     selectedAnswers.push(inputValue);
                 });
 
-                if (plugin.config.disableNext && selectedAnswers.length == 0) {
+                if (plugin.config.preventUnanswered && selectedAnswers.length == 0) {
                     alert('You must select at least one answer.');
                     return false;
                 }
 
                 // Verify all true answers (and no false ones) were submitted
-                correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers);
-
-                // Toggle responses based on submission
-                questionLI.find('.answers').hide();
-                questionLI.find('.responses').show();
+                var correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers);
 
                 if (correctResponse) {
-                    questionLI.find('.correct').fadeIn(300);
                     questionLI.addClass('correctResponse');
-                } else {
-                    questionLI.find('.incorrect').fadeIn(300);
                 }
 
-                $(checkButton).hide();
-                questionLI.find('.nextQuestion').fadeIn(300);
-                questionLI.find('.backToQuestion').fadeIn(300);
+                // If response messaging hasn't been disabled, toggle the proper response
+                if (!plugin.config.disableResponseMessaging) {
+                    // If response messaging hasn't been set to display upon quiz completion, show it now
+                    if (!plugin.config.completionResponseMessaging) {
+                        questionLI.find('.answers').hide();
+                        questionLI.find('.responses').show();
+
+                        $(checkButton).hide();
+                        questionLI.find('.nextQuestion').fadeIn(300);
+                        questionLI.find('.backToQuestion').fadeIn(300);
+                    }
+
+                    // Toggle responses based on submission
+                    if (correctResponse) {
+                        questionLI.find('.correct').fadeIn(300);
+                    } else {
+                        questionLI.find('.incorrect').fadeIn(300);
+                    }
+                }
             },
 
             // Moves to the next question OR completes the quiz if on last question
             nextQuestion: function(nextButton) {
-                currentQuestion = $($(nextButton).parents('li.question')[0]);
-                nextQuestion    = currentQuestion.next('.question');
+                var currentQuestion = $($(nextButton).parents('li.question')[0]),
+                    nextQuestion    = currentQuestion.next('.question'),
+                    answerInputs    = currentQuestion.find('input:checked');
+
+                // If response messaging has been disabled or moved to completion,
+                // make sure we have an answer if we require it, let checkAnswer handle the alert messaging
+                if (plugin.config.preventUnanswered && answerInputs.length == 0) {
+                    return false;
+                }
 
                 if (nextQuestion.length) {
                     currentQuestion.fadeOut(300, function(){
@@ -224,19 +274,24 @@
 
             // Go back to the last question
             backToQuestion: function(backButton) {
-                questionLI = $($(backButton).parents('li.question')[0]);
-                answers    = questionLI.find('.answers');
+                var questionLI = $($(backButton).parents('li.question')[0]),
+                    answers    = questionLI.find('.answers');
 
                 // Back to previous question
                 if (answers.css('display') === 'block' ) {
-                    prevQuestion = questionLI.prev('.question');
+                    var prevQuestion = questionLI.prev('.question');
 
                     questionLI.fadeOut(300, function() {
                         prevQuestion.removeClass('correctResponse');
                         prevQuestion.find('.responses, .responses li').hide()
                         prevQuestion.find('.answers').show();
                         prevQuestion.find('.checkAnswer').show();
-                        prevQuestion.find('.nextQuestion').hide();
+
+                        // If response messaging hasn't been disabled or moved to completion, hide the next question button
+                        // If it has been, we need nextQuestion visible so the user can move forward (there is no separate checkAnswer button)
+                        if (!plugin.config.disableResponseMessaging && !plugin.config.completionResponseMessaging) {
+                            prevQuestion.find('.nextQuestion').hide();
+                        }
 
                         if (prevQuestion.attr('id') != 'question0') {
                             prevQuestion.find('.backToQuestion').show();
@@ -268,14 +323,24 @@
 
             // Hides all questions, displays the final score and some conclusive information
             completeQuiz: function() {
-                score = $('#' + selector + ' .correctResponse').length;
-                level = levels[plugin.method.calculateLevel(score)];
+                var score     = $('#' + selector + ' .correctResponse').length,
+                    levelRank = plugin.method.calculateLevel(score),
+                    levelText = levels[levelRank];
 
                 $(targets.quizScore + ' span').html(score + ' / ' + questionCount);
-                $(targets.quizLevel + ' span').html(level);
+                $(targets.quizLevel + ' span').html(levelText);
+                $(targets.quizLevel).addClass('level' + levelRank);
 
                 $(targets.quizArea).fadeOut(300, function() {
-                    $(targets.quizResults).fadeIn(500);
+                    // If response messaging is set to show upon quiz completion, show it
+                    if (plugin.config.completionResponseMessaging && !plugin.config.disableResponseMessaging) {
+                        $('#' + selector + ' .questions input').prop('disabled', true);
+                        $('#' + selector + ' .questions .button, #' + selector + ' .questions .questionCount').hide();
+                        $('#' + selector + ' .questions .question, #' + selector + ' .questions .responses').show();
+                        $(targets.quizResults).append($('#' + selector + ' .questions')).fadeIn(500);
+                    } else {
+                        $(targets.quizResults).fadeIn(500);
+                    }
                 });
             },
 
@@ -285,8 +350,8 @@
                     return false;
                 }
 
-                trueAnswers = trueAnswers.sort();
-                selectedAnswers = selectedAnswers.sort();
+                var trueAnswers     = trueAnswers.sort(),
+                    selectedAnswers = selectedAnswers.sort();
 
                 for (var i = 0, l = trueAnswers.length; i < l; i++) {
                     if (trueAnswers[i] !== selectedAnswers[i]) {
@@ -299,7 +364,8 @@
 
             // Calculates knowledge level based on number of correct answers
             calculateLevel: function(correctAnswers) {
-                percent = correctAnswers / questionCount;
+                var percent = correctAnswers / questionCount,
+                    level   = 0;
 
                 if (plugin.method.inRange(0, 0.20, percent)) {
                     level = 5;

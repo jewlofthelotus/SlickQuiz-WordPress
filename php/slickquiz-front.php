@@ -36,8 +36,8 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
         function load_resources( $content )
         {
             // Only load resources when a shortcode is on the page
-            preg_match( '/\[slickquiz[^\]]*\]/is', $content, $matches );
-            if ( count( $matches) == 0 ) return $content;
+            preg_match( '/\[\s*slickquiz[^\]]*\]/is', $content, $matches );
+            if ( !count( $matches) ) return $content;
 
             $mainPluginFile = dirname(dirname(__FILE__)) . '/slickquiz.php';
 
@@ -69,14 +69,16 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                             <script type="text/javascript">
                                 jQuery(document).ready(function($) {
                                     $("#slickQuiz' . $quiz->id . '").slickQuiz({
-                                        json:                ' . $quiz->publishedJson . ',
-                                        checkAnswerText:     "' . $this->get_admin_option( 'check_answer_text' ) . '",
-                                        nextQuestionText:    "' . $this->get_admin_option( 'next_question_text' ) . '",
-                                        backButtonText:      "' . $this->get_admin_option( 'back_button_text' ) . '",
-                                        randomSortQuestions: ' . ( $this->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) . ',
-                                        randomSortAnswers:   ' . ( $this->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) . ',
-                                        randomSort:          ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . ',
-                                        disableNext:         ' . ( $this->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) . '
+                                        json:                        ' . $quiz->publishedJson . ',
+                                        checkAnswerText:             "' . $this->get_admin_option( 'check_answer_text' ) . '",
+                                        nextQuestionText:            "' . $this->get_admin_option( 'next_question_text' ) . '",
+                                        backButtonText:              "' . $this->get_admin_option( 'back_button_text' ) . '",
+                                        randomSortQuestions:         ' . ( $this->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) . ',
+                                        randomSortAnswers:           ' . ( $this->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) . ',
+                                        randomSort:                  ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . ',
+                                        preventUnanswered:           ' . ( $this->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) . ',
+                                        disableResponseMessaging:    ' . ( $this->get_admin_option( 'disable_responses' ) == '1' ? 'true' : 'false' ) . ',
+                                        completionResponseMessaging: ' . ( $this->get_admin_option( 'completion_responses' ) == '1' ? 'true' : 'false' ) . '
                                     });
                                 });
                             </script>';
