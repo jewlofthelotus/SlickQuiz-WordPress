@@ -389,6 +389,7 @@ jQuery(document).ready(function($) {
                                 json: formJSON
                               },
                     dataType: 'text',
+                    async:    false, // for Safari
                     success:  function(data) {
                         if (location.match('new')) {
                             window.location = location.replace('new', 'edit') + '&id=' + data;

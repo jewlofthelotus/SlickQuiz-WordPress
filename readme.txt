@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.4
-Stable tag: 1.0.17
+Stable tag: 1.0.18
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -61,6 +61,9 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 
 == Changelog ==
 
+= 1.0.18 =
+* Bug fix: resolved issue with Safari not being able to open the quiz preview pane
+
 = 1.0.17 =
 * Added NEW option to hide all correct and incorrect response messages until the quiz is completed
 * Added NEW option to hide all correct and incorrect response messages entirely
@@ -96,6 +99,9 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.0.18 =
+* Bug fix: resolved issue with Safari not being able to open the quiz preview pane
 
 = 1.0.17 =
 * Added NEW option to hide all correct and incorrect response messages until the quiz is completed

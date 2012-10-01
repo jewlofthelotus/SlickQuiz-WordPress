@@ -1,4 +1,15 @@
-(function($){
+/*!
+ * SlickQuiz jQuery Plugin
+ * http://github.com/QuickenLoans/SlickQuiz
+ *
+ * @updated September 24, 2010
+ *
+ * @author Julie Bellinson - http://www.jewlofthelotus.com
+ * @copyright (c) 2012 Quicken Loans - http://www.quickenloans.com
+ * @license MIT
+ */
+
+ (function($){
     // Setup Sexy Quiz
     $.slickQuiz = function(element, options) {
         var $element = $(element),
