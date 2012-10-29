@@ -385,18 +385,18 @@ jQuery(document).ready(function($) {
                     type:     'POST',
                     url:      saveUrl,
                     data:     {
-                                action: location.match('new') ? 'create_quiz' : 'update_quiz',
+                                action: location.match('slickquiz-new') ? 'create_quiz' : 'update_quiz',
                                 json: formJSON
                               },
                     dataType: 'text',
                     async:    false, // for Safari
                     success:  function(data) {
-                        if (location.match('new')) {
-                            window.location = location.replace('new', 'edit') + '&id=' + data;
-                            var previewUrl  = location.replace('new', 'preview') + '&id=' + data;
+                        if (location.match('slickquiz-new')) {
+                            window.location = location.replace('slickquiz-new', 'slickquiz-edit') + '&id=' + data;
+                            var previewUrl  = location.replace('slickquiz-new', 'slickquiz-preview') + '&id=' + data;
                         } else {
                             window.location.reload();
-                            var previewUrl  = location.replace('edit', 'preview');
+                            var previewUrl  = location.replace('slickquiz-edit', 'slickquiz-preview');
                         }
                         window.open(previewUrl, 'quizPreview', 'resizable=1,width=900,height=700,scrollbars=1');
                     }
@@ -744,7 +744,7 @@ jQuery(document).ready(function($) {
 
                 publishUrl = window.location.pathname
                                 .replace('admin.php', 'admin-ajax.php')
-                                .replace('preview', 'publish')
+                                .replace('slickquiz-preview', 'slickquiz-publish')
                                 + window.location.search;
 
                 if (confirm(confirmStr)) {
