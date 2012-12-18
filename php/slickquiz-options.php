@@ -125,6 +125,15 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'missing_quiz_message' ) ), 'SlickQuizPlugin' ); ?>" />
                     </td>
                 </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[name_label]"><em>USER NAME</em> label text (if saving scores is enabled below)</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[name_label]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'name_label' ) ), 'SlickQuizPlugin' ); ?>" />
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -199,6 +208,18 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                             <?php $slickQuizOptions->get_admin_option( 'disable_responses' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
                         <br /><small><em>(<strong>NOTE:</strong> Selecting "Yes" will override the above selection to display messaging upon quiz completion.<br />
                             It will also prevent messaging from displaying after each question.)</em></small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[save_scores]">Save user scores?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[save_scores]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'save_scores' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[save_scores]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'save_scores' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                        <br /><small><em>(<strong>NOTE:</strong> Selecting "Yes" will require the user to enter their name before proceeding with the quiz.)</em></small>
                     </td>
                 </tr>
             </tbody>

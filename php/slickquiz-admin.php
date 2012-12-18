@@ -59,6 +59,10 @@ if ( !class_exists( 'SlickQuizAdmin' ) ) {
                      . 'src="' . plugins_url( '/images/edit.png' , dirname( __FILE__ ) ) . '"'
                      . ' width="16" height="16" alt="Edit Quiz" /></a> &nbsp; ';
 
+            $scoreLink = '<a href="' . admin_url( 'admin.php?page=slickquiz-scores&id=' . $quiz->id ) . '">'
+                       . '<img src="' . plugins_url( '/images/user_comment.png' , dirname( __FILE__ ) ) . '"'
+                       . ' alt="Quiz Scores" /></a>';
+
             $quizRow .= '<tr>';
             $quizRow .= '<td class="table_id">' . $quiz->id . '</td>';
             $quizRow .= '<td class="table_name">' . $quiz->name . '</td>';
@@ -66,6 +70,7 @@ if ( !class_exists( 'SlickQuizAdmin' ) ) {
             $quizRow .= '<td class="table_updated">' . $quiz->lastUpdatedDate . '</td>';
             $quizRow .= '<td class="table_pubDate">' . $quiz->publishedDate . '</td>';
             $quizRow .= '<td class="table_status">' . $statusButton . '</td>';
+            $quizRow .= '<td class="table_scores">' . $scoreLink . '</td>';
             $quizRow .= '<td class="table_actions">' . $actions . '</td>';
             $quizRow .= '</tr>';
 
@@ -122,6 +127,7 @@ if ( class_exists( 'SlickQuizAdmin' ) ) {
                 <th scope="col" class="table_updated">Last Updated On</th>
                 <th scope="col" class="table_pubDate">Published On</th>
                 <th scope="col" class="table_status">Status</th>
+                <th scope="col" class="table_scores">Scores</th>
                 <th scope="col" class="table_actions"></th>
             </tr>
         </thead>

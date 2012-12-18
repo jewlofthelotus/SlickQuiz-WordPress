@@ -18,6 +18,7 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
             add_action( 'wp_ajax_publish_quiz', array( &$this, 'publish_quiz' ) );
             add_action( 'wp_ajax_unpublish_quiz', array( &$this, 'unpublish_quiz' ) );
             add_action( 'wp_ajax_delete_quiz', array( &$this, 'delete_quiz' ) );
+            add_action( 'wp_ajax_save_quiz_score', array( &$this, 'save_quiz_score' ) );
         }
 
         function create_quiz()
@@ -69,6 +70,16 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
         {
             $this->delete( $_GET['id'] );
             die();
+        }
+
+        function save_quiz_score()
+        {
+            if ( isset( $_POST['json'] ) ) {
+                $this->save_score( $_POST['json'] );
+            } else {
+                echo 'Something went wrong, please try again.';
+            }
+            die(); // this is required to return a proper result
         }
 
     }

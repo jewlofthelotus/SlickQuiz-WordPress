@@ -50,6 +50,19 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
         }
 
 
+        function get_all_scores( $quiz_id )
+        {
+            global $wpdb;
+            $db_name = $wpdb->prefix . 'plugin_slickquiz_scores';
+
+            $query = '';
+
+            $scoreResults = $wpdb->get_results( "SELECT id, name, score, quiz_id, createdDate FROM $db_name WHERE quiz_id = " . $quiz_id . " ORDER BY createdDate DESC" );
+
+            return $scoreResults;
+        }
+
+
         /**
          * Helper Methods
          */
@@ -211,6 +224,25 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
             global $wpdb, $data;
             $db_name = $wpdb->prefix . 'plugin_slickquiz';
             $wpdb->query( "DELETE FROM $db_name WHERE id = $id" );
+        }
+
+        function save_score( $json, $user_id = null )
+        {
+            global $wpdb, $data;
+            $db_name = $wpdb->prefix . 'plugin_slickquiz_scores';
+
+            $data    = json_decode( stripcslashes( $json ) );
+            $set     = array();
+            $now     = date( 'Y-m-d H:i:s' );
+            $user_id = $user_id ? $user_id : get_current_user_id();
+
+            $set['name']        = $data->name;
+            $set['score']       = $data->score;
+            $set['quiz_id']     = $data->quiz_id;
+            $set['createdBy']   = $user_id;
+            $set['createdDate'] = $now;
+
+            $wpdb->insert( $db_name, $set );
         }
 
     }

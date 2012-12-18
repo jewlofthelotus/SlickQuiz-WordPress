@@ -6,7 +6,8 @@
     // Delete option from options table
     delete_option( 'slick_quiz_options' );
 
-    // Delete quiz table
+    // Delete quiz tables
     global $wpdb;
     $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}plugin_slickquiz" );
+    $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}plugin_slickquiz_scores" );
 ?>

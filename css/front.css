@@ -16,7 +16,18 @@
     background-color:darkslategray;
 }
 
-.startQuiz {
+.buttonWrapper .button {
+    margin-top: 20px;
+}
+
+.buttonWrapper .button.disabled {
+    margin-top: 20px;
+    cursor: default;
+    background-color: #888;
+    opacity: 0.5;
+}
+
+.nameLabel {
     margin-top: 20px;
 }
 

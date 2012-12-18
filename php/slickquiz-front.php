@@ -36,8 +36,9 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
         function load_resources( $content )
         {
             // Only load resources when a shortcode is on the page
-            preg_match( '/\[\s*slickquiz[^\]]*\]/is', $content, $matches );
-            if ( !count( $matches) ) return $content;
+            if ( !strpos( $content, '[slickquiz' ) ) {
+                return $content;
+            }
 
             $mainPluginFile = dirname(dirname(__FILE__)) . '/slickquiz.php';
 
@@ -65,9 +66,11 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                     $status = $quizStat[1];
 
                     if ( $status && $status != self::NOT_PUBLISHED ) {
-                        $out .= '
+                        $out .='
                             <script type="text/javascript">
-                                jQuery(document).ready(function($) {
+                                jQuery(document).ready(function($) {';
+
+                        $out .= '
                                     $("#slickQuiz' . $quiz->id . '").slickQuiz({
                                         json:                        ' . $quiz->publishedJson . ',
                                         checkAnswerText:             "' . $this->get_admin_option( 'check_answer_text' ) . '",
@@ -79,7 +82,59 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         preventUnanswered:           ' . ( $this->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) . ',
                                         disableResponseMessaging:    ' . ( $this->get_admin_option( 'disable_responses' ) == '1' ? 'true' : 'false' ) . ',
                                         completionResponseMessaging: ' . ( $this->get_admin_option( 'completion_responses' ) == '1' ? 'true' : 'false' ) . '
+                                    });';
+
+                        if ( $this->get_admin_option( 'save_scores' ) == '1') {
+                            $out .= '
+                                    // get the start button
+                                    var button' . $quiz->id . ' = $("#slickQuiz' . $quiz->id . ' .buttonWrapper a");
+
+                                    // disable the start button
+                                    button' . $quiz->id . '.removeClass("startQuiz").addClass("disabled");
+
+                                    // insert a name field before the button
+                                    $("#slickQuiz' . $quiz->id . ' .buttonWrapper").before(
+                                        "<div class=\"nameLabel\"><label>' . $this->get_admin_option( 'name_label' ) . '</label> <input type=\"text\" /></div>"
+                                    );
+
+                                    // when name is entered, enable start button
+                                    $("#slickQuiz' . $quiz->id . ' .nameLabel input").on("change keyup", function() {
+                                        if ($(this).val() !== "") {
+                                            button' . $quiz->id . '.addClass("startQuiz").removeClass("disabled");
+                                        } else {
+                                            button' . $quiz->id . '.removeClass("startQuiz").addClass("disabled");
+                                        }
                                     });
+
+                                    // when starting quiz, hide name field
+                                    $("#slickQuiz' . $quiz->id . ' .button.startQuiz").live("click", function() {
+                                        if ($(this).hasClass("disabled") === false) {
+                                            $("#slickQuiz' . $quiz->id . ' .nameLabel").hide();
+                                        }
+                                    });
+
+                                    // watch final check answer button and wait for result calculation before submitting
+                                    $("#slickQuiz' . $quiz->id . ' .button.checkAnswer").last().on("click", function() {
+                                        setTimeout(submitScore' . $quiz->id . ', 2000);
+                                    });
+
+                                    // submit scores to wordpress db
+                                    function submitScore' . $quiz->id . '() {
+                                        var json = {
+                                            name: $("#slickQuiz' . $quiz->id . ' .nameLabel input").val(),
+                                            score: $("#slickQuiz' . $quiz->id . ' .correctResponse").length + " / " + $("#slickQuiz' . $quiz->id . ' .question").length,
+                                            quiz_id: ' . $quiz->id . ',
+                                        };
+
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "' . esc_url( wp_nonce_url( site_url( "wp-admin/admin-ajax.php" ), "wp-admin/admin-ajax.php" ) ) . '",
+                                            data: {action: "save_quiz_score", json: JSON.stringify(json)}
+                                        });
+                                    }';
+                        }
+
+                        $out .= '
                                 });
                             </script>';
                     }

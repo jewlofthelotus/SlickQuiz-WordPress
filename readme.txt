@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.0.19
+Stable tag: 1.1.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -15,6 +15,7 @@ Create and manage pretty, dynamic quizzes using the SlickQuiz jQuery plugin.
 
 Managing and creating new quizzes is simple and intuitive.
 
+* NEW: Saved user scores! (must be enabled in the options)
 * Quiz questions can have single or multiple correct responses.
 * Correct and Incorrect response messages.
 * Multiple correct / incorrect response message display formats.
@@ -33,6 +34,8 @@ NOTE: Do not place the same quiz on the page multiple times, things will break.
 
 Created by [Julie Bellinson](http://jewlofthelotus.com/) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
 
+Based off the [SlickQuiz jQuery plugin](https://github.com/QuickenLoans/SlickQuiz).
+
 == Installation ==
 
 1. Upload the SlickQuiz plugin folder to the `/wp-content/plugins/` directory
@@ -45,7 +48,9 @@ Created by [Julie Bellinson](http://jewlofthelotus.com/) - Software Engineer at 
 
 = Is there a way to save or email user scores and answers? =
 
-Not yet, but there have been many requests for features like this.  I'm working out the best way to set it up and will push out an update when it's available. Thanks for your patience!
+YES! As of version 1.1.0, you can now enable the saving of user scores! Visit the SlickQuiz Options page to turn saving on as well as to customize the user name input label.
+
+Score saving is still in it's infancy, so I'd love your feedback on how it works and what features you'd like to see!
 
 = Is there any social integration? Twitter? Facebook? =
 
@@ -58,8 +63,14 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 3. Adding quiz questions
 4. A quiz embedded in a post - your styles will vary depending on your theme and preferences.
 5. The plugin options allow you to alter messages and quiz features.
+6. When user score saving is enabled, the user will be prompted for their name before starting the quiz.
+7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.1.0 =
+* Added NEW option to enable the saving of user scores!!
+* Added NEW option to customizable the user's name label when score saving is enabled
 
 = 1.0.19 =
 * Bug fix: resolved issue with fuzzy URL matching in the admin interface
@@ -102,6 +113,10 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+* Added NEW option to enable the saving of user scores!!
+* Added NEW option to customizable the user's name label when score saving is enabled
 
 = 1.0.19 =
 * Bug fix: resolved issue with fuzzy URL matching in the admin interface

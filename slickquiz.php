@@ -4,7 +4,7 @@
 Plugin Name: SlickQuiz
 Plugin URI: http://www.jewlofthelotus.com/2011/12/23/slickquiz-jquery-plugin-now-on-github/
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.0.19
+Version: 1.1.0
 Author: Julie Bellinson, Software Engineer at Quicken Loans
 Author URI: http://www.quickenloans.com
 License: GPLv3 or later
@@ -46,7 +46,11 @@ if ( !class_exists( 'SlickQuiz' ) ) {
         {
             $this->plugin_name = basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ );
 
+            // Activate for New Installs
             register_activation_hook( $this->plugin_name, array( &$this, 'activate' ) );
+
+            // Activate for Updates
+            add_action( 'plugins_loaded', array( &$this, 'activate' ) );
 
             // Include Quiz Model
             include_once ( dirname ( __FILE__ ) . '/php/slickquiz-model.php' );
@@ -73,6 +77,7 @@ if ( !class_exists( 'SlickQuiz' ) ) {
         function activate()
         {
             $this->create_quiz_table();
+            $this->create_score_table();
             $this->get_admin_options();
         }
 
@@ -100,6 +105,12 @@ if ( !class_exists( 'SlickQuiz' ) ) {
                 add_action( $hooknamePreview, array( &$this, 'direct_route' ) );
             }
             $_registered_pages[$hooknamePreview] = true;
+
+            $hooknameScores = get_plugin_page_hookname( 'slickquiz-scores', 'admin.php' );
+            if ( !empty( $hooknameScores ) ) {
+                add_action( $hooknameScores, array( &$this, 'direct_route' ) );
+            }
+            $_registered_pages[$hooknameScores] = true;
         }
 
         // Basic Router
@@ -120,6 +131,9 @@ if ( !class_exists( 'SlickQuiz' ) ) {
                 break;
             case 'slickquiz-options' :
                 include_once ( dirname ( __FILE__ ) . '/php/slickquiz-options.php' );
+                break;
+            case 'slickquiz-scores' :
+                include_once ( dirname ( __FILE__ ) . '/php/slickquiz-scores.php' );
                 break;
             case 'slickquiz' :
                 include_once ( dirname ( __FILE__ ) . '/php/slickquiz-admin.php' );
@@ -145,14 +159,14 @@ if ( !class_exists( 'SlickQuiz' ) ) {
             wp_enqueue_style( 'slickquiz_admin_css', plugins_url( '/css/admin.css', __FILE__ ) );
         }
 
-        // Create Database Table
+        // Create Quiz Database Table
         function create_quiz_table()
         {
             global $wpdb;
             $db_name = $wpdb->prefix . 'plugin_slickquiz';
 
             // this if statement makes sure that the table doe not exist already
-            if ( $wpdb->get_var( "show tables like $db_name" ) != $db_name ) {
+            if ( $wpdb->get_var( "show tables like '$db_name'" ) != $db_name ) {
                 $sql = "CREATE TABLE $db_name (
                     id bigint(20) NOT NULL AUTO_INCREMENT,
                     name text NOT NULL,
@@ -167,6 +181,30 @@ if ( !class_exists( 'SlickQuiz' ) ) {
                     createdDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
                     lastUpdatedBy bigint(20) unsigned NOT NULL DEFAULT '0',
                     lastUpdatedDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                    PRIMARY KEY (id)
+                );";
+
+                require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+                dbDelta( $sql );
+            }
+        }
+
+        // Create User Score Database Table
+        function create_score_table()
+        {
+            global $wpdb;
+            $db_name = $wpdb->prefix . 'plugin_slickquiz_scores';
+
+            // this if statement makes sure that the table doe not exist already
+            if ( $wpdb->get_var( "show tables like '$db_name'" ) != $db_name ) {
+                $sql = "CREATE TABLE $db_name (
+                    id bigint(20) NOT NULL AUTO_INCREMENT,
+                    name text NOT NULL,
+                    score text NOT NULL,
+                    quiz_id bigint(20) unsigned NOT NULL DEFAULT '0',
+                    createdBy bigint(20) unsigned NOT NULL DEFAULT '0',
+                    createdDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
                     PRIMARY KEY (id)
                 );";
 
@@ -193,7 +231,9 @@ if ( !class_exists( 'SlickQuiz' ) ) {
                 'random_sort'           => '0',
                 'disable_next'          => '0',
                 'disable_responses'     => '0',
-                'completion_responses'  => '0'
+                'completion_responses'  => '0',
+                'save_scores'           => '0',
+                'name_label'            => 'Your Name:'
             );
 
             $pluginOptions = get_option( $this->adminOptionsName );
