@@ -12,13 +12,17 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
         // Constructor
         function __construct()
         {
+            // Admin
             add_action( 'wp_ajax_create_quiz', array( &$this, 'create_quiz' ) );
             add_action( 'wp_ajax_update_quiz', array( &$this, 'update_quiz' ) );
             add_action( 'wp_ajax_revert_quiz', array( &$this, 'revert_quiz' ) );
             add_action( 'wp_ajax_publish_quiz', array( &$this, 'publish_quiz' ) );
             add_action( 'wp_ajax_unpublish_quiz', array( &$this, 'unpublish_quiz' ) );
             add_action( 'wp_ajax_delete_quiz', array( &$this, 'delete_quiz' ) );
+
+            // Front End
             add_action( 'wp_ajax_save_quiz_score', array( &$this, 'save_quiz_score' ) );
+            add_action( 'wp_ajax_nopriv_save_quiz_score', array( &$this, 'save_quiz_score' ) );
         }
 
         function create_quiz()

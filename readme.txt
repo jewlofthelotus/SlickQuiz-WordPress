@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.4.2
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -68,6 +68,9 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 
 == Changelog ==
 
+= 1.1.1 =
+* Bug fix: resolved issue with user scores not saving for logged out users
+
 = 1.1.0 =
 * Added NEW option to enable the saving of user scores!!
 * Added NEW option to customizable the user's name label when score saving is enabled
@@ -113,6 +116,9 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+* Bug fix: resolved issue with user scores not saving for logged out users
 
 = 1.1.0 =
 * Added NEW option to enable the saving of user scores!!

@@ -123,7 +123,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         var json = {
                                             name: $("#slickQuiz' . $quiz->id . ' .nameLabel input").val(),
                                             score: $("#slickQuiz' . $quiz->id . ' .correctResponse").length + " / " + $("#slickQuiz' . $quiz->id . ' .question").length,
-                                            quiz_id: ' . $quiz->id . ',
+                                            quiz_id: ' . $quiz->id . '
                                         };
 
                                         $.ajax({
