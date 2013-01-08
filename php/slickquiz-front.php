@@ -36,7 +36,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
         function load_resources( $content )
         {
             // Only load resources when a shortcode is on the page
-            if ( !strpos( $content, '[slickquiz' ) ) {
+            if ( strpos( $content, '[slickquiz' ) === false ) {
                 return $content;
             }
 

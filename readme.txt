@@ -2,8 +2,8 @@
 Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
-Tested up to: 3.4.2
-Stable tag: 1.1.1
+Tested up to: 3.5
+Stable tag: 1.1.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -68,6 +68,9 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 
 == Changelog ==
 
+= 1.1.2 =
+* Bug fix: resolved issue with quizzes not working when they are the only thing in the post / page
+
 = 1.1.1 =
 * Bug fix: resolved issue with user scores not saving for logged out users
 
@@ -116,6 +119,9 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.1.2 =
+* Bug fix: resolved issue with quizzes not working when they are the only thing in the post / page
 
 = 1.1.1 =
 * Bug fix: resolved issue with user scores not saving for logged out users
