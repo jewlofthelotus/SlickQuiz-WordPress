@@ -36,28 +36,32 @@ if ( !class_exists( 'SlickQuizAdmin' ) ) {
             $actions      = '';
             $quizRow      = '';
 
-            if ( $status == self::PUBLISHED ) {
-                $actions .= '<a class="unpublish_quiz unpublish" title="Unpublish Quiz" '
+            // Editor or Admin Options
+            if ( current_user_can( 'publish_pages' ) ) {
+                if ( $status == self::PUBLISHED ) {
+                    $actions .= '<a class="unpublish_quiz unpublish" title="Unpublish Quiz" '
+                             . 'href="' . admin_url( 'admin-ajax.php?id=' ) . $id . '">'
+                             . '<img id="unpublishquiz-' . $id . '" '
+                             . 'src="' . plugins_url( '/images/remove.png' , dirname( __FILE__ ) ) . '"'
+                             . ' width="16" height="16" alt="Unpublish Quiz" /></a> ';
+                }
+                $actions .= '<a class="delete_quiz delete" title="Delete Quiz" '
                          . 'href="' . admin_url( 'admin-ajax.php?id=' ) . $id . '">'
-                         . '<img id="unpublishquiz-' . $id . '" '
-                         . 'src="' . plugins_url( '/images/remove.png' , dirname( __FILE__ ) ) . '"'
-                         . ' width="16" height="16" alt="Unpublish Quiz" /></a> ';
+                         . '<img id="deletequiz-' . $id . '" '
+                         . 'src="' . plugins_url( '/images/bin_closed.png' , dirname( __FILE__ ) ) . '"'
+                         . ' width="16" height="16" alt="Delete Quiz" /></a> ';
+                $actions .= '<a class="edit_quiz" title="Edit Quiz" '
+                         . 'href="' . admin_url( 'admin.php?page=slickquiz-edit&id=' ) . $id . '">'
+                         . '<img id="editquiz-' . $id . '" '
+                         . 'src="' . plugins_url( '/images/edit.png' , dirname( __FILE__ ) ) . '"'
+                         . ' width="16" height="16" alt="Edit Quiz" /></a> ';
             }
-            $actions .= '<a class="delete_quiz delete" title="Delete Quiz" '
-                     . 'href="' . admin_url( 'admin-ajax.php?id=' ) . $id . '">'
-                     . '<img id="deletequiz-' . $id . '" '
-                     . 'src="' . plugins_url( '/images/bin_closed.png' , dirname( __FILE__ ) ) . '"'
-                     . ' width="16" height="16" alt="Delete Quiz" /></a> ';
+
             $actions .= '<a class="preview_quiz preview" title="Preview Quiz" '
                      . 'href="' . admin_url( 'admin.php?page=slickquiz-preview&id=' ) . $id . '&readOnly">'
                      . '<img id="previewquiz-' . $id . '" '
                      . 'src="' . plugins_url( '/images/view.png' , dirname( __FILE__ ) ) . '"'
                      . ' width="16" height="16" alt="Preview Quiz" /></a> &nbsp; ';
-            $actions .= '<a class="edit_quiz" title="Edit Quiz" '
-                     . 'href="' . admin_url( 'admin.php?page=slickquiz-edit&id=' ) . $id . '">'
-                     . '<img id="editquiz-' . $id . '" '
-                     . 'src="' . plugins_url( '/images/edit.png' , dirname( __FILE__ ) ) . '"'
-                     . ' width="16" height="16" alt="Edit Quiz" /></a> &nbsp; ';
 
             $scoreLink = '<a href="' . admin_url( 'admin.php?page=slickquiz-scores&id=' . $quiz->id ) . '">'
                        . '<img src="' . plugins_url( '/images/user_comment.png' , dirname( __FILE__ ) ) . '"'
@@ -105,7 +109,7 @@ if ( class_exists( 'SlickQuizAdmin' ) ) {
 <div class="wrap quizList">
     <?php $slickQuizAdmin->show_alert_messages(); ?>
 
-    <h2>SlickQuiz Management <a href="<?php echo admin_url( 'admin.php?page=slickquiz-new' ); ?>" class="add-new-h2" title="Create a new Quiz">Add New Quiz</a></h2>
+    <h2>SlickQuiz Management <?php if ( current_user_can( 'publish_pages' ) ) { // Editor or Admin Only  ?><a href="<?php echo admin_url( 'admin.php?page=slickquiz-new' ); ?>" class="add-new-h2" title="Create a new Quiz">Add New Quiz</a><?php } ?></h2>
 
     <p>To place a quiz on a post, page, or in the sidebar text widget - insert the following into the content, where "X" is the ID of the quiz you want to display.</p>
 
