@@ -4,7 +4,7 @@
 Plugin Name: SlickQuiz
 Plugin URI: http://www.jewlofthelotus.com/2011/12/23/slickquiz-jquery-plugin-now-on-github/
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.1.2
+Version: 1.1.3
 Author: Julie Bellinson, Software Engineer at Quicken Loans
 Author URI: http://www.quickenloans.com
 License: GPLv3 or later
@@ -84,9 +84,14 @@ if ( !class_exists( 'SlickQuiz' ) ) {
         // Add SlickQuiz Menu to Navigation
         function add_menu()
         {
-             add_menu_page( 'SlickQuizzes', 'SlickQuizzes', 'administrator', 'slickquiz', array( &$this, 'direct_route' ) );
-             add_submenu_page( 'slickquiz', 'Add Quiz', 'Add Quiz', 'administrator', 'slickquiz-new', array( &$this, 'direct_route') );
-             add_submenu_page( 'slickquiz', 'Options', 'Options', 'administrator', 'slickquiz-options', array( &$this, 'direct_route') );
+            // Accessible to Authors, Editors, and Admins
+            add_menu_page( 'SlickQuizzes', 'SlickQuizzes', 'publish_posts', 'slickquiz', array( &$this, 'direct_route' ) );
+
+            // Accessible to Editors and Admins
+            add_submenu_page( 'slickquiz', 'Add Quiz', 'Add Quiz', 'publish_pages', 'slickquiz-new', array( &$this, 'direct_route') );
+
+            // Accessible to Admins
+            add_submenu_page( 'slickquiz', 'Options', 'Options', 'manage_options', 'slickquiz-options', array( &$this, 'direct_route') );
         }
 
         // Register Non-Menu Pages
