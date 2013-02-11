@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -36,6 +36,8 @@ Created by [Julie Bellinson](http://jewlofthelotus.com/) - Software Engineer at 
 
 Based off the [SlickQuiz jQuery plugin](https://github.com/QuickenLoans/SlickQuiz).
 
+The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https://github.com/QuickenLoans/SlickQuiz-WordPress)
+
 == Installation ==
 
 1. Upload the SlickQuiz plugin folder to the `/wp-content/plugins/` directory
@@ -67,6 +69,10 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.1.3 =
+* Tweaking user permissions - Admins can do everything; Editors can do everything EXCEPT manage SlickQuiz Options; Authors can view the quiz list, scores and previews.
+* SlickQuiz is now opensource - contribute on [Github](https://github.com/QuickenLoans/SlickQuiz-WordPress)!
 
 = 1.1.2 =
 * Bug fix: resolved issue with quizzes not working when they are the only thing in the post / page
@@ -119,6 +125,10 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.1.3 =
+* Tweaking user permissions - Admins can do everything; Editors can do everything EXCEPT manage SlickQuiz Options; Authors can view the quiz list, scores and previews.
+* SlickQuiz is now opensource - contribute on [Github](https://github.com/QuickenLoans/SlickQuiz-WordPress)!
 
 = 1.1.2 =
 * Bug fix: resolved issue with quizzes not working when they are the only thing in the post / page
