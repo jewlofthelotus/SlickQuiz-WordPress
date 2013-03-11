@@ -166,7 +166,7 @@ jQuery(document).ready(function($) {
 
                 newQuestionHTML = $('<div class="question actual"></div>');
                 newQuestionHTML.append('<label>' + defaults.requiredString + ' Question</label> ');
-                newQuestionHTML.append('<input type="text" name="question" value="' + (fieldGroup ? plugin.formHelper.htmlspecialchars(fieldGroup.q) : '') + '" />');
+                newQuestionHTML.append('<textarea name="question">' + (fieldGroup ? plugin.formHelper.htmlspecialchars(fieldGroup.q) : '') + '</textarea>');
 
                 newQuestionCorrectHTML = $('<div class="question correct"></div>');
                 newQuestionCorrectHTML.append('<label>' + defaults.requiredString + ' Correct Response Message</label> ');
@@ -522,7 +522,7 @@ jQuery(document).ready(function($) {
 
                 // Get question and answer responses
                 questions.each(function(i, questionSet) {
-                    questionInput     = $($(questionSet).children('.actual').children('input')[0]);
+                    questionInput     = $($(questionSet).children('.actual').children('textarea')[0]);
                     correctResponse   = $($(questionSet).children('.correct').children('textarea')[0]);
                     incorrectResponse = $($(questionSet).children('.incorrect').children('textarea')[0]);
                     answers           = $($(questionSet).children('.answer'));

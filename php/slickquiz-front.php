@@ -46,6 +46,10 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             wp_enqueue_script( 'jquery' );
             wp_enqueue_script( 'slickquiz_js', plugins_url( '/slickquiz/js/slickQuiz.js', $mainPluginFile ) );
 
+            if ( $this->get_admin_option( 'share_links' ) == '1' ) {
+                wp_enqueue_script( 'twitter-widget', 'http://platform.twitter.com/widgets.js' );
+            }
+
             // Styles
             wp_enqueue_style( 'slickquiz_css', plugins_url( '/slickquiz/css/slickQuiz.css', $mainPluginFile ) );
             wp_enqueue_style( 'slickquiz_front_css', plugins_url( '/css/front.css', $mainPluginFile ) );
@@ -84,7 +88,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         completionResponseMessaging: ' . ( $this->get_admin_option( 'completion_responses' ) == '1' ? 'true' : 'false' ) . '
                                     });';
 
-                        if ( $this->get_admin_option( 'save_scores' ) == '1') {
+                        if ( $this->get_admin_option( 'save_scores' ) == '1' ) {
                             $out .= '
                                     // get the start button
                                     var button' . $quiz->id . ' = $("#slickQuiz' . $quiz->id . ' .buttonWrapper a");
@@ -134,6 +138,46 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                     }';
                         }
 
+                        if ( $this->get_admin_option( 'share_links' ) == '1' ) {
+                            $out .= '
+                                    // watch final check answer button and wait for result calculation before submitting
+                                    $("#slickQuiz' . $quiz->id . ' .button.checkAnswer").last().on("click", function() {
+                                        setTimeout(addShareButtons' . $quiz->id . ', 2000);
+                                    });
+
+                                    // updates the share buttons with score, rank, and quiz name details
+                                    function addShareButtons' . $quiz->id . '() {
+                                        var shareDiv = $("#slickQuiz' . $quiz->id . ' .quizShare");
+
+                                        if (shareDiv.length > 0) {
+                                            var twitterButton = "<a href=\'https://twitter.com/share\'"
+                                                + " class=\'twitter-share-button\'"
+                                                + " data-url=\'' . $this->current_page_url() . '\'"
+                                                + " data-text=\\"' . $this->get_admin_option( 'share_message' ) . '\\""
+                                                + " data-via=\'' . $this->get_admin_option( 'twitter_account' ) . '\'>Tweet</a>";
+
+                                            twitterButton = twitterButton
+                                                .replace(/\[NAME\]/, $("#slickQuiz' . $quiz->id . ' .quizName").html())
+                                                .replace(/\[SCORE\]/, $("#slickQuiz' . $quiz->id . ' .quizScore span").html())
+                                                .replace(/\[RANK\]/, $("#slickQuiz' . $quiz->id . ' .quizLevel span").html());
+
+                                            shareDiv.append($(twitterButton));
+
+                                            var facebookButton = "<iframe"
+                                                + " src=\'//www.facebook.com/plugins/like.php?href=' . urlencode( $this->current_page_url() ) . '&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21&amp\'"
+                                                + " scrolling=\'no\'"
+                                                + " frameborder=\'0\'"
+                                                + " style=\'border:none; overflow:hidden; width:450px; height:21px;\'"
+                                                + " allowTransparency=\'true\'></iframe>";
+
+                                            shareDiv.append($(facebookButton));
+
+                                            twttr.widgets.load();
+                                        }
+                                    }
+                            ';
+                        }
+
                         $out .= '
                                 });
                             </script>';
@@ -167,10 +211,12 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
                 $pageQuizzes[$id] = array( $quiz, $status );
 
+                $out = '';
+
                 if ( $status == self::NOT_PUBLISHED ) {
-                    $out = "<p class='quiz-$id notPublished'>" . $this->get_admin_option( 'disabled_quiz_message' ) . "</p>";
+                    $out .= "<p class='quiz-$id notPublished'>" . $this->get_admin_option( 'disabled_quiz_message' ) . "</p>";
                 } else {
-                    $out = '
+                    $out .= '
                         <div class="slickQuizWrapper" id="slickQuiz' . $quiz->id . '">
                             <h2 class="quizName"></h2>
 
@@ -183,16 +229,42 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                             <div class="quizResults">
                                 <div class="quizResultsCopy">
                                     <h3 class="quizScore">' . $this->get_admin_option( 'your_score_text' ) . ' <span>&nbsp;</span></h3>
-                                    <h3 class="quizLevel">' . $this->get_admin_option( 'your_ranking_text' ) . ' <span>&nbsp;</span></h3>
+                                    <h3 class="quizLevel">' . $this->get_admin_option( 'your_ranking_text' ) . ' <span>&nbsp;</span></h3>';
+
+                    if ( $this->get_admin_option( 'share_links' ) == '1' ) {
+                        $out .= '
+                                    <div class="quizShare"></div>';
+                    }
+
+                    $out .= '
                                 </div>
                             </div>
                         </div>';
                 }
             } else {
-                $out = "<p class='quiz-$id notFound'>" . $this->get_admin_option( 'missing_quiz_message' ) . "</p>";
+                $out .= "<p class='quiz-$id notFound'>" . $this->get_admin_option( 'missing_quiz_message' ) . "</p>";
             }
 
             return $out;
+        }
+
+        function current_page_url()
+        {
+            $pageURL = 'http';
+
+            if( isset($_SERVER["HTTPS"]) ) {
+                if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+            }
+
+            $pageURL .= "://";
+
+            if ($_SERVER["SERVER_PORT"] != "80") {
+                $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+            } else {
+                $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+            }
+
+            return $pageURL;
         }
 
     }
