@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -27,6 +27,7 @@ Managing and creating new quizzes is simple and intuitive.
 * Randomly sort questions and answers
 * Prevent submitting questions without answers
 * Multiple quizzes on the same page
+* Easily share results with Twitter and Facebook sharing buttons
 
 NOTE: If the Preview window does not appear from the create / edit page, *you may need to allow popups for your domain.*
 
@@ -69,6 +70,11 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.1.5 =
+* Updating the SlickQuiz jQuery plugin to commit 661e8fcd9d5fe47bf4d28cb4080ae9a724827bc3
+* Resolved mobile bug where buttons weren't clickable
+* Resolved "Quiz not found" warning bug
 
 = 1.1.4 =
 * Added optional Twitter and Facebook sharing buttons to quiz results
@@ -129,6 +135,11 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.1.5 =
+* Updating the SlickQuiz jQuery plugin to commit 661e8fcd9d5fe47bf4d28cb4080ae9a724827bc3
+* Resolved mobile bug where buttons weren't clickable
+* Resolved "Quiz not found" warning bug
 
 = 1.1.4 =
 * Added optional Twitter and Facebook sharing buttons to quiz results

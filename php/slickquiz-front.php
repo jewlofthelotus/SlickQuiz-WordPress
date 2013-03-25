@@ -205,13 +205,12 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             global $quiz, $status, $pageQuizzes;
 
             $quiz = $this->get_quiz_by_id( $id );
+            $out  = '';
 
             if ( $quiz ) {
                 $status = $this->get_quiz_status( $quiz );
 
                 $pageQuizzes[$id] = array( $quiz, $status );
-
-                $out = '';
 
                 if ( $status == self::NOT_PUBLISHED ) {
                     $out .= "<p class='quiz-$id notPublished'>" . $this->get_admin_option( 'disabled_quiz_message' ) . "</p>";
@@ -222,7 +221,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
                             <div class="quizArea">
                                 <div class="quizHeader">
-                                    <div class="buttonWrapper"><a class="button startQuiz">' . $this->get_admin_option( 'start_button_text' ) . '</a></div>
+                                    <div class="buttonWrapper"><a class="button startQuiz" href="#">' . $this->get_admin_option( 'start_button_text' ) . '</a></div>
                                 </div>
                             </div>
 
