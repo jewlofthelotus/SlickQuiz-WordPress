@@ -4,7 +4,7 @@
 Plugin Name: SlickQuiz
 Plugin URI: http://www.jewlofthelotus.com/2011/12/23/slickquiz-jquery-plugin-now-on-github/
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.1.4
+Version: 1.1.5
 Author: Julie Bellinson, Software Engineer at Quicken Loans
 Author URI: http://www.quickenloans.com
 License: GPLv3 or later
@@ -12,7 +12,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 */
 
 /*
-Copyright (c) 2012 Quicken Loans
+Copyright (c) 2013 Quicken Loans
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
