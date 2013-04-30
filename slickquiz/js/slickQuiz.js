@@ -2,7 +2,7 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/QuickenLoans/SlickQuiz
  *
- * @updated March 25, 2013
+ * @updated April 29, 2013
  *
  * @author Julie Bellinson - http://www.jewlofthelotus.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -210,7 +210,7 @@
                         var answer = answers[i];
 
                         if (answer.correct) {
-                            trueAnswers.push(answer.option);
+                            trueAnswers.push($('<div />').html(answer.option).text())
                         }
                     }
                 }
@@ -220,9 +220,9 @@
                 answerInputs.each( function() {
                     // If we're in jQuery Mobile, grab value from nested span
                     if ($('.ui-mobile').length > 0) {
-                        var inputValue = $(this).next('label').find('span.ui-btn-text').html();
+                        var inputValue = $(this).next('label').find('span.ui-btn-text').text();
                     } else {
-                        var inputValue = $(this).next('label').html();
+                        var inputValue = $(this).next('label').text();
                     }
 
                     selectedAnswers.push(inputValue);
@@ -374,7 +374,7 @@
 
             // Calculates knowledge level based on number of correct answers
             calculateLevel: function(correctAnswers) {
-                var percent = correctAnswers / questionCount,
+                var percent = (correctAnswers / questionCount).toFixed(2),
                     level   = 0;
 
                 if (plugin.method.inRange(0, 0.20, percent)) {
@@ -406,25 +406,25 @@
             plugin.method.setupQuiz();
 
             // Bind "start" button
-            $(triggers.starter).live('click', function(e) {
+            $(triggers.starter).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.startQuiz(this);
             });
 
             // Bind "submit answer" button
-            $(triggers.checker).live('click', function(e) {
+            $(triggers.checker).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.checkAnswer(this);
             });
 
             // Bind "back" button
-            $(triggers.back).live('click', function(e) {
+            $(triggers.back).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.backToQuestion(this);
             });
 
             // Bind "next question" button
-            $(triggers.next).live('click', function(e) {
+            $(triggers.next).on('click', function(e) {
                 e.preventDefault();
                 plugin.method.nextQuestion(this);
             });
