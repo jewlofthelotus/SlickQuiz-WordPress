@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.1.5
+Stable tag: 1.1.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -71,15 +71,6 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 
 == Changelog ==
 
-= 1.1.5 =
-* Updating the SlickQuiz jQuery plugin to commit 661e8fcd9d5fe47bf4d28cb4080ae9a724827bc3
-* Resolved mobile bug where buttons weren't clickable
-* Resolved "Quiz not found" warning bug
-
-= 1.1.4 =
-* Added optional Twitter and Facebook sharing buttons to quiz results
-* Changed Question input to a textarea for easier form editing
-
 = 1.1.3 =
 * Tweaking user permissions - Admins can do everything; Editors can do everything EXCEPT manage SlickQuiz Options; Authors can view the quiz list, scores and previews.
 * SlickQuiz is now opensource - contribute on [Github](https://github.com/QuickenLoans/SlickQuiz-WordPress)!
@@ -135,15 +126,6 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
-
-= 1.1.5 =
-* Updating the SlickQuiz jQuery plugin to commit 661e8fcd9d5fe47bf4d28cb4080ae9a724827bc3
-* Resolved mobile bug where buttons weren't clickable
-* Resolved "Quiz not found" warning bug
-
-= 1.1.4 =
-* Added optional Twitter and Facebook sharing buttons to quiz results
-* Changed Question input to a textarea for easier form editing
 
 = 1.1.3 =
 * Tweaking user permissions - Admins can do everything; Editors can do everything EXCEPT manage SlickQuiz Options; Authors can view the quiz list, scores and previews.
