@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -57,7 +57,7 @@ Score saving is still in it's infancy, so I'd love your feedback on how it works
 
 = Is there any social integration? Twitter? Facebook? =
 
-Not yet, but again - that's in the feature queue. Stay tuned!
+YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Facebook.  There is also an option to customize the Twitter share message.
 
 == Screenshots ==
 
@@ -70,6 +70,11 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.1.6 =
+* Updating the SlickQuiz jQuery plugin to commit d9213bf14be5ac216e8d622bc8a5c9376e035782
+* Resolved bug with HTML entities and tags in answers
+* Resolved bug with ranking level calculation
 
 = 1.1.5 =
 * Updating the SlickQuiz jQuery plugin to commit 661e8fcd9d5fe47bf4d28cb4080ae9a724827bc3
@@ -135,6 +140,11 @@ Not yet, but again - that's in the feature queue. Stay tuned!
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.1.6 =
+* Updating the SlickQuiz jQuery plugin to commit d9213bf14be5ac216e8d622bc8a5c9376e035782
+* Resolved bug with HTML entities and tags in answers
+* Resolved bug with ranking level calculation
 
 = 1.1.5 =
 * Updating the SlickQuiz jQuery plugin to commit 661e8fcd9d5fe47bf4d28cb4080ae9a724827bc3
