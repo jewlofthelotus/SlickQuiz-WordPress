@@ -91,6 +91,16 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
+                        <label for="slickQuizOptions[try_again_text]"><em>TRY AGAIN</em> button text</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[try_again_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'try_again_text' ) ), 'SlickQuizPlugin' ); ?>" /><br />
+                        <small><em>(If left blank, no TRY AGAIN buttons will be displayed.)</em></small></label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
                         <label for="slickQuizOptions[your_score_text]"><em>SCORE</em> result text</label>
                     </th>
                     <td>

@@ -4,8 +4,8 @@
 Plugin Name: SlickQuiz
 Plugin URI: http://www.jewlofthelotus.com/2011/12/23/slickquiz-jquery-plugin-now-on-github/
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.1.6
-Author: Julie Bellinson, Software Engineer at Quicken Loans
+Version: 1.1.7
+Author: Julie Cameron, Software Engineer at Quicken Loans
 Author URI: http://www.quickenloans.com
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -62,6 +62,7 @@ if ( !class_exists( 'SlickQuiz' ) ) {
             // Register AJAX actions
             include_once ( dirname ( __FILE__ ) . '/php/slickquiz-functions.php' );
             $slickQuizFunctions = new SlickQuizFunctions();
+
 
             // Register non-menu pages
             add_action( 'admin_menu', array( &$this, 'register_aux_pages' ) );
@@ -229,6 +230,7 @@ if ( !class_exists( 'SlickQuiz' ) ) {
                 'check_answer_text'     => 'Check My Answer!',
                 'next_question_text'    => 'Next &raquo;',
                 'back_button_text'      => '',
+                'try_again_text'        => '',
                 'your_score_text'       => 'Your Score:',
                 'your_ranking_text'     => 'Your Ranking:',
                 'random_sort_questions' => '0',
