@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -33,7 +33,7 @@ NOTE: If the Preview window does not appear from the create / edit page, *you ma
 
 NOTE: Do not place the same quiz on the page multiple times, things will break.
 
-Created by [Julie Bellinson](http://jewlofthelotus.com/) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
+Created by [Julie Cameron](http://jewlofthelotus.com/) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
 
 Based off the [SlickQuiz jQuery plugin](https://github.com/QuickenLoans/SlickQuiz).
 
@@ -70,6 +70,10 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.1.7 =
+* Added "Try Again" option to end of quiz (resets and restarts quiz)
+* Bug fixes, code cleanup - YAY!
 
 = 1.1.6 =
 * Updating the SlickQuiz jQuery plugin to commit d9213bf14be5ac216e8d622bc8a5c9376e035782
@@ -140,6 +144,10 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.1.7 =
+* Added "Try Again" option to end of quiz (resets and restarts quiz)
+* Bug fixes, code cleanup - YAY!
 
 = 1.1.6 =
 * Updating the SlickQuiz jQuery plugin to commit d9213bf14be5ac216e8d622bc8a5c9376e035782
