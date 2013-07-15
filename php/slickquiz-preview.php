@@ -88,6 +88,8 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
                 nextQuestionText:            "<?php $slickQuizPreview->get_admin_option( 'next_question_text', true ) ?>",
                 backButtonText:              "<?php $slickQuizPreview->get_admin_option( 'back_button_text', true ) ?>",
                 tryAgainText:                "<?php $slickQuizPreview->get_admin_option( 'try_again_text', true ) ?>",
+                skipStartButton:             <?php echo( $slickQuizPreview->get_admin_option( 'skip_start_button' ) == '1' ? 'true' : 'false' ) ?>,
+                numberOfQuestions:           <?php echo( $slickQuizPreview->get_admin_option( 'number_of_questions' ) != '' ? $slickQuizPreview->get_admin_option( 'number_of_questions' ) : 'null' ) ?>,
                 randomSortQuestions:         <?php echo( $slickQuizPreview->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) ?>,
                 randomSortAnswers:           <?php echo( $slickQuizPreview->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) ?>,
                 randomSort:                  <?php echo( $slickQuizPreview->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) ?>,

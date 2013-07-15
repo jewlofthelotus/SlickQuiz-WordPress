@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.5.2
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -25,6 +25,7 @@ Managing and creating new quizzes is simple and intuitive.
 * Customize error messages for missing or unpublished quizzes.
 * Customize the quiz start button text, as well as score and ranking text.
 * Randomly sort questions and answers
+* Load a set number of questions from a larger group
 * Prevent submitting questions without answers
 * Multiple quizzes on the same page
 * Easily share results with Twitter and Facebook sharing buttons
@@ -70,6 +71,10 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.1.8 =
+* Added "Skip Start Button" option (loads first question instead of start button)
+* Added "Number of Questions" option (loads the specified number of questions, instead of all questions)
 
 = 1.1.7 =
 * Added "Try Again" option to end of quiz (resets and restarts quiz)
@@ -144,6 +149,10 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.1.8 =
+* Added "Skip Start Button" option (loads first question instead of start button)
+* Added "Number of Questions" option (loads the specified number of questions, instead of all questions)
 
 = 1.1.7 =
 * Added "Try Again" option to end of quiz (resets and restarts quiz)
