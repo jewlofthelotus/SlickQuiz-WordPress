@@ -26,6 +26,10 @@ To initialize your quiz:
 
 **`tryAgainText`** (String) - the text to use on the try again button, if left null / blank (default) - no try again button will be displayed
 
+**`skipStartButton`** (Boolean) - whether or not to skip the quiz "start" button, defaults to false
+
+**`numberOfQuestions`** (Integer) - the number of questions to load from the question set in the JSON object, defaults to null (all questions); Note: If you set this to an integer, you'll probably also want to set <code>randomSortQuestions</code> or <code>randomSort</code> to **true** to ensure that you get a mixed set of questions each page load.
+
 **`randomSortQuestions`** (Boolean) - whether or not to randomly sort questions ONLY, defaults to false
 
 **`randomSortAnswers`** (Boolean) - whether or not to randomly sort answers ONLY, defaults to false
