@@ -2,7 +2,7 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/QuickenLoans/SlickQuiz
  *
- * @updated July 11, 2013
+ * @updated July 15, 2013
  *
  * @author Julie Cameron - http://www.jewlofthelotus.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -20,6 +20,8 @@
                 nextQuestionText: 'Next &raquo;',
                 backButtonText: '',
                 tryAgainText: '',
+                skipStartButton: false,
+                numberOfQuestions: null,
                 randomSort: false,
                 randomSortQuestions: false,
                 randomSortAnswers: false,
@@ -110,6 +112,11 @@
         // Count the number of questions
         var questionCount = questions.length;
 
+        // Select X number of questions to load if options is set
+        if (plugin.config.numberOfQuestions && questionCount >= plugin.config.numberOfQuestions) {
+            questions = questions.slice(0, plugin.config.numberOfQuestions);
+            questionCount = questions.length;
+        }
 
         plugin.method = {
             // Sets up the questions and answers based on above array
@@ -213,18 +220,31 @@
                 // Add the quiz content to the page
                 $quizArea.append(quiz);
 
-                // Toggle the start button
-                $quizStarter.fadeIn(500);
+                // Toggle the start button OR start the quiz if start button is disabled
+                if (plugin.config.skipStartButton || $quizStarter.length == 0) {
+                    $quizStarter.hide();
+                    plugin.method.startQuiz(this);
+                } else {
+                    $quizStarter.fadeIn(500);
+                }
             },
 
             // Starts the quiz (hides start button and displays first question)
-            startQuiz: function(startButton) {
-                $(startButton).fadeOut(300, function(){
+            startQuiz: function() {
+                function start() {
                     var firstQuestion = $(_element + ' ' + _questions + ' li').first();
                     if (firstQuestion.length) {
                         firstQuestion.fadeIn(500);
                     }
-                });
+                }
+
+                if (plugin.config.skipStartButton || $quizStarter.length == 0) {
+                    start();
+                } else {
+                    $quizStarter.fadeOut(300, function(){
+                        start();
+                    });
+                }
             },
 
             // Resets (restarts) the quiz (hides results, resets inputs, and displays first question)
@@ -458,7 +478,7 @@
             // Bind "start" button
             $quizStarter.on('click', function(e) {
                 e.preventDefault();
-                plugin.method.startQuiz(this);
+                plugin.method.startQuiz();
             });
 
             // Bind "try again" button

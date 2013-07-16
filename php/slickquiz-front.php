@@ -81,6 +81,8 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         nextQuestionText:            "' . $this->get_admin_option( 'next_question_text' ) . '",
                                         backButtonText:              "' . $this->get_admin_option( 'back_button_text' ) . '",
                                         tryAgainText:                "' . $this->get_admin_option( 'try_again_text' ) . '",
+                                        numberOfQuestions:           ' . ( $this->get_admin_option( 'number_of_questions' ) != '' ? $this->get_admin_option( 'number_of_questions' ) : 'null' ) . ',
+                                        skipStartButton:             ' . ( $this->get_admin_option( 'skip_start_button' ) == '1' ? 'true' : 'false' ) . ',
                                         randomSortQuestions:         ' . ( $this->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) . ',
                                         randomSortAnswers:           ' . ( $this->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) . ',
                                         randomSort:                  ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . ',

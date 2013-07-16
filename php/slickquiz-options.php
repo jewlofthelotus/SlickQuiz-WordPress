@@ -153,6 +153,28 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
             <tbody>
                 <tr valign="top">
                     <th scope="row">
+                        <label for="slickQuizOptions[number_of_questions]">Number of questions to display?</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[number_of_questions]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'number_of_questions' ) ), 'SlickQuizPlugin' ); ?>" />
+                        <br /><small><em>(<strong>NOTE:</strong> Leave blank to load all questions.<br />
+                            If set, you may want to also enable random (question) sorting to ensure that you get a mixed set of questions each page load.)</em></small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[skip_start_button]">Skip the "Start" button?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[skip_start_button]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'skip_start_button' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[skip_start_button]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'skip_start_button' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
                         <label for="slickQuizOptions[random_sort_questions]">Randomly sort questions ONLY?</label>
                     </th>
                     <td>
