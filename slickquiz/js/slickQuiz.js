@@ -97,7 +97,6 @@
         }
         // End of deprecation reassignment
 
-
         plugin.config = $.extend(defaults, options);
 
         // Set via json option or quizJSON variable (see slickQuiz-config.js)
