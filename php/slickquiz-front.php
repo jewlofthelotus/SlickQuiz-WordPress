@@ -92,26 +92,46 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                     });';
 
                         if ( $this->get_admin_option( 'save_scores' ) == '1' ) {
+                            $current_user = wp_get_current_user();
+                            $name = '';
+
+                            if ( ( $current_user instanceof WP_User ) ) {
+                                $username = $current_user->user_login;
+                                $fullname = trim($current_user->user_firstname . ' ' . $current_user->user_lastname);
+                                $name = $fullname ? $fullname : $username;
+                            }
+
                             $out .= '
                                     // get the start button
-                                    var button' . $quiz->id . ' = $("#slickQuiz' . $quiz->id . ' .buttonWrapper a");
+                                    var button' . $quiz->id . ' = $("#slickQuiz' . $quiz->id . ' .buttonWrapper a");';
 
-                                    // disable the start button
-                                    button' . $quiz->id . '.removeClass("startQuiz").addClass("disabled");
+                            // add username input if not logged in
+                            if ( !$name ) {
+                                $out .= '
+                                        // disable the start button
+                                        button' . $quiz->id . '.removeClass("startQuiz").addClass("disabled");
 
+                                        // when name is entered, enable start button
+                                        $("#slickQuiz' . $quiz->id . ' .nameLabel input").on("change keyup", function() {
+                                            if ($(this).val() !== "") {
+                                                button' . $quiz->id . '.addClass("startQuiz").removeClass("disabled");
+                                            } else {
+                                                button' . $quiz->id . '.removeClass("startQuiz").addClass("disabled");
+                                            }
+                                        });';
+                            }
+
+                            // hide the name field if a user is logged in
+                            $display = $name ? 'style=\"display: none;\"' : '';
+
+                            $out .= '
                                     // insert a name field before the button
+                            console.log($("#slickQuiz' . $quiz->id . ' .buttonWrapper"));
                                     $("#slickQuiz' . $quiz->id . ' .buttonWrapper").before(
-                                        "<div class=\"nameLabel\"><label>' . $this->get_admin_option( 'name_label' ) . '</label> <input type=\"text\" /></div>"
+                                        "<div class=\"nameLabel\" ' . $display . '>"
+                                        + "<label>' . $this->get_admin_option( 'name_label' ) . '</label>"
+                                        + "<input type=\"text\" value=\"' . $name . '\" /></div>"
                                     );
-
-                                    // when name is entered, enable start button
-                                    $("#slickQuiz' . $quiz->id . ' .nameLabel input").on("change keyup", function() {
-                                        if ($(this).val() !== "") {
-                                            button' . $quiz->id . '.addClass("startQuiz").removeClass("disabled");
-                                        } else {
-                                            button' . $quiz->id . '.removeClass("startQuiz").addClass("disabled");
-                                        }
-                                    });
 
                                     // when starting quiz, hide name field
                                     $("#slickQuiz' . $quiz->id . ' .button.startQuiz").live("click", function() {
@@ -188,7 +208,6 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                             </script>';
                     }
                 }
-
             }
 
             echo $out;
@@ -209,11 +228,12 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
         {
             global $quiz, $status, $pageQuizzes;
 
-            $quiz = $this->get_quiz_by_id( $id );
+            $quizModel = new SlickQuizModel;
+            $quiz = $quizModel->get_quiz_by_id( $id );
             $out  = '';
 
             if ( $quiz ) {
-                $status = $this->get_quiz_status( $quiz );
+                $status = $quizModel->get_quiz_status( $quiz );
 
                 $pageQuizzes[$id] = array( $quiz, $status );
 
