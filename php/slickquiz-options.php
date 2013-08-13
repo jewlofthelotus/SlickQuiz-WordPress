@@ -6,7 +6,7 @@ if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 }
 
 if ( !class_exists( 'SlickQuizOptions' ) ) {
-    class SlickQuizOptions extends SlickQuiz
+    class SlickQuizOptions extends SlickQuizHelper
     {
 
         var $updated = false;
@@ -137,7 +137,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[name_label]"><em>USER NAME</em> label text (if saving scores is enabled below)</label>
+                        <label for="slickQuizOptions[name_label]"><em>USER NAME</em> label text (if saving scores is enabled below and user is not logged in)</label>
                     </th>
                     <td>
                         <input type="text" name="slickQuizOptions[name_label]" class="regular-text"
@@ -251,7 +251,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                             <?php $slickQuizOptions->get_admin_option( 'save_scores' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
                         <input type="radio" name="slickQuizOptions[save_scores]" value="1"
                             <?php $slickQuizOptions->get_admin_option( 'save_scores' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
-                        <br /><small><em>(<strong>NOTE:</strong> Selecting "Yes" will require the user to enter their name before proceeding with the quiz.)</em></small>
+                        <br /><small><em>(<strong>NOTE:</strong> Selecting "Yes" will require users who are not logged in to enter their name before proceeding with the quiz.)</em></small>
                     </td>
                 </tr>
             </tbody>

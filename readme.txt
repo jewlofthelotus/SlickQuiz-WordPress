@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.5.2
-Stable tag: 1.1.8
+Stable tag: 1.2.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -34,7 +34,7 @@ NOTE: If the Preview window does not appear from the create / edit page, *you ma
 
 NOTE: Do not place the same quiz on the page multiple times, things will break.
 
-Created by [Julie Cameron](http://jewlofthelotus.com/) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
+Created by [Julie Cameron](http://juliecameron.com/) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
 
 Based off the [SlickQuiz jQuery plugin](https://github.com/QuickenLoans/SlickQuiz).
 
@@ -71,6 +71,11 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.2.0 =
+* NEW Top 10 Scores widget!
+* Automatically save user names for logged in users if score saving is enabled
+* Updating the SlickQuiz jQuery plugin
 
 = 1.1.8 =
 * Added "Skip Start Button" option (loads first question instead of start button)
@@ -149,6 +154,11 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+* NEW Top 10 Scores widget!
+* Automatically save user names for logged in users if score saving is enabled
+* Updating the SlickQuiz jQuery plugin
 
 = 1.1.8 =
 * Added "Skip Start Button" option (loads first question instead of start button)

@@ -4,8 +4,8 @@
 Plugin Name: SlickQuiz
 Plugin URI: http://www.jewlofthelotus.com/2011/12/23/slickquiz-jquery-plugin-now-on-github/
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.1.8
-Author: Julie Cameron, Software Engineer at Quicken Loans
+Version: 1.2.0
+Author: Julie Cameron, Quicken Loans
 Author URI: http://www.quickenloans.com
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -37,10 +37,6 @@ if ( !class_exists( 'SlickQuiz' ) ) {
     class SlickQuiz
     {
 
-        var $adminOptionsName = "slick_quiz_options";
-        var $adminOptions       = array();
-
-
         // Constructor
         function __construct()
         {
@@ -52,6 +48,12 @@ if ( !class_exists( 'SlickQuiz' ) ) {
             // Activate for Updates
             add_action( 'plugins_loaded', array( &$this, 'activate' ) );
 
+            // Include Quiz Helper (Shared Methods)
+            include_once ( dirname ( __FILE__ ) . '/php/slickquiz-helper.php' );
+
+            // Include Quiz Widgets
+            include_once ( dirname ( __FILE__ ) . '/php/slickquiz-widgets.php' );
+
             // Include Quiz Model
             include_once ( dirname ( __FILE__ ) . '/php/slickquiz-model.php' );
 
@@ -62,7 +64,6 @@ if ( !class_exists( 'SlickQuiz' ) ) {
             // Register AJAX actions
             include_once ( dirname ( __FILE__ ) . '/php/slickquiz-functions.php' );
             $slickQuizFunctions = new SlickQuizFunctions();
-
 
             // Register non-menu pages
             add_action( 'admin_menu', array( &$this, 'register_aux_pages' ) );
@@ -79,7 +80,9 @@ if ( !class_exists( 'SlickQuiz' ) ) {
         {
             $this->create_quiz_table();
             $this->create_score_table();
-            $this->get_admin_options();
+
+            $quizHelper = new SlickQuizHelper;
+            $quizHelper->get_admin_options();
         }
 
         // Add SlickQuiz Menu to Navigation
@@ -169,106 +172,52 @@ if ( !class_exists( 'SlickQuiz' ) ) {
         function create_quiz_table()
         {
             global $wpdb;
-            $db_name = $wpdb->prefix . 'plugin_slickquiz';
 
-            // this if statement makes sure that the table doe not exist already
-            if ( $wpdb->get_var( "show tables like '$db_name'" ) != $db_name ) {
-                $sql = "CREATE TABLE $db_name (
-                    id bigint(20) NOT NULL AUTO_INCREMENT,
-                    name text NOT NULL,
-                    publishedJson longtext NULL,
-                    workingJson longtext NULL,
-                    publishedQCount int(11) NULL,
-                    workingQCount int(11) NULL,
-                    hasBeenPublished tinyint(1) NOT NULL DEFAULT '0',
-                    publishedBy bigint(20) unsigned NOT NULL DEFAULT '0',
-                    publishedDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-                    createdBy bigint(20) unsigned NOT NULL DEFAULT '0',
-                    createdDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-                    lastUpdatedBy bigint(20) unsigned NOT NULL DEFAULT '0',
-                    lastUpdatedDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-                    PRIMARY KEY (id)
-                );";
+            $table_name = $wpdb->prefix . 'plugin_slickquiz';
 
-                require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+            $sql = "CREATE TABLE $table_name (
+                id bigint(20) NOT NULL AUTO_INCREMENT,
+                name varchar(255) NOT NULL,
+                publishedJson longtext NULL,
+                workingJson longtext NULL,
+                publishedQCount int(11) NULL,
+                workingQCount int(11) NULL,
+                hasBeenPublished tinyint(1) NOT NULL DEFAULT '0',
+                publishedBy bigint(20) unsigned NOT NULL DEFAULT '0',
+                publishedDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                createdBy bigint(20) unsigned NOT NULL DEFAULT '0',
+                createdDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                lastUpdatedBy bigint(20) unsigned NOT NULL DEFAULT '0',
+                lastUpdatedDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                PRIMARY KEY  (id),
+                KEY createdBy_index (createdBy)
+            );";
 
-                dbDelta( $sql );
-            }
+            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+            dbDelta( $sql );
         }
 
         // Create User Score Database Table
         function create_score_table()
         {
             global $wpdb;
-            $db_name = $wpdb->prefix . 'plugin_slickquiz_scores';
 
-            // this if statement makes sure that the table doe not exist already
-            if ( $wpdb->get_var( "show tables like '$db_name'" ) != $db_name ) {
-                $sql = "CREATE TABLE $db_name (
-                    id bigint(20) NOT NULL AUTO_INCREMENT,
-                    name text NOT NULL,
-                    score text NOT NULL,
-                    quiz_id bigint(20) unsigned NOT NULL DEFAULT '0',
-                    createdBy bigint(20) unsigned NOT NULL DEFAULT '0',
-                    createdDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-                    PRIMARY KEY (id)
-                );";
+            $table_name = $wpdb->prefix . 'plugin_slickquiz_scores';
 
-                require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+            $sql = "CREATE TABLE $table_name (
+                id bigint(20) NOT NULL AUTO_INCREMENT,
+                name varchar(255) NOT NULL,
+                score varchar(50) NOT NULL,
+                quiz_id bigint(20) unsigned NOT NULL DEFAULT '0',
+                createdBy bigint(20) unsigned NOT NULL DEFAULT '0',
+                createdDate datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                PRIMARY KEY  (id),
+                KEY quiz_id_index (quiz_id),
+                KEY score_index (score)
+            );";
 
-                dbDelta( $sql );
-            }
-        }
-
-        // Set and return Admin Options
-        function get_admin_options()
-        {
-            $this->adminOptions = array(
-                'disabled_quiz_message' => '<strong>Sorry.</strong> The requested quiz has been disabled.',
-                'missing_quiz_message'  => '<strong>Sorry.</strong> The requested quiz could not be found.',
-                'start_button_text'     => 'Get Started!',
-                'check_answer_text'     => 'Check My Answer!',
-                'next_question_text'    => 'Next &raquo;',
-                'back_button_text'      => '',
-                'try_again_text'        => '',
-                'your_score_text'       => 'Your Score:',
-                'your_ranking_text'     => 'Your Ranking:',
-                'skip_start_button'     => '0',
-                'number_of_questions'   => '',
-                'random_sort_questions' => '0',
-                'random_sort_answers'   => '0',
-                'random_sort'           => '0',
-                'disable_next'          => '0',
-                'disable_responses'     => '0',
-                'completion_responses'  => '0',
-                'save_scores'           => '0',
-                'name_label'            => 'Your Name:',
-                'share_links'           => '0',
-                'share_message'         => 'I\'m a [RANK]! I just scored [SCORE] on the [NAME] quiz!',
-                'twitter_account'       => ''
-            );
-
-            $pluginOptions = get_option( $this->adminOptionsName );
-
-            // If options have been set, override defaults
-            if ( !empty( $pluginOptions ) ) {
-                foreach ( $pluginOptions as $key => $option )
-                    $this->adminOptions[$key] = $option;
-            }
-
-            update_option( $this->adminOptionsName, $this->adminOptions );
-
-            return $this->adminOptions;
-        }
-
-        // Get requested admin option
-        function get_admin_option( $option, $echo = false )
-        {
-            if ( $echo ) {
-                echo $this->adminOptions[$option];
-            } else {
-                return $this->adminOptions[$option];
-            }
+            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+            dbDelta( $sql );
         }
 
     } // End Class SlickQuiz

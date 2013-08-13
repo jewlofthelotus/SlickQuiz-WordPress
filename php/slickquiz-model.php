@@ -6,25 +6,20 @@ if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 }
 
 if ( !class_exists( 'SlickQuizModel' ) ) {
-    class SlickQuizModel extends SlickQuiz
+    class SlickQuizModel extends SlickQuizHelper
     {
-
-        /**
-         * Statuses
-         */
-        const PUBLISHED           = 'Published';
-        const UNPUBLISHED_CHANGES = 'Unpublished Changes';
-        const NOT_PUBLISHED       = 'Not Published';
 
         var $data = array();
 
 
-        function get_all_quizzes()
+        function get_all_quizzes( $select = '' )
         {
             global $wpdb;
             $db_name = $wpdb->prefix . 'plugin_slickquiz';
 
-            $quizResults = $wpdb->get_results("SELECT id, name, workingQCount, publishedQCount, publishedJson, publishedDate, lastUpdatedDate FROM $db_name ORDER BY lastUpdatedDate DESC");
+            $select = $select ? $select : 'id, name, workingQCount, publishedQCount, publishedJson, publishedDate, lastUpdatedDate';
+
+            $quizResults = $wpdb->get_results("SELECT $select FROM $db_name ORDER BY lastUpdatedDate DESC");
 
             return $quizResults;
         }
@@ -49,15 +44,15 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
             return $quizResult;
         }
 
-
-        function get_all_scores( $quiz_id )
+        function get_all_scores( $quiz_id, $order_by = '', $limit = '' )
         {
             global $wpdb;
             $db_name = $wpdb->prefix . 'plugin_slickquiz_scores';
 
-            $query = '';
+            $order_by = $order_by ? $order_by : 'createdDate DESC';
+            $limit = $limit ? $limit : '';
 
-            $scoreResults = $wpdb->get_results( "SELECT id, name, score, quiz_id, createdDate FROM $db_name WHERE quiz_id = " . $quiz_id . " ORDER BY createdDate DESC" );
+            $scoreResults = $wpdb->get_results( "SELECT id, name, score, quiz_id, createdDate FROM $db_name WHERE quiz_id = " . $quiz_id . " ORDER BY $order_by $limit" );
 
             return $scoreResults;
         }
