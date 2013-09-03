@@ -126,6 +126,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
                             $out .= '
                                     // insert a name field before the button
+                            console.log($("#slickQuiz' . $quiz->id . ' .buttonWrapper"));
                                     $("#slickQuiz' . $quiz->id . ' .buttonWrapper").before(
                                         "<div class=\"nameLabel\" ' . $display . '>"
                                         + "<label>' . $this->get_admin_option( 'name_label' ) . '</label>"
