@@ -3,7 +3,11 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.5.2
+<<<<<<< HEAD
 Stable tag: 1.2.0
+=======
+Stable tag: 1.1.7
+>>>>>>> updating wordpress testing version
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
