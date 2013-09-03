@@ -274,6 +274,33 @@
                 });
             },
 
+            // Resets (restarts) the quiz (hides results, resets inputs, and displays first question)
+            resetQuiz: function(startButton) {
+                $quizResults.fadeOut(300, function() {
+                    $(_element + ' input').prop('checked', false).prop('disabled', false);
+
+                    $quizLevel.attr('class', 'quizLevel');
+                    $(_element + ' ' + _correct).removeClass(correctClass);
+
+                    $(_element + ' ' + _question          + ',' +
+                      _element + ' ' + _responses         + ',' +
+                      _element + ' ' + _correctResponse   + ',' +
+                      _element + ' ' + _incorrectResponse + ',' +
+                      _element + ' ' + _nextQuestionBtn   + ',' +
+                      _element + ' ' + _prevQuestionBtn
+                    ).hide();
+
+                    $(_element + ' ' + _questionCount + ',' +
+                      _element + ' ' + _answers + ',' +
+                      _element + ' ' + _checkAnswerBtn
+                    ).show();
+
+                    $quizArea.append($(_element + ' ' + _questions)).show();
+
+                    plugin.method.startQuiz($quizResults);
+                });
+            },
+
             // Validates the response selection(s), displays explanations & next question button
             checkAnswer: function(checkButton) {
                 var questionLI   = $($(checkButton).parents(_question)[0]),
