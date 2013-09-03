@@ -236,8 +236,6 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
                 $pageQuizzes[$id] = array( $quiz, $status );
 
-                $out = '';
-
                 if ( $status == self::NOT_PUBLISHED ) {
                     $out .= "<p class='quiz-$id notPublished'>" . $this->get_admin_option( 'disabled_quiz_message' ) . "</p>";
                 } else {
