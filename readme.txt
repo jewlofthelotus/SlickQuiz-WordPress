@@ -2,8 +2,8 @@
 Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
 Requires at least: 3.0
-Tested up to: 3.5.2
-Stable tag: 1.2.0
+Tested up to: 3.6
+Stable tag: 1.2.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -71,6 +71,9 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.2.1 =
+* Bug fix: changed PHP short tag to long form which would break things on servers without short tags enabled
 
 = 1.2.0 =
 * NEW Top 10 Scores widget!
@@ -154,6 +157,9 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+* Bug fix: changed PHP short tag to long form which would break things on servers without short tags enabled
 
 = 1.2.0 =
 * NEW Top 10 Scores widget!
