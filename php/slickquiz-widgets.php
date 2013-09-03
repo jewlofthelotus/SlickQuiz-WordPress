@@ -18,7 +18,7 @@ if ( !class_exists( 'SlickQuizScoreWidget' ) ) {
             parent::__construct(
                 'slickquiz_topscores', // Base ID
                 'SlickQuiz Top Scores', // Name
-                array( 'description' => __( 'Lists top scores for a designated SlickQuiz.', 'text_domain' ), ) // Args
+                array( 'description' => __( 'Lists top scores for a designated SlickQuiz.', 'text_domain' ) ) // Args
             );
         }
 
@@ -29,8 +29,9 @@ if ( !class_exists( 'SlickQuizScoreWidget' ) ) {
 
             // Before Widget Content (wrapper / title)
             echo $args['before_widget'];
-            if ( ! empty( $title ) )
+            if ( ! empty( $title ) ) {
                 echo $args['before_title'] . $title . $args['after_title'];
+            }
 
             // Main Widget Content
             if ( $instance['quiz_id'] ) {
@@ -55,7 +56,7 @@ if ( !class_exists( 'SlickQuizScoreWidget' ) ) {
                     <?php
                 }
             } else {
-                ?><p>Quiz not found.</p><?
+                ?><p>Quiz not found.</p><?php
             }
 
             // After Widget Content (closing tags)
