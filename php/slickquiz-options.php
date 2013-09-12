@@ -29,7 +29,7 @@ if ( !class_exists( 'SlickQuizOptions' ) ) {
         {
             global $updated;
             if ( $updated )
-                echo '<p class="success">Your quiz options have been updated.</p>';
+                echo '<p class="success">' . _e('Your quiz options have been updated', 'SlickQuizPlugin') . '.</p>';
         }
 
     }
@@ -45,16 +45,18 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
 <div class="wrap quizOptions">
     <?php $slickQuizOptions->show_alert_messages(); ?>
 
-    <h2>SlickQuiz Options</h2>
+    <h2><?php _e( 'SlickQuiz Options', 'SlickQuizPlugin' ); ?></h2>
 
     <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
-        <h3 class="title">Default Text Copy</h3>
+        <h3 class="title"><?php _e( 'Default Text Copy', 'SlickQuizPlugin' ); ?></h3>
 
         <table class="form-table">
             <tbody>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[start_button_text]"><em>START</em> button text</label>
+                        <label for="slickQuizOptions[start_button_text]">
+                            <em><?php _e( 'START', 'SlickQuizPlugin' ) ?></em> <?php _e( 'button text', 'SlickQuizPlugin' ); ?>
+                        </label>
                     </th>
                     <td>
                         <input  type="text" name="slickQuizOptions[start_button_text]" class="regular-text"
@@ -63,7 +65,9 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[check_answer_text]"><em>CHECK ANSWER</em> button text</label>
+                        <label for="slickQuizOptions[check_answer_text]">
+                            <em><?php _e( 'CHECK ANSWER', 'SlickQuizPlugin' ); ?></em> <?php _e( 'button text', 'SlickQuizPlugin' ); ?>
+                        </label>
                     </th>
                     <td>
                         <input type="text" name="slickQuizOptions[check_answer_text]" class="regular-text"
@@ -72,7 +76,9 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[next_question_text]"><em>NEXT QUESTION</em> button text</label>
+                        <label for="slickQuizOptions[next_question_text]">
+                            <em><?php _e( 'NEXT QUESTION', 'SlickQuizPlugin' ); ?></em> <?php _e( 'button text', 'SlickQuizPlugin' ); ?>
+                        </label>
                     </th>
                     <td>
                         <input type="text" name="slickQuizOptions[next_question_text]" class="regular-text"
@@ -81,27 +87,33 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[back_button_text]"><em>BACK</em> button text</label>
+                        <label for="slickQuizOptions[back_button_text]">
+                            <em><?php _e( 'BACK', 'SlickQuizPlugin' ); ?></em> <?php _e( 'button text', 'SlickQuizPlugin' ); ?>
+                        </label>
                     </th>
                     <td>
                         <input type="text" name="slickQuizOptions[back_button_text]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'back_button_text' ) ), 'SlickQuizPlugin' ); ?>" /><br />
-                        <small><em>(If left blank, no BACK buttons will be displayed.)</em></small></label>
+                        <small><em>(<?php _e( 'If left blank, no BACK buttons will be displayed.', 'SlickQuizPlugin'); ?>)</em></small></label>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[try_again_text]"><em>TRY AGAIN</em> button text</label>
+                        <label for="slickQuizOptions[try_again_text]">
+                            <em><?php _e( 'TRY AGAIN', 'SlickQuizPlugin' ); ?></em> <?php _e( 'button text', 'SlickQuizPlugin' ); ?>
+                        </label>
                     </th>
                     <td>
                         <input type="text" name="slickQuizOptions[try_again_text]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'try_again_text' ) ), 'SlickQuizPlugin' ); ?>" /><br />
-                        <small><em>(If left blank, no TRY AGAIN buttons will be displayed.)</em></small></label>
+                        <small><em>(<?php _e( 'If left blank, no TRY AGAIN buttons will be displayed.', 'SlickQuizPlugin' ); ?>)</em></small></label>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[your_score_text]"><em>SCORE</em> result text</label>
+                        <label for="slickQuizOptions[your_score_text]">
+                            <em><?php _e( 'SCORE', 'SlickQuizPlugin' ); ?></em> <?php _e( 'result text', 'SlickQuizPlugin' ); ?>
+                        </label>
                     </th>
                     <td>
                         <input type="text" name="slickQuizOptions[your_score_text]" class="regular-text"
@@ -110,7 +122,9 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[your_ranking_text]"><em>RANKING</em> result text</label>
+                        <label for="slickQuizOptions[your_ranking_text]">
+                            <em><?php _e( 'RANKING', 'SlickQuizPlugin' ); ?></em> <?php _e( 'result text', 'SlickQuizPlugin' ); ?>
+                        </label>
                     </th>
                     <td>
                         <input type="text" name="slickQuizOptions[your_ranking_text]" class="regular-text"

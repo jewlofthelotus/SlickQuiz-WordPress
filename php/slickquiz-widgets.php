@@ -18,14 +18,14 @@ if ( !class_exists( 'SlickQuizScoreWidget' ) ) {
             parent::__construct(
                 'slickquiz_topscores', // Base ID
                 'SlickQuiz Top Scores', // Name
-                array( 'description' => __( 'Lists top scores for a designated SlickQuiz.', 'text_domain' ) ) // Args
+                array( 'description' => __( 'Lists top scores for a designated SlickQuiz.', 'SlickQuizPlugin' ) ) // Args
             );
         }
 
         // Outputs widget content
         public function widget( $args, $instance )
         {
-            $title = apply_filters( 'widget_title', $instance['title'] );
+            $title = __( apply_filters( 'widget_title', $instance['title'] ), 'SlickQuizPlugin' );
 
             // Before Widget Content (wrapper / title)
             echo $args['before_widget'];
@@ -69,7 +69,7 @@ if ( !class_exists( 'SlickQuizScoreWidget' ) ) {
             $title = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] : 'Top Quiz Scores';
             ?>
             <p>
-            <label for="<?php echo $this->get_field_name( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+            <label for="<?php echo $this->get_field_name( 'title' ); ?>"><?php _e( 'Title:', 'SlickQuizPlugin' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
             </p>
             <?php
