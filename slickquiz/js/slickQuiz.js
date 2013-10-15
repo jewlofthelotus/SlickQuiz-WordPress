@@ -2,9 +2,9 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/QuickenLoans/SlickQuiz
  *
- * @updated August 2, 2013
+ * @updated October 15, 2013
  *
- * @author Julie Cameron - http://www.jewlofthelotus.com
+ * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
  * @license MIT
  */
@@ -99,6 +99,7 @@
         }
         // End of deprecation reassignment
 
+
         plugin.config = $.extend(defaults, options);
 
         // Set via json option or quizJSON variable (see slickQuiz-config.js)
@@ -154,24 +155,27 @@
                             }
                         }
 
-                        // prepare a name for the answer inputs based on the question
-                        var inputName  = 'question' + (count - 1);
-
                         // Now let's append the answers with checkboxes or radios depending on truth count
                         var answerHTML = $('<ul class="' + answersClass + '"></ul>');
 
+                        // Get the answers
                         var answers = plugin.config.randomSort || plugin.config.randomSortAnswers ?
                             question.a.sort(function() { return (Math.round(Math.random())-0.5); }) :
                             question.a;
+
+                        // prepare a name for the answer inputs based on the question
+                        var selectAny  = question.select_any ? question.select_any : false,
+                            inputName  = 'question' + (count - 1),
+                            inputType  = (truths > 1 && !selectAny ? 'checkbox' : 'radio');
 
                         for (i in answers) {
                             if (answers.hasOwnProperty(i)) {
                                 answer   = answers[i],
                                 optionId = inputName + '_' + i.toString();
 
-                                // If question has >1 true answers, use checkboxes; otherwise, radios
+                                // If question has >1 true answers and is not a select any, use checkboxes; otherwise, radios
                                 var input = '<input id="' + optionId + '" name="' + inputName +
-                                            '" type="' + (truths > 1 ? 'checkbox' : 'radio') + '" />';
+                                            '" type="' + inputType + '" />';
 
                                 var optionLabel = '<label for="' + optionId + '">' + answer.option + '</label>';
 
@@ -276,9 +280,11 @@
 
             // Validates the response selection(s), displays explanations & next question button
             checkAnswer: function(checkButton) {
-                var questionLI   = $($(checkButton).parents(_question)[0]),
-                    answerInputs = questionLI.find('input:checked'),
-                    answers      = questions[parseInt(questionLI.attr('id').replace(/(question)/, ''), 10)].a;
+                var questionLI    = $($(checkButton).parents(_question)[0]),
+                    answerInputs  = questionLI.find('input:checked'),
+                    questionIndex = parseInt(questionLI.attr('id').replace(/(question)/, ''), 10),
+                    answers       = questions[questionIndex].a,
+                    selectAny     = questions[questionIndex].select_any ? questions[questionIndex].select_any : false;
 
                 // Collect the true answers needed for a correct response
                 var trueAnswers = [];
@@ -292,7 +298,7 @@
                     }
                 }
 
-                // NOTE: Collecting .text() for comparison ensures that HTML entities
+                // NOTE: Collecting .text() for comparison aims to ensure that HTML entities
                 // and HTML elements that may be modified by the browser match up
 
                 // Collect the answers submitted
@@ -307,8 +313,8 @@
                     return false;
                 }
 
-                // Verify all true answers (and no false ones) were submitted
-                var correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers);
+                // Verify all/any true answers (and no false ones) were submitted
+                var correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers, selectAny);
 
                 if (correctResponse) {
                     questionLI.addClass(correctClass);
@@ -432,9 +438,13 @@
             },
 
             // Compares selected responses with true answers, returns true if they match exactly
-            compareAnswers: function(trueAnswers, selectedAnswers) {
-                // crafty array comparison (http://stackoverflow.com/a/7726509)
-                return ($(trueAnswers).not(selectedAnswers).length === 0 && $(selectedAnswers).not(trueAnswers).length === 0);
+            compareAnswers: function(trueAnswers, selectedAnswers, selectAny) {
+                if ( selectAny ) {
+                    return $.inArray(selectedAnswers[0], trueAnswers) > -1;
+                } else {
+                    // crafty array comparison (http://stackoverflow.com/a/7726509)
+                    return ($(trueAnswers).not(selectedAnswers).length === 0 && $(selectedAnswers).not(trueAnswers).length === 0);
+                }
             },
 
             // Calculates knowledge level based on number of correct answers
@@ -470,7 +480,10 @@
             // Bind "start" button
             $quizStarter.on('click', function(e) {
                 e.preventDefault();
-                plugin.method.startQuiz();
+
+                if (!this.disabled && !$(this).hasClass('disabled')) {
+                    plugin.method.startQuiz();
+                }
             });
 
             // Bind "try again" button
