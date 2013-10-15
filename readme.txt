@@ -34,11 +34,11 @@ NOTE: If the Preview window does not appear from the create / edit page, *you ma
 
 NOTE: Do not place the same quiz on the page multiple times, things will break.
 
-Created by [Julie Cameron](http://juliecameron.com/) - Software Engineer at [Quicken Loans](http://quickenloans.com), Detroit, MI
+Created by [Julie Cameron](http://juliecameron.com/) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI
 
-Based off the [SlickQuiz jQuery plugin](https://github.com/QuickenLoans/SlickQuiz).
+Based off the [SlickQuiz jQuery plugin](https://github.com/JewlOfTheLotus/SlickQuiz).
 
-The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https://github.com/QuickenLoans/SlickQuiz-WordPress)
+The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https://github.com/JewlOfTheLotus/SlickQuiz-WordPress)
 
 == Installation ==
 
