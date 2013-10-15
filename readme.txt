@@ -1,3 +1,8 @@
+*** THIS PROJECT IS NO LONGER ACTIVELY MAINTAINED. ***
+
+*** PLEASE SEE [jewlofthelotus/SlickQuiz-WordPress](https://github.com/jewlofthelotus/SlickQuiz-WordPress) for updates. ***
+
+
 === SlickQuiz ===
 Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
