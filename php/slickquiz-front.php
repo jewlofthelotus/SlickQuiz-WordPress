@@ -105,22 +105,6 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                     // get the start button
                                     var button' . $quiz->id . ' = $("#slickQuiz' . $quiz->id . ' .buttonWrapper a");';
 
-                            // add username input if not logged in
-                            if ( !$name ) {
-                                $out .= '
-                                        // disable the start button
-                                        button' . $quiz->id . '.removeClass("startQuiz").addClass("disabled");
-
-                                        // when name is entered, enable start button
-                                        $("#slickQuiz' . $quiz->id . ' .nameLabel input").on("change keyup", function() {
-                                            if ($(this).val() !== "") {
-                                                button' . $quiz->id . '.addClass("startQuiz").removeClass("disabled");
-                                            } else {
-                                                button' . $quiz->id . '.removeClass("startQuiz").addClass("disabled");
-                                            }
-                                        });';
-                            }
-
                             // hide the name field if a user is logged in
                             $display = $name ? 'style=\"display: none;\"' : '';
 
@@ -133,8 +117,10 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                     );
 
                                     // when starting quiz, hide name field
-                                    $("#slickQuiz' . $quiz->id . ' .button.startQuiz").live("click", function() {
-                                        if ($(this).hasClass("disabled") === false) {
+                                    $("#slickQuiz' . $quiz->id . ' .button.startQuiz").on("click", function(e) {
+                                        if ($(this).hasClass("disabled")) {
+                                            e.stopPropagation();
+                                        } else {
                                             $("#slickQuiz' . $quiz->id . ' .nameLabel").hide();
                                         }
                                     });
@@ -158,6 +144,22 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                             data: {action: "save_quiz_score", json: JSON.stringify(json)}
                                         });
                                     }';
+
+                            // add username input if not logged in
+                            if ( !$name ) {
+                                $out .= '
+                                        // disable the start button
+                                        button' . $quiz->id . '.addClass("disabled");
+
+                                        // when name is entered, enable start button
+                                        $("#slickQuiz' . $quiz->id . ' .nameLabel input").on("change keyup", function() {
+                                            if ($(this).val() !== "") {
+                                                button' . $quiz->id . '.removeClass("disabled");
+                                            } else {
+                                                button' . $quiz->id . '.addClass("disabled");
+                                            }
+                                        });';
+                            }
                         }
 
                         if ( $this->get_admin_option( 'share_links' ) == '1' ) {
