@@ -65,7 +65,6 @@ if ( !class_exists( 'SlickQuiz' ) ) {
             include_once ( dirname ( __FILE__ ) . '/php/slickquiz-functions.php' );
             $slickQuizFunctions = new SlickQuizFunctions();
 
-
             // Register non-menu pages
             add_action( 'admin_menu', array( &$this, 'register_aux_pages' ) );
 
