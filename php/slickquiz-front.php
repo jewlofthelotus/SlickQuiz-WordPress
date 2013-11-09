@@ -76,19 +76,19 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
                         $out .= '
                                     $("#slickQuiz' . $quiz->id . '").slickQuiz({
-                                        json:                        ' . $quiz->publishedJson . ',
-                                        checkAnswerText:             "' . $this->get_admin_option( 'check_answer_text' ) . '",
-                                        nextQuestionText:            "' . $this->get_admin_option( 'next_question_text' ) . '",
-                                        backButtonText:              "' . $this->get_admin_option( 'back_button_text' ) . '",
-                                        tryAgainText:                "' . $this->get_admin_option( 'try_again_text' ) . '",
-                                        numberOfQuestions:           ' . ( $this->get_admin_option( 'number_of_questions' ) != '' ? $this->get_admin_option( 'number_of_questions' ) : 'null' ) . ',
-                                        skipStartButton:             ' . ( $this->get_admin_option( 'skip_start_button' ) == '1' ? 'true' : 'false' ) . ',
-                                        randomSortQuestions:         ' . ( $this->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) . ',
-                                        randomSortAnswers:           ' . ( $this->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) . ',
-                                        randomSort:                  ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . ',
-                                        preventUnanswered:           ' . ( $this->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) . ',
-                                        disableResponseMessaging:    ' . ( $this->get_admin_option( 'disable_responses' ) == '1' ? 'true' : 'false' ) . ',
-                                        completionResponseMessaging: ' . ( $this->get_admin_option( 'completion_responses' ) == '1' ? 'true' : 'false' ) . '
+                                        json:                         ' . $quiz->publishedJson . ',
+                                        checkAnswerText:              "' . $this->get_admin_option( 'check_answer_text' ) . '",
+                                        nextQuestionText:             "' . $this->get_admin_option( 'next_question_text' ) . '",
+                                        backButtonText:               "' . $this->get_admin_option( 'back_button_text' ) . '",
+                                        tryAgainText:                 "' . $this->get_admin_option( 'try_again_text' ) . '",
+                                        numberOfQuestions:            ' . ( $this->get_admin_option( 'number_of_questions' ) != '' ? $this->get_admin_option( 'number_of_questions' ) : 'null' ) . ',
+                                        skipStartButton:              ' . ( $this->get_admin_option( 'skip_start_button' ) == '1' ? 'true' : 'false' ) . ',
+                                        randomSortQuestions:          ' . ( $this->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) . ',
+                                        randomSortAnswers:            ' . ( $this->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) . ',
+                                        randomSort:                   ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . ',
+                                        preventUnanswered:            ' . ( $this->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) . ',
+                                        perQuestionResponseMessaging: ' . ( $this->get_admin_option( 'perquestion_responses' ) == '1' ? 'true' : 'false' ) . ',
+                                        completionResponseMessaging:  ' . ( $this->get_admin_option( 'completion_responses' ) == '1' ? 'true' : 'false' ) . '
                                     });';
 
                         if ( $this->get_admin_option( 'save_scores' ) == '1' ) {

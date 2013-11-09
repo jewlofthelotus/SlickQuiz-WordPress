@@ -38,7 +38,7 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
 
 ?>
 
-<div id="preview" class="quizPreview SlickQuiz slickQuizWrapper">
+<div id="preview" class="quizPreview slickQuizWrapper">
     <h1>Preview Quiz</h1>
     <p class="previewNote"><strong>Note:</strong> Your styles may very.</p>
 
@@ -50,6 +50,9 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
         <a class="button continueEditing" href="#" title="Continue Editing">
             <img alt="Continue Editing" src="<?php echo plugins_url( '/images/remove.png' , dirname( __FILE__ ) ); ?>" width="16" height="16" /> Continue Editing
         </a>
+        <button class="button saveClose publish" title="Save this quiz and publish it." value="Publish">
+            <img alt="Publish" height="16" src="<?php echo plugins_url( '/images/save.png' , dirname( __FILE__ ) ); ?>" width="16"> Publish
+        </button>
         <?php } else { ?>
         <a class="button continueEditing" href="#" title="Close">
             <img alt="Close" src="<?php echo plugins_url( '/images/remove.png' , dirname( __FILE__ ) ); ?>" width="16" height="16" /> Close
@@ -57,18 +60,20 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
         <?php } ?>
     </div>
 
-    <h2 class="quizName"></h2>
+    <div id="previewQuiz" class="SlickQuiz">
+        <h2 class="quizName"></h2>
 
-    <div class="quizArea">
-        <div class="quizHeader">
-            <div class="buttonWrapper"><a class="button startQuiz"><?php $slickQuizPreview->get_admin_option( 'start_button_text', true ); ?></a></div>
+        <div class="quizArea">
+            <div class="quizHeader">
+                <div class="buttonWrapper"><a class="button startQuiz"><?php $slickQuizPreview->get_admin_option( 'start_button_text', true ); ?></a></div>
+            </div>
         </div>
-    </div>
 
-    <div class="quizResults">
-        <div class="quizResultsCopy">
-            <h3 class="quizScore"><?php $slickQuizPreview->get_admin_option( 'your_score_text', true ); ?> <span>&nbsp;</span></h3>
-            <h3 class="quizLevel"><?php $slickQuizPreview->get_admin_option( 'your_ranking_text', true ); ?> <span>&nbsp;</span></h3>
+        <div class="quizResults">
+            <div class="quizResultsCopy">
+                <h3 class="quizScore"><?php $slickQuizPreview->get_admin_option( 'your_score_text', true ); ?> <span>&nbsp;</span></h3>
+                <h3 class="quizLevel"><?php $slickQuizPreview->get_admin_option( 'your_ranking_text', true ); ?> <span>&nbsp;</span></h3>
+            </div>
         </div>
     </div>
 
@@ -83,19 +88,19 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
     <script type="text/javascript">
         jQuery(document).ready(function($) {
             $('.SlickQuiz').slickQuiz({
-                json:                        <?php $slickQuizPreview->get_quiz_json(); ?>,
-                checkAnswerText:             "<?php $slickQuizPreview->get_admin_option( 'check_answer_text', true ) ?>",
-                nextQuestionText:            "<?php $slickQuizPreview->get_admin_option( 'next_question_text', true ) ?>",
-                backButtonText:              "<?php $slickQuizPreview->get_admin_option( 'back_button_text', true ) ?>",
-                tryAgainText:                "<?php $slickQuizPreview->get_admin_option( 'try_again_text', true ) ?>",
-                skipStartButton:             <?php echo( $slickQuizPreview->get_admin_option( 'skip_start_button' ) == '1' ? 'true' : 'false' ) ?>,
-                numberOfQuestions:           <?php echo( $slickQuizPreview->get_admin_option( 'number_of_questions' ) != '' ? $slickQuizPreview->get_admin_option( 'number_of_questions' ) : 'null' ) ?>,
-                randomSortQuestions:         <?php echo( $slickQuizPreview->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) ?>,
-                randomSortAnswers:           <?php echo( $slickQuizPreview->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) ?>,
-                randomSort:                  <?php echo( $slickQuizPreview->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) ?>,
-                preventUnanswered:           <?php echo( $slickQuizPreview->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) ?>,
-                disableResponseMessaging:    <?php echo( $slickQuizPreview->get_admin_option( 'disable_responses' ) == '1' ? 'true' : 'false' ) ?>,
-                completionResponseMessaging: <?php echo( $slickQuizPreview->get_admin_option( 'completion_responses' ) == '1' ? 'true' : 'false' ) ?>
+                json:                         <?php $slickQuizPreview->get_quiz_json(); ?>,
+                checkAnswerText:              "<?php $slickQuizPreview->get_admin_option( 'check_answer_text', true ) ?>",
+                nextQuestionText:             "<?php $slickQuizPreview->get_admin_option( 'next_question_text', true ) ?>",
+                backButtonText:               "<?php $slickQuizPreview->get_admin_option( 'back_button_text', true ) ?>",
+                tryAgainText:                 "<?php $slickQuizPreview->get_admin_option( 'try_again_text', true ) ?>",
+                skipStartButton:              <?php echo( $slickQuizPreview->get_admin_option( 'skip_start_button' ) == '1' ? 'true' : 'false' ) ?>,
+                numberOfQuestions:            <?php echo( $slickQuizPreview->get_admin_option( 'number_of_questions' ) != '' ? $slickQuizPreview->get_admin_option( 'number_of_questions' ) : 'null' ) ?>,
+                randomSortQuestions:          <?php echo( $slickQuizPreview->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) ?>,
+                randomSortAnswers:            <?php echo( $slickQuizPreview->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) ?>,
+                randomSort:                   <?php echo( $slickQuizPreview->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) ?>,
+                preventUnanswered:            <?php echo( $slickQuizPreview->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) ?>,
+                perQuestionResponseMessaging: <?php echo( $slickQuizPreview->get_admin_option( 'perquestion_responses' ) == '1' ? 'true' : 'false' ) ?>,
+                completionResponseMessaging:  <?php echo( $slickQuizPreview->get_admin_option( 'completion_responses' ) == '1' ? 'true' : 'false' ) ?>
             });
         });
     </script>

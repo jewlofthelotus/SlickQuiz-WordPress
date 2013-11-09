@@ -40,17 +40,7 @@ p.statusLegend {
     color: #555;
 }
 p.required {
-    text-align: right;
-    clear: right;
-}
-
-p.fieldDesc {
-    margin: 0;
-    font-size: 11px;
-}
-p.fieldDesc a {
-    font-size: 12px;
-    text-decoration: underline;
+    margin: 20px 0 40px;
 }
 
 .quizFormWrapper {
@@ -92,8 +82,11 @@ p.fieldDesc a {
     padding: 0 0 20px 0;
 }
 
-.quizFormWrapper div.question label {
+.quizFormWrapper .question label {
     display: block;
+}
+.quizFormWrapper .selectAny label {
+    display: inline-block;
 }
 
 .quizFormWrapper div input[type=text],
@@ -178,30 +171,7 @@ div.bottom_button_bar {
     text-align: right;
     margin-top: 20px;
 }
-#preview div.bottom_button_bar {
-    margin-top: 60px;
-}
 
-.slickQuizWrapper .top_button_bar a.button,
-.slickQuizWrapper .bottom_button_bar a.button,
-.slickQuizWrapper .top_button_bar button.button,
-.slickQuizWrapper .bottom_button_bar button.button {
-    font-size: 20px !important;
-    line-height: 20px;
-    padding: 3px 10px;
-    margin: 0;
-    float: none;
-    display: inline;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-}
-.slickQuizWrapper button.button {
-    padding-bottom: 6px;
-}
-div.bottom_button_bar .button {
-    float: right;
-    margin-left: 15px;
-}
 div.bottom_button_bar .button.publish {
     margin-right: 20px;
 }
@@ -305,6 +275,13 @@ p.toggleSets a {
     margin: 10px 0;
 }
 
+#preview div.bottom_button_bar {
+    margin-top: 60px;
+}
+#preview .button img {
+    vertical-align: text-bottom;
+}
+
 /* BUTTONS */
 .buttonGreen {
     width: 200px;
@@ -338,21 +315,26 @@ p.toggleSets a {
     margin-top: 30px;
 }
 
-a.startQuiz {
+.slickQuizWrapper a.startQuiz {
     display: none;
 }
-a.backToQuestion,
-a.nextQuestion {
+.slickQuizWrapper a.backToQuestion,
+.slickQuizWrapper a.nextQuestion {
     display: none;
     float: left;
     width: 100px;
     margin-bottom: 40px;
 }
-a.checkAnswer {
+.slickQuizWrapper a.checkAnswer {
     float: left;
     width: 180px;
     margin-right: 10px;
     margin-bottom: 40px;
+}
+.slickQuizWrapper small.desc {
+    color: #aaa;
+    font-size: .9em;
+    margin: .25em 0;
 }
 
 /* Results & Conversion Features */

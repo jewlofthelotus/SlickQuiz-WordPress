@@ -2,9 +2,9 @@
 
 /*
 Plugin Name: SlickQuiz
-Plugin URI: http://www.jewlofthelotus.com/2011/12/23/slickquiz-jquery-plugin-now-on-github/
+Plugin URI: http://github.com/jewlofthelotus/SlickQuiz-WordPress
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.2.21
+Version: 1.2.3
 Author: Julie Cameron
 Author URI: http://juliecameron.com
 License: GPLv3 or later
@@ -51,11 +51,11 @@ if ( !class_exists( 'SlickQuiz' ) ) {
             // Include Quiz Helper (Shared Methods)
             include_once ( dirname ( __FILE__ ) . '/php/slickquiz-helper.php' );
 
-            // Include Quiz Widgets
-            include_once ( dirname ( __FILE__ ) . '/php/slickquiz-widgets.php' );
-
             // Include Quiz Model
             include_once ( dirname ( __FILE__ ) . '/php/slickquiz-model.php' );
+
+            // Include Quiz Widgets
+            include_once ( dirname ( __FILE__ ) . '/php/slickquiz-widgets.php' );
 
             // Setup Quiz Shortcodes
             include_once ( dirname ( __FILE__ ) . '/php/slickquiz-front.php' );
@@ -73,6 +73,10 @@ if ( !class_exists( 'SlickQuiz' ) ) {
 
             // Add the script and style files
             add_action( 'admin_enqueue_scripts', array( &$this, 'load_resources' ) );
+
+            // Display Update Notice
+            add_action( 'admin_notices', array( &$this, 'update_notice' ) );
+            add_action( 'admin_init', array( &$this, 'ignore_notice' ) );
         }
 
         // On Activation - Create SlickQuiz Database Table And Setup Options
@@ -83,6 +87,34 @@ if ( !class_exists( 'SlickQuiz' ) ) {
 
             $quizHelper = new SlickQuizHelper;
             $quizHelper->get_admin_options();
+        }
+
+        // Display update notice
+        function update_notice()
+        {
+            global $current_user;
+
+            $disabled = get_option( "slick_quiz_options" )['disable_responses'];
+
+            if ( $disabled && !get_user_meta( $current_user->ID, 'slickquiz_ignore_notice_disabled' ) ) {
+                echo '<div class="error">';
+                printf( __( '<p><strong>NOTICE: SlickQuiz options have changed.</strong></p>' .
+                    '<p>The single option to disable response messages has been removed, ' .
+                    'instead you should disable both per question and completion response message options.</p>' .
+                    '<p><a href="' . admin_url( 'admin.php?page=slickquiz-options#responses' ) . '">Edit Options</a>  &nbsp; ' .
+                    '<a href="%1$s">Hide This Notice</a></p>' ), add_query_arg( 'slickquiz_ignore_notice', '0' ) );
+                echo "</div>";
+            }
+        }
+
+        // Allow user to ignore update notice
+        function ignore_notice()
+        {
+            global $current_user;
+
+            if ( isset( $_GET['slickquiz_ignore_notice'] ) && '0' == $_GET['slickquiz_ignore_notice'] ) {
+                add_user_meta( $current_user->ID, 'slickquiz_ignore_notice_disabled', 'true', true );
+            }
         }
 
         // Add SlickQuiz Menu to Navigation

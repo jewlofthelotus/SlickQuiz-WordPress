@@ -4,7 +4,7 @@
     float: left;
     width: auto;
     padding: 5px 15px;
-    color:#ffffff;
+    color:#ffffff !important;
     background-color:darkcyan;
     border: 1px solid #fff;
     -webkit-border-radius: 5px;
@@ -13,7 +13,7 @@
     text-decoration: none;
 }
 .slickQuizWrapper .button:hover {
-    background-color:darkslategray;
+    background-color:darkslategray !important;
 }
 
 .buttonWrapper .button {
@@ -27,7 +27,7 @@
     opacity: 0.5;
 }
 
-.nameLabel {
+.slickQuizWrapper .nameLabel {
     margin-top: 20px;
 }
 
@@ -51,44 +51,42 @@
 }
 
 .questionCount {
-    font-size: 14px;
+    font-size: .9em;
     font-style: italic;
 }
 .questionCount span {
     font-weight: bold;
 }
 
-ol.questions {
-    margin-top: 20px;
+.slickQuizWrapper ul.responses,
+.slickQuizWrapper ol.questions,
+.slickQuizWrapper ol.questions li {
     margin-left: 0;
-}
-ol.questions li {
-    margin-left: 0;
+    padding-left: 0;
 }
 
-ul.answers {
-    margin-left: 20px;
+.slickQuizWrapper ul.answers {
     margin-bottom: 20px;
 }
 
-ul.responses li {
+.slickQuizWrapper ul.responses li {
     margin: 10px 20px 20px;
 }
-ul.responses li p span {
+.slickQuizWrapper ul.responses li p span {
     display: block;
     font-weight: bold;
-    font-size: 18px;
 }
-ul.responses li.correct p span {
+.slickQuizWrapper ul.responses li.correct p span {
     color: #6C9F2E;
-}ul.responses li.incorrect p span {
+}
+.slickQuizWrapper ul.responses li.incorrect p span {
     color: #B5121B;
 }
 
-.quizResults h3 {
+.quizResultsCopy h3 {
     margin: 0;
 }
-.quizResults h3 span {
+.quizResultsCopy h3 span {
     font-weight: normal;
     font-style: italic;
 }

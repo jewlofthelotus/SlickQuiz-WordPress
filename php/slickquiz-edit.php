@@ -61,6 +61,8 @@ if ( class_exists( 'SlickQuizEdit' ) ) {
         <p class="statusLegend">
             <strong>Status:</strong> &nbsp;&nbsp;&nbsp; <?php $slickQuizEdit->get_quiz_status_info(); ?>
         </p>
+
+        <p class="required">All fields marked with <img alt="*" height="16" src="<?php echo plugins_url( '/images/required.png' , dirname( __FILE__ ) ); ?>" width="16" /> are required.</p>
     </div>
 
     <div class="floatRight">
@@ -74,8 +76,6 @@ if ( class_exists( 'SlickQuizEdit' ) ) {
                 <img alt="Cancel" src="<?php echo plugins_url( '/images/remove.png' , dirname( __FILE__ ) ); ?>" width="16" height="16" /> Cancel
             </a>
         </div>
-
-        <p class="required">All fields marked with <img alt="*" height="16" src="<?php echo plugins_url( '/images/required.png' , dirname( __FILE__ ) ); ?>" width="16" /> are required.</p>
     </div>
 
     <div class="quizFormWrapper">

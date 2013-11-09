@@ -39,7 +39,7 @@ if ( !class_exists( 'SlickQuizHelper' ) ) {
                 'random_sort_answers'   => '0',
                 'random_sort'           => '0',
                 'disable_next'          => '0',
-                'disable_responses'     => '0',
+                'perquestion_responses' => '1',
                 'completion_responses'  => '0',
                 'save_scores'           => '0',
                 'name_label'            => 'Your Name:',
