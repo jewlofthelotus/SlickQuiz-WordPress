@@ -216,6 +216,8 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         var shareDiv = $("#slickQuiz' . $quiz->id . ' .quizShare");
 
                                         if (shareDiv.length > 0) {
+                                            shareDiv.empty(); // in case Try Again is enabled, reset buttons / messages
+
                                             var twitterButton = "<a href=\'https://twitter.com/share\'"
                                                 + " class=\'twitter-share-button\'"
                                                 + " data-url=\'' . $this->current_page_url() . '\'"
