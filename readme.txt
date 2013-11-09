@@ -1,9 +1,9 @@
 === SlickQuiz ===
 Contributors: jewlofthelotus
-Tags: quiz, jquery, slickquiz, javascript, education, generator, manager, test
+Tags: quiz, jquery, slickquiz, javascript, education, elearning, generator, manager, test
 Requires at least: 3.0
-Tested up to: 3.6
-Stable tag: 1.2.21
+Tested up to: 3.7.1
+Stable tag: 1.2.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -15,12 +15,16 @@ Create and manage pretty, dynamic quizzes using the SlickQuiz jQuery plugin.
 
 Managing and creating new quizzes is simple and intuitive.
 
-* NEW: Saved user scores! (must be enabled in the options)
+* Unlimited questions, unlimited answers
+* Save user scores (must be enabled in the options)
+* Share results via Twitter and Facebook sharing buttons
+
+More Features:
+
 * Quiz questions can have single or multiple correct responses.
 * Correct and Incorrect response messages.
-* Multiple correct / incorrect response message display formats.
-* Results will include a score and ranking (example rankings: Savant, Genius, Pretty Smart, Not Smart, etc.)
-* Unlimited questions, unlimited answers
+* Show correct / incorrect response message after each question and / or at the end of the quiz
+* Results include a score and ranking
 * Make changes to your quiz without having to publish them immediately.
 * Customize error messages for missing or unpublished quizzes.
 * Customize the quiz start button text, as well as score and ranking text.
@@ -28,14 +32,12 @@ Managing and creating new quizzes is simple and intuitive.
 * Load a set number of questions from a larger group
 * Prevent submitting questions without answers
 * Multiple quizzes on the same page
-* Easily share results with Twitter and Facebook sharing buttons
 
 NOTE: If the Preview window does not appear from the create / edit page, *you may need to allow popups for your domain.*
 
 NOTE: Do not place the same quiz on the page multiple times, things will break.
 
 Created by [Julie Cameron](http://juliecameron.com/) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI
-
 Based off the [SlickQuiz jQuery plugin](https://github.com/JewlOfTheLotus/SlickQuiz).
 
 The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https://github.com/JewlOfTheLotus/SlickQuiz-WordPress)
@@ -71,6 +73,15 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.2.3 =
+* Separate options to display per question response messages (enabled by default) and completion response messaging
+* REMOVES single option to disable response messages entirely, instead you should disable both per question and completion response message options
+* Added new option for questions with multiple answers - considers the selection of any single correct answer from the set of correct answers a valid response
+* Attempts to eliminate some unnecessary styles that might conflict with your theme
+* Adds some helpful form input descriptions
+* Updated plugin screenshots
+* Bug fix: prevents critical buttons from disappearing in preview window when certain quiz settings are enabled
 
 = 1.2.21 =
 * Bug fix: start button wasn't getting enabled due to an order of operations issue
@@ -163,6 +174,15 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.2.3 =
+* Separate options to display per question response messages (enabled by default) and completion response messaging
+* REMOVES single option to disable response messages entirely, instead you should disable both per question and completion response message options
+* Added new option for questions with multiple answers - considers the selection of any single correct answer from the set of correct answers a valid response
+* Attempts to eliminate some unnecessary styles that might conflict with your theme
+* Adds some helpful form input descriptions
+* Updated plugin screenshots
+* Bug fix: prevents critical buttons from disappearing in preview window when certain quiz settings are enabled
 
 = 1.2.21 =
 * Bug fix: start button wasn't getting enabled due to an order of operations issue

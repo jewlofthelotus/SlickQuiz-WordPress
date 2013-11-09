@@ -14,13 +14,16 @@ if ( !class_exists( 'SlickQuizOptions' ) ) {
 
         function __construct()
         {
-            global $updated;
+            global $updated, $current_user;
 
             $this->get_admin_options();
 
             if ( isset( $_POST['slickQuizOptions'] ) ) {
                 $this->adminOptions = array_merge( $this->adminOptions, $_POST['slickQuizOptions'] );
                 update_option( $this->adminOptionsName, $this->adminOptions );
+
+                add_user_meta( $current_user->ID, 'slickquiz_ignore_notice_disabled', 'true', true );
+
                 $updated = true;
             }
         }
@@ -48,8 +51,8 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
     <h2>SlickQuiz Options</h2>
 
     <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
-        <h3 class="title">Default Text Copy</h3>
-
+        <h3 class="title">Copy Settings</h3>
+        <p>Use the fields below to setup button, label, and messaging copy.</p>
         <table class="form-table">
             <tbody>
                 <tr valign="top">
@@ -147,8 +150,8 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
             </tbody>
         </table>
 
-        <h3 class="title">Additional Settings</h3>
-
+        <h3 class="title">Functionality Settings</h3>
+        <p>Adjust the following options to change the way your quizzes behave.</p>
         <table class="form-table">
             <tbody>
                 <tr valign="top">
@@ -175,7 +178,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[random_sort_questions]">Randomly sort questions ONLY?</label>
+                        <label for="slickQuizOptions[random_sort_questions]">Randomly sort questions?</label>
                     </th>
                     <td>
                         <input type="radio" name="slickQuizOptions[random_sort_questions]" value="0"
@@ -186,7 +189,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[random_sort_answers]">Randomly sort answers ONLY?</label>
+                        <label for="slickQuizOptions[random_sort_answers]">Randomly sort answers?</label>
                     </th>
                     <td>
                         <input type="radio" name="slickQuizOptions[random_sort_answers]" value="0"
@@ -218,28 +221,26 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                             <?php $slickQuizOptions->get_admin_option( 'disable_next' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
                     </td>
                 </tr>
+                <tr id="responses" valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[completion_responses]">Display correct / incorrect response messaging <em>after each question</em>?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[perquestion_responses]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'perquestion_responses' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[perquestion_responses]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'perquestion_responses' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                    </td>
+                </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[completion_responses]">Display correct / incorrect response messaging <em>upon quiz completion</em> (rather than after each question)?</label>
+                        <label for="slickQuizOptions[completion_responses]">Display correct / incorrect response messaging <em>upon quiz completion</em>?</label>
                     </th>
                     <td>
                         <input type="radio" name="slickQuizOptions[completion_responses]" value="0"
                             <?php $slickQuizOptions->get_admin_option( 'completion_responses' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
                         <input type="radio" name="slickQuizOptions[completion_responses]" value="1"
                             <?php $slickQuizOptions->get_admin_option( 'completion_responses' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">
-                        <label for="slickQuizOptions[disable_responses]">Disable correct / incorrect response messaging <em>entirely</em>?</label>
-                    </th>
-                    <td>
-                        <input type="radio" name="slickQuizOptions[disable_responses]" value="0"
-                            <?php $slickQuizOptions->get_admin_option( 'disable_responses' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
-                        <input type="radio" name="slickQuizOptions[disable_responses]" value="1"
-                            <?php $slickQuizOptions->get_admin_option( 'disable_responses' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
-                        <br /><small><em>(<strong>NOTE:</strong> Selecting "Yes" will override the above selection to display messaging upon quiz completion.<br />
-                            It will also prevent messaging from displaying after each question.)</em></small>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -258,12 +259,11 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
         </table>
 
         <h3 class="title">Sharing Options</h3>
-
         <table class="form-table">
             <tbody>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[share_links]">Display sharing (twitter and facebook) buttons?</label>
+                        <label for="slickQuizOptions[share_links]">Enable sharing (twitter and facebook) buttons?</label>
                     </th>
                     <td>
                         <input type="radio" name="slickQuizOptions[share_links]" value="0"
@@ -279,7 +279,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                     <td>
                         <input type="text" name="slickQuizOptions[share_message]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'share_message' ) ), 'SlickQuizPlugin' ); ?>" />
-                        <br /><small><em>(<strong>NOTE:</strong> You can use the following shortcodes to insert the quiz score [SCORE], rank [RANK], and name [NAME].</em></small>
+                        <br /><small><em>(<strong>NOTE:</strong> You can use the following shortcodes to insert the quiz name [NAME], score [SCORE], and rank [RANK].</em></small>
                     </td>
                 </tr>
                 <tr valign="top">

@@ -30,50 +30,56 @@ jQuery(document).ready(function($) {
             requiredString:     '<img alt="*" height="16" src="' + imagePath + 'required.png" width="16"> ',
             fields:             [
                 {
-                    "q":          "Quiz Name",
+                    "q":          "Quiz Title",
+                    "desc":       "The Quiz Title will appear at the top of your quiz.",
                     "type":       "text",
                     "required":   true,
                     "jsonName":   "name"
                 },
                 {
                     "q":          "Main Copy",
+                    "desc":       "This will appear immediately below the Quiz Title and should be used to describe the quiz, provide instructions, or any other desired information.",
                     "type":       "textarea",
                     "required":   false,
                     "jsonName":   "main"
                 },
                 {
                     "q":          "Result Copy",
+                    "desc":       "This will appear upon quiz completion along with the user's quiz score and ranking. This is an excellent place to link to additional resources or point users to the next step.",
                     "type":       "textarea",
                     "required":   false,
                     "jsonName":   "results"
                 },
                 {
-                    "label":      "Knowledge Levels <small>(1 = Best, 5 = Worst)</small>",
-                    "q":          "Level 1",
+                    "label":      "Ranking Levels",
+                    "descGroup":  "Upon quiz completion the user's score percentage will be calculated and the corresponding ranking level will be presented to the user.",
+                    "q":          "Level 1 <small>(81-100% Best)</small>",
+                    "placeholder": 'For example, Prodigy or Savant',
                     "type":       "text",
                     "required":   true,
                     "jsonName":   "level1"
                 },
                 {
-                    "q":          "Level 2",
+                    "q":          "Level 2 <small>(61-80%)</small>",
                     "type":       "text",
                     "required":   true,
                     "jsonName":   "level2"
                 },
                 {
-                    "q":          "Level 3",
+                    "q":          "Level 3 <small>(41-60%)</small>",
                     "type":       "text",
                     "required":   true,
                     "jsonName":   "level3"
                 },
                 {
-                    "q":          "Level 4",
+                    "q":          "Level 4 <small>(21-40%)</small>",
                     "type":       "text",
                     "required":   true,
                     "jsonName":   "level4"
                 },
                 {
-                    "q":          "Level 5",
+                    "q":          "Level 5 <small>(0-20% Worst)</small>",
+                    "placeholder": 'For example, Airhead or Schmuck',
                     "type":       "text",
                     "required":   true,
                     "jsonName":   "level5"
@@ -117,6 +123,7 @@ jQuery(document).ready(function($) {
                     inputName = field.q.replace(/\W/g,'');
                     required  = field.required ? defaults.requiredString : '';
                     nameAndId = 'name="' + inputName + '" id="' + inputName + '"';
+                    placeholder = field.placeholder ? 'placeholder="' + field.placeholder + '"' : '';
 
                     if (quizValues != null) {
                         value = plugin.formHelper.htmlspecialchars(quizValues.info[field.jsonName]);
@@ -132,12 +139,22 @@ jQuery(document).ready(function($) {
                         defaultQuestionHTML.append('<label class="main">' + field.label + '</label>');
                     }
 
+                    // Add Group Description
+                    if (field.descGroup) {
+                        defaultQuestionHTML.append('<small class="desc">' + field.descGroup + '</small>');
+                    }
+
                     // Add Input Label
                     defaultQuestionHTML.append('<label>' + required + field.q + '</label> ');
 
+                    // Add Input Description
+                    if (field.desc) {
+                        defaultQuestionHTML.append('<small class="desc">' + field.desc + '</small>');
+                    }
+
                     // Add Field
                     if (field.type == 'text') {
-                        defaultQuestionHTML.append('<input type="text" ' + nameAndId + ' value="' + value + '" />');
+                        defaultQuestionHTML.append('<input type="text" ' + nameAndId + ' value="' + value + '" ' + placeholder + ' />');
                     } else if (field.type == 'textarea') {
                         defaultQuestionHTML.append('<textarea ' + nameAndId + '>' + value + '</textarea>');
                     }
@@ -170,10 +187,12 @@ jQuery(document).ready(function($) {
 
                 newQuestionCorrectHTML = $('<div class="question correct"></div>');
                 newQuestionCorrectHTML.append('<label>' + defaults.requiredString + ' Correct Response Message</label> ');
+                newQuestionCorrectHTML.append('<small class="desc">The message that will display if the user answers the question correctly (and if response messaging is enabled).</small> ');
                 newQuestionCorrectHTML.append('<textarea name="correct">' + (fieldGroup ? fieldGroup.correct : '') + '</textarea>');
 
                 newQuestionIncorrectHTML = $('<div class="question incorrect"></div>');
                 newQuestionIncorrectHTML.append('<label>' + defaults.requiredString + ' Incorrect Response Message</label> ');
+                newQuestionIncorrectHTML.append('<small class="desc">The message that will display if the user answers the question incorrectly (and if response messaging is enabled).</small> ');
                 newQuestionIncorrectHTML.append('<textarea name="incorrect">' + (fieldGroup ? fieldGroup.incorrect : '') + '</textarea>');
 
                 newAnswerHTML = $('<p class="addAnswer"><a href="#addAnswer" class="addAnswer"><img alt="*" height="16" src="' + imagePath + 'new.png" width="16"> Add Answer</a></p>');
@@ -192,9 +211,13 @@ jQuery(document).ready(function($) {
                     for (f in fieldGroup.a) {
                         plugin.formBuilder.addAnswer(newAnswerHTML, fieldGroup.a[f]);
                     }
+
+                    plugin.formBuilder.addSelectAny(newAnswerHTML, fieldGroup);
                 } else { // Add blank answers to NEW quiz form question
                     plugin.formBuilder.addAnswer(newAnswerHTML.children('a')[0]);
                     plugin.formBuilder.addAnswer(newAnswerHTML.children('a')[0]);
+
+                    plugin.formBuilder.addSelectAny(newAnswerHTML.children('a')[0]);
                 }
 
                 newQuestionSetHTML.fadeIn(800);
@@ -214,6 +237,20 @@ jQuery(document).ready(function($) {
                     + '</div>';
 
                 addAnswerLink.before($(newAnswerHTML).hide().fadeIn(800));
+            },
+
+            // Adds "select any (correct)" answer option to the selected question
+            addSelectAny: function(element, fieldGroup) {
+                addAnswerLink = fieldGroup ? $(element) : $(element).parent();
+
+                var anyAnswerHTML = '<div class="question selectAny">'
+                    + '<input type="checkbox" name="select_any"' + (fieldGroup && fieldGroup.select_any ? ' checked="checked"' : '') + ' /> '
+                    + '<label>Selecting any <strong>single</strong> correct answer is valid</label><br /> '
+                    + '<small class="desc">If you have more than one correct answer for this quesiton, by default the user must choose all correct answers to pass.</small><br />'
+                    + '<small class="desc">Checking this box will change the question so that choosing any single correct answer will result in a correct response.</small> '
+                    + '</div>';
+
+                addAnswerLink.before($(anyAnswerHTML).hide().fadeIn(800));
             },
 
             // Return toggle elements
@@ -526,6 +563,7 @@ jQuery(document).ready(function($) {
                     correctResponse   = $($(questionSet).children('.correct').children('textarea')[0]);
                     incorrectResponse = $($(questionSet).children('.incorrect').children('textarea')[0]);
                     answers           = $($(questionSet).children('.answer'));
+                    selectAny         = $($(questionSet).find('.selectAny input[type="checkbox"]')[0]).attr('checked');
                     question          = {"a": []};
                     correctAnswers    = false;
 
@@ -559,9 +597,10 @@ jQuery(document).ready(function($) {
                     if ($.inArray(false, questionValidations) > -1) {
                         valid = false;
                     } else {
-                        question["q"]         = questionInput.attr('value'),
-                        question["correct"]   = correctResponse.attr('value'),
-                        question["incorrect"] = incorrectResponse.attr('value'),
+                        question["q"]         = questionInput.attr('value');
+                        question["correct"]   = correctResponse.attr('value');
+                        question["incorrect"] = incorrectResponse.attr('value');
+                        question["select_any"] = selectAny ? true : false;
                         quizJson["questions"].push(question);
                     }
                 });
