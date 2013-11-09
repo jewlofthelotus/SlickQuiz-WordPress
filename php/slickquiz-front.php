@@ -244,6 +244,46 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                             ';
                         }
 
+                        if ( $this->get_admin_option( 'share_links' ) == '1' ) {
+                            $out .= '
+                                    // watch final check answer button and wait for result calculation before submitting
+                                    $("#slickQuiz' . $quiz->id . ' .button.checkAnswer").last().on("click", function() {
+                                        setTimeout(addShareButtons' . $quiz->id . ', 2000);
+                                    });
+
+                                    // updates the share buttons with score, rank, and quiz name details
+                                    function addShareButtons' . $quiz->id . '() {
+                                        var shareDiv = $("#slickQuiz' . $quiz->id . ' .quizShare");
+
+                                        if (shareDiv.length > 0) {
+                                            var twitterButton = "<a href=\'https://twitter.com/share\'"
+                                                + " class=\'twitter-share-button\'"
+                                                + " data-url=\'' . $this->current_page_url() . '\'"
+                                                + " data-text=\\"' . $this->get_admin_option( 'share_message' ) . '\\""
+                                                + " data-via=\'' . $this->get_admin_option( 'twitter_account' ) . '\'>Tweet</a>";
+
+                                            twitterButton = twitterButton
+                                                .replace(/\[NAME\]/, $("#slickQuiz' . $quiz->id . ' .quizName").html())
+                                                .replace(/\[SCORE\]/, $("#slickQuiz' . $quiz->id . ' .quizScore span").html())
+                                                .replace(/\[RANK\]/, $("#slickQuiz' . $quiz->id . ' .quizLevel span").html());
+
+                                            shareDiv.append($(twitterButton));
+
+                                            var facebookButton = "<iframe"
+                                                + " src=\'//www.facebook.com/plugins/like.php?href=' . urlencode( $this->current_page_url() ) . '&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21&amp\'"
+                                                + " scrolling=\'no\'"
+                                                + " frameborder=\'0\'"
+                                                + " style=\'border:none; overflow:hidden; width:450px; height:21px;\'"
+                                                + " allowTransparency=\'true\'></iframe>";
+
+                                            shareDiv.append($(facebookButton));
+
+                                            twttr.widgets.load();
+                                        }
+                                    }
+                            ';
+                        }
+
                         $out .= '
                                 });
                             </script>';
