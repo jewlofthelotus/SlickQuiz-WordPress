@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, elearning, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.7.1
-Stable tag: 1.2.3
+Stable tag: 1.2.31
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -73,6 +73,9 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.2.31 =
+* Push issues resolved
 
 = 1.2.3 =
 * Separate options to display per question response messages (enabled by default) and completion response messaging
@@ -174,6 +177,9 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.2.31 =
+* Push issues resolved
 
 = 1.2.3 =
 * Separate options to display per question response messages (enabled by default) and completion response messaging
