@@ -40,6 +40,8 @@ Based off the [SlickQuiz jQuery plugin](https://github.com/JewlOfTheLotus/SlickQ
 
 The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https://github.com/JewlOfTheLotus/SlickQuiz-WordPress)
 
+The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https://github.com/QuickenLoans/SlickQuiz-WordPress)
+
 == Installation ==
 
 1. Upload the SlickQuiz plugin folder to the `/wp-content/plugins/` directory
