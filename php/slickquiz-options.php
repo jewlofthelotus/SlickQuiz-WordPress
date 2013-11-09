@@ -294,6 +294,43 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
             </tbody>
         </table>
 
+        <h3 class="title">Sharing Options</h3>
+
+        <table class="form-table">
+            <tbody>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[share_links]">Display sharing (twitter and facebook) buttons?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[share_links]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'share_links' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[share_links]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'share_links' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[share_message]">Share message:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[share_message]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'share_message' ) ), 'SlickQuizPlugin' ); ?>" />
+                        <br /><small><em>(<strong>NOTE:</strong> You can use the following shortcodes to insert the quiz score [SCORE], rank [RANK], and name [NAME].</em></small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[twitter_account]">Twitter username to use with sharing button:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[twitter_account]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'twitter_account' ) ), 'SlickQuizPlugin' ); ?>" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
         <p class="submit">
             <input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Update Options', 'SlickQuizPlugin') ?>" />
         </p>
