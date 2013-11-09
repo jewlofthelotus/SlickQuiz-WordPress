@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, elearning, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.7.1
-Stable tag: 1.2.31
+Stable tag: 1.2.32
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -37,8 +37,7 @@ NOTE: If the Preview window does not appear from the create / edit page, *you ma
 
 NOTE: Do not place the same quiz on the page multiple times, things will break.
 
-Created by [Julie Cameron](http://juliecameron.com/) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI
-Based off the [SlickQuiz jQuery plugin](https://github.com/JewlOfTheLotus/SlickQuiz).
+Created by [Julie Cameron](http://juliecameron.com/) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI. Based off the [SlickQuiz jQuery plugin](https://github.com/JewlOfTheLotus/SlickQuiz).
 
 The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https://github.com/JewlOfTheLotus/SlickQuiz-WordPress)
 
@@ -74,10 +73,7 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 
 == Changelog ==
 
-= 1.2.31 =
-* Push issues resolved
-
-= 1.2.3 =
+= 1.2.32 =
 * Separate options to display per question response messages (enabled by default) and completion response messaging
 * REMOVES single option to disable response messages entirely, instead you should disable both per question and completion response message options
 * Added new option for questions with multiple answers - considers the selection of any single correct answer from the set of correct answers a valid response
@@ -178,10 +174,7 @@ This is the initial setup of the plugin.
 
 == Upgrade Notice ==
 
-= 1.2.31 =
-* Push issues resolved
-
-= 1.2.3 =
+= 1.2.32 =
 * Separate options to display per question response messages (enabled by default) and completion response messaging
 * REMOVES single option to disable response messages entirely, instead you should disable both per question and completion response message options
 * Added new option for questions with multiple answers - considers the selection of any single correct answer from the set of correct answers a valid response

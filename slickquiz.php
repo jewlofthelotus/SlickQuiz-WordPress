@@ -4,7 +4,7 @@
 Plugin Name: SlickQuiz
 Plugin URI: http://github.com/jewlofthelotus/SlickQuiz-WordPress
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.2.31
+Version: 1.2.32
 Author: Julie Cameron
 Author URI: http://juliecameron.com
 License: GPLv3 or later
@@ -94,7 +94,8 @@ if ( !class_exists( 'SlickQuiz' ) ) {
         {
             global $current_user;
 
-            $disabled = get_option( "slick_quiz_options" )['disable_responses'];
+            $options = get_option( "slick_quiz_options" );
+            $disabled = $options['disable_responses'];
 
             if ( $disabled && !get_user_meta( $current_user->ID, 'slickquiz_ignore_notice_disabled' ) ) {
                 echo '<div class="error">';

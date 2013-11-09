@@ -250,7 +250,7 @@ jQuery(document).ready(function($) {
                     + '<small class="desc">Checking this box will change the question so that choosing any single correct answer will result in a correct response.</small> '
                     + '</div>';
 
-                addAnswerLink.before($(anyAnswerHTML).hide().fadeIn(800));
+                addAnswerLink.after($(anyAnswerHTML).hide().fadeIn(800));
             },
 
             // Return toggle elements
