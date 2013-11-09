@@ -42,6 +42,8 @@ The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https:
 
 The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https://github.com/QuickenLoans/SlickQuiz-WordPress)
 
+The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https://github.com/QuickenLoans/SlickQuiz-WordPress)
+
 == Installation ==
 
 1. Upload the SlickQuiz plugin folder to the `/wp-content/plugins/` directory
