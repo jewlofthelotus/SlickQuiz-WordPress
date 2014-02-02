@@ -46,9 +46,15 @@ if ( class_exists( 'SlickQuizNew' ) ) {
     </div>
 
     <div class="bottom_button_bar">
-        <button class="button preview" title="Don't save this quiz, but open a new window with a preview of the page using this content." value="Preview">
-            <img alt="Preview" height="16" src="<?php echo plugins_url( '/images/save.png' , dirname( __FILE__ ) ); ?>" width="16" /> Preview
+        <button class="button publish" title="Save this quiz and publish it." value="Publish">
+            <img alt="Publish" height="16" src="<?php echo plugins_url( '/images/save.png' , dirname( __FILE__ ) ); ?>" width="16"> Publish
         </button>
-        <p class="previewNote">Previewing will save all changes to the working copy.<br/><strong>You must <em>Preview</em> your changes in order to <em>Publish</em>.</strong></p>
+        <button class="button draft" title="Save this quiz as a draft." value="Draft">
+            <img alt="Draft" height="16" src="<?php echo plugins_url( '/images/save.png' , dirname( __FILE__ ) ); ?>" width="16"> Save Draft
+        </button>
+        <button class="button preview" title="Save a draft and preview it." value="Preview">
+            <img alt="Preview" height="16" src="<?php echo plugins_url( '/images/view.png' , dirname( __FILE__ ) ); ?>" width="16" /> Preview
+        </button>
+        <p class="previewNote"><em>Previewing will save changes to a draft version.</em></p>
     </div>
 </div>

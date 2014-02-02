@@ -13,10 +13,11 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
         function __construct()
         {
             // Admin
-            add_action( 'wp_ajax_create_quiz', array( &$this, 'create_quiz' ) );
-            add_action( 'wp_ajax_update_quiz', array( &$this, 'update_quiz' ) );
-            add_action( 'wp_ajax_revert_quiz', array( &$this, 'revert_quiz' ) );
-            add_action( 'wp_ajax_publish_quiz', array( &$this, 'publish_quiz' ) );
+            add_action( 'wp_ajax_create_draft_quiz', array( &$this, 'create_draft_quiz' ) );
+            add_action( 'wp_ajax_create_published_quiz', array( &$this, 'create_published_quiz' ) );
+            add_action( 'wp_ajax_update_draft_quiz', array( &$this, 'update_draft_quiz' ) );
+            add_action( 'wp_ajax_update_published_quiz', array( &$this, 'update_published_quiz' ) );
+            add_action( 'wp_ajax_discard_draft_quiz', array( &$this, 'discard_draft_quiz' ) );
             add_action( 'wp_ajax_unpublish_quiz', array( &$this, 'unpublish_quiz' ) );
             add_action( 'wp_ajax_delete_quiz', array( &$this, 'delete_quiz' ) );
 
@@ -25,10 +26,10 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
             add_action( 'wp_ajax_nopriv_save_quiz_score', array( &$this, 'save_quiz_score' ) );
         }
 
-        function create_quiz()
+        function create_draft_quiz()
         {
             if ( isset( $_POST['json'] ) ) {
-                $this->save_working_copy( $_POST['json'] );
+                $this->create_draft( $_POST['json'] );
                 $quiz = $this->get_last_quiz_by_user( get_current_user_id() );
                 echo $quiz->id;
             } else {
@@ -37,12 +38,11 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
             die(); // this is required to return a proper result
         }
 
-        function update_quiz()
+        function create_published_quiz()
         {
             if ( isset( $_POST['json'] ) ) {
-                $quiz      = $this->get_quiz_by_id( $_GET['id'] );
-                $published = $this->get_quiz_status( $quiz ) == self::NOT_PUBLISHED ? false : true;
-                $this->update_working_copy( $_POST['json'], $quiz->id, $published );
+                $this->create_published( $_POST['json'] );
+                $quiz = $this->get_last_quiz_by_user( get_current_user_id() );
                 echo $quiz->id;
             } else {
                 echo 'Something went wrong, please try again.';
@@ -50,17 +50,34 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
             die(); // this is required to return a proper result
         }
 
-        function revert_quiz()
+        function update_draft_quiz()
         {
-            $quiz = $this->get_quiz_by_id( $_GET['id'] );
-            $this->revert_to_published_copy( $quiz->publishedJson, $quiz->id, $quiz->publishedDate );
-            die();
+            if ( isset( $_POST['json'] ) ) {
+                $quiz = $this->get_quiz_by_id( $_GET['id'] );
+                $this->update_draft( $_POST['json'], $quiz->id );
+                echo $quiz->id;
+            } else {
+                echo 'Something went wrong, please try again.';
+            }
+            die(); // this is required to return a proper result
         }
 
-        function publish_quiz()
+        function update_published_quiz()
+        {
+            if ( isset( $_POST['json'] ) ) {
+                $quiz = $this->get_quiz_by_id( $_GET['id'] );
+                $this->update_published( $_POST['json'], $quiz->id );
+                echo $quiz->id;
+            } else {
+                echo 'Something went wrong, please try again.';
+            }
+            die(); // this is required to return a proper result
+        }
+
+        function discard_draft_quiz()
         {
             $quiz = $this->get_quiz_by_id( $_GET['id'] );
-            $this->update_published_copy( $quiz->workingJson, $quiz->id );
+            $this->discard_draft( $quiz->publishedJson, $quiz->id, $quiz->publishedDate );
             die();
         }
 

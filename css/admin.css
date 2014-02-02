@@ -172,11 +172,14 @@ div.bottom_button_bar {
     margin-top: 20px;
 }
 
-div.bottom_button_bar .button.publish {
-    margin-right: 20px;
+div.bottom_button_bar .button {
+    float: right;
+    margin-left: 20px;
 }
 div.bottom_button_bar .previewNote {
-    margin: 4px 0 0 0;
+    clear: right;
+    float: right;
+    margin: 10px 0 0 0;
 }
 
 

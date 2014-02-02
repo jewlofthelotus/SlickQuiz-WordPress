@@ -40,7 +40,7 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
 
 <div id="preview" class="quizPreview slickQuizWrapper">
     <h1>Preview Quiz</h1>
-    <p class="previewNote"><strong>Note:</strong> Your styles may very.</p>
+    <p class="previewNote"><strong>Note:</strong> Your styles may vary.</p>
 
     <div class="top_button_bar">
         <a class="button reload" href="#" title="Reload">
@@ -50,9 +50,6 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
         <a class="button continueEditing" href="#" title="Continue Editing">
             <img alt="Continue Editing" src="<?php echo plugins_url( '/images/remove.png' , dirname( __FILE__ ) ); ?>" width="16" height="16" /> Continue Editing
         </a>
-        <button class="button saveClose publish" title="Save this quiz and publish it." value="Publish">
-            <img alt="Publish" height="16" src="<?php echo plugins_url( '/images/save.png' , dirname( __FILE__ ) ); ?>" width="16"> Publish
-        </button>
         <?php } else { ?>
         <a class="button continueEditing" href="#" title="Close">
             <img alt="Close" src="<?php echo plugins_url( '/images/remove.png' , dirname( __FILE__ ) ); ?>" width="16" height="16" /> Close
@@ -76,14 +73,6 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
             </div>
         </div>
     </div>
-
-    <?php if ( !isset( $_GET['readOnly'] ) ) { ?>
-    <div class="bottom_button_bar">
-        <button class="button saveClose publish" title="Save this quiz and publish it." value="Publish">
-            <img alt="Publish" height="16" src="<?php echo plugins_url( '/images/save.png' , dirname( __FILE__ ) ); ?>" width="16"> Publish
-        </button>
-    </div>
-    <?php } ?>
 
     <script type="text/javascript">
         jQuery(document).ready(function($) {
