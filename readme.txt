@@ -102,6 +102,10 @@ Nope, things will break.  This might happen if you place the same quiz within mu
 * Added separate "Save Draft" and "Publish" options to simplify publishing
 
 = 1.2.32 =
+* Made the "Preview" step optional when saving quizzes
+* Added separate "Save Draft" and "Publish" options to simplify publishing
+
+= 1.2.32 =
 * Separate options to display per question response messages (enabled by default) and completion response messaging
 * REMOVES single option to disable response messages entirely, instead you should disable both per question and completion response message options
 * Added new option for questions with multiple answers - considers the selection of any single correct answer from the set of correct answers a valid response
