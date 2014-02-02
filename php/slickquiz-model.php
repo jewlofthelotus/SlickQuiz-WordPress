@@ -119,7 +119,7 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
          * Database Methods
          */
 
-        function save_working_copy( $json, $user_id = null )
+        function create_draft( $json, $user_id = null )
         {
             global $wpdb, $data;
             $db_name = $wpdb->prefix . 'plugin_slickquiz';
@@ -140,7 +140,7 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
             $wpdb->insert( $db_name, $set );
         }
 
-        function update_working_copy( $json, $id, $published = false )
+        function update_draft( $json, $id )
         {
             global $wpdb, $data;
             $db_name = $wpdb->prefix . 'plugin_slickquiz';
@@ -148,43 +148,66 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
             $data = json_decode( stripcslashes( $json ) );
             $set  = array();
 
-            if ( !$published ) {
-                $set['name'] = $this->get_name();
-            }
-
             $set['lastUpdatedDate'] = date( 'Y-m-d H:i:s' );
             $set['lastUpdatedBy']   = get_current_user_id();
+            $set['name']            = $this->get_name();
             $set['workingQCount']   = $this->get_question_count();
             $set['workingJson']     = json_encode( $data );
 
             $wpdb->update( $db_name, $set, array( 'id' => $id ) );
         }
 
-        function update_published_copy( $json, $id )
+        function create_published( $json )
         {
             global $wpdb, $data;
             $db_name = $wpdb->prefix . 'plugin_slickquiz';
 
-            $data    = json_decode( $json );
+            $data    = json_decode( stripcslashes( $json ) );
             $set     = array();
             $now     = date( 'Y-m-d H:i:s' );
             $user_id = get_current_user_id();
 
+            $set['createdDate']      = $now;
+            $set['createdBy']        = $user_id;
+            $set['lastUpdatedDate']  = $now;
+            $set['lastUpdatedBy']    = $user_id;
+            $set['publishedDate']    = $now;
+            $set['publishedBy']      = $user_id;
             $set['name']             = $this->get_name();
             $set['workingQCount']    = $this->get_question_count();
             $set['publishedQCount']  = $set['workingQCount'];
-            $set['workingJson']      = $json;
+            $set['workingJson']      = json_encode( $data );
             $set['publishedJson']    = $set['workingJson'];
             $set['hasBeenPublished'] = 1;
-            $set['publishedDate']    = $now;
-            $set['publishedBy']      = $user_id;
+
+            $wpdb->insert( $db_name, $set );
+        }
+
+        function update_published( $json, $id )
+        {
+            global $wpdb, $data;
+            $db_name = $wpdb->prefix . 'plugin_slickquiz';
+
+            $data    = json_decode( stripcslashes( $json ) );
+            $set     = array();
+            $now     = date( 'Y-m-d H:i:s' );
+            $user_id = get_current_user_id();
+
             $set['lastUpdatedDate']  = $now;
             $set['lastUpdatedBy']    = $user_id;
+            $set['publishedDate']    = $now;
+            $set['publishedBy']      = $user_id;
+            $set['name']             = $this->get_name();
+            $set['workingQCount']    = $this->get_question_count();
+            $set['publishedQCount']  = $set['workingQCount'];
+            $set['workingJson']      = json_encode( $data );
+            $set['publishedJson']    = $set['workingJson'];
+            $set['hasBeenPublished'] = 1;
 
             $wpdb->update( $db_name, $set, array( 'id' => $id ) );
         }
 
-        function revert_to_published_copy( $json, $id, $updatedOn )
+        function discard_draft( $json, $id, $updatedOn )
         {
             global $wpdb, $data;
             $db_name = $wpdb->prefix . 'plugin_slickquiz';
@@ -206,10 +229,10 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
 
             $set = array();
 
-            $set['publishedQCount'] = null;
-            $set['publishedJson']   = null;
-            $set['lastUpdatedDate'] = date( 'Y-m-d H:i:s' );
-            $set['lastUpdatedBy']   = get_current_user_id();
+            $set['lastUpdatedDate']  = date( 'Y-m-d H:i:s' );
+            $set['lastUpdatedBy']    = get_current_user_id();
+            $set['publishedQCount']  = null;
+            $set['publishedJson']    = null;
 
             $wpdb->update( $db_name, $set, array( 'id' => $id ) );
         }
