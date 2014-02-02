@@ -31,19 +31,17 @@ To initialize your quiz:
 
 **`skipStartButton`** (Boolean) *Default: false;* - whether or not to skip the quiz "start" button
 
-**`numberOfQuestions`** (Integer) *Default: null;* - the number of questions to load from the question set in the JSON object, defaults to null (all questions); Note: If you set this to an integer, you'll probably also want to set <code>randomSortQuestions</code> or <code>randomSort</code> to **true** to ensure that you get a mixed set of questions each page load.
+**`numberOfQuestions`** (Integer) *Default: null;* - the number of questions to load from the question set in the JSON object, defaults to null (all questions); Note: If you set this to an integer, you'll probably also want to set <code>randomSortQuestions</code> to **true** to ensure that you get a mixed set of questions each page load.
 
 **`randomSortQuestions`** (Boolean) *Default: false;* - whether or not to randomly sort questions ONLY
 
 **`randomSortAnswers`** (Boolean) *Default: false;* - whether or not to randomly sort answers ONLY
 
-**`randomSort`** (Boolean) *Default: false;* - whether or not to randomly sort questions AND their answers (overrides <code>randomSortQuestions</code> and <code>randomSortAnswers</code>). NOTE: this will be deprecated in a future release.
-
 **`preventUnanswered`** (Boolean) *Default: false;* - prevents submitting a question with zero answers
 
 **`perQuestionResponseMessaging`** (Boolean) *Default: true;* - Displays correct / incorrect response messages after each question is submitted.
 
-**`completionResponseMessaging`** (Boolean) *Default: false;* - Displays all questions and selected answers with correct or incorrect response messages when the quiz is completed. 
+**`completionResponseMessaging`** (Boolean) *Default: false;* - Displays all questions and selected answers with correct or incorrect response messages when the quiz is completed.
 
 
 #### Deprecated Options
@@ -51,6 +49,8 @@ To initialize your quiz:
 **`disableNext`** - Prevents submitting a question with zero answers. You should now use <code>preventUnanswered</code> instead.
 
 **`disableResponseMessaging`** - Hides all correct / incorrect response messages. You should now use <code>perQuestionResponseMessaging</code> and <code>completionResponseMessaging</code> instead.
+
+**`randomSort`** - Randomly sort all questions AND their answers. You should now use <code>randomSortQuestions</code> and <code>randomSortAnswers</code> instead.
 
 
 ## Advanced Usage

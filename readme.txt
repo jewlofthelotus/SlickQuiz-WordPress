@@ -3,75 +3,99 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, elearning, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 1.2.33
+Stable tag: 1.2.34
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
 SlickQuiz is a plugin for displaying and managing pretty, dynamic quizzes. It uses the SlickQuiz jQuery plugin.
 
+
 == Description ==
 
-Create and manage pretty, dynamic quizzes using the SlickQuiz jQuery plugin.
+**Create and manage pretty, dynamic quizzes** using the SlickQuiz jQuery plugin.
 
 Managing and creating new quizzes is simple and intuitive.
 
-* Unlimited questions, unlimited answers
-* Save user scores (must be enabled in the options)
-* Share results via Twitter and Facebook sharing buttons
+* **Unlimited** questions, unlimited answers.
+* **Save** user scores (must be enabled in the options).
+* **Share** results via Twitter and Facebook sharing buttons.
 
 More Features:
 
-* Quiz questions can have single or multiple correct responses.
-* Correct and Incorrect response messages.
-* Show correct / incorrect response message after each question and / or at the end of the quiz
-* Results include a score and ranking
-* Make changes to your quiz without having to publish them immediately.
-* Customize error messages for missing or unpublished quizzes.
-* Customize the quiz start button text, as well as score and ranking text.
-* Randomly sort questions and answers
-* Load a set number of questions from a larger group
-* Prevent submitting questions without answers
-* Multiple quizzes on the same page
-
-NOTE: If the Preview window does not appear from the create / edit page, *you may need to allow popups for your domain.*
-
-NOTE: Do not place the same quiz on the page multiple times, things will break.
+* Questions can have single or multiple correct responses.
+* Answers have correct and incorrect response messaging.
+* Show correct / incorrect response message after each question and / or at the end of the quiz.
+* End results include a score (8/10) and customizable ranking (ex. Super Genius).
+* Quiz changes can be saved to a draft.
+* Randomly sort questions and answers.
+* Customize button text, as well as score and ranking text.
+* Customize error messages for removed or unpublished quizzes.
+* Load a set number of questions from a larger group.
+* Prevent submitting questions without answers.
+* Allows multiple quizzes on the same page.
 
 Created by [Julie Cameron](http://juliecameron.com/) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI. Based off the [SlickQuiz jQuery plugin](https://github.com/JewlOfTheLotus/SlickQuiz).
 
-The SlickQuiz WordPress Plugin is now opensource - contribute on [Github](https://github.com/JewlOfTheLotus/SlickQuiz-WordPress)
+The SlickQuiz WordPress Plugin is now open source - contribute on [Github](https://github.com/JewlOfTheLotus/SlickQuiz-WordPress)
+
 
 == Installation ==
 
-1. Upload the SlickQuiz plugin folder to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Create and publish a quiz through the SlickQuiz Management interface. (You may need to allow popups to see the SlickQuiz Preview window.)
-1. Place [slickquiz id=X] in your templates, where X is the ID of the quiz you created.
-1. To use the [slickquiz] shortcode in the sidebar Text widget, add add_filter( 'widget_text', 'do_shortcode' ) to your theme.
+1. Install the SlickQuiz plugin directly from the WordPress plugin directory. Or upload the SlickQuiz plugin to your `/wp-content/plugins/` directory.
+1. Activate the plugin through the "Plugins" menu in WordPress.
+1. Create / publish quizzes via the "SlickQuizzes" option in the WordPress sidebar.
+1. To add a quiz to a post or page, place `[slickquiz id=X]` the content area, where `X` is the ID of the quiz you created. The ID can be found in the main SlickQuiz listing.
+1. To use the `[slickquiz id=X]` shortcode in the sidebar Text widget, add `add_filter( 'widget_text', 'do_shortcode' )` to your theme.
+
 
 == Frequently Asked Questions ==
 
-= Is there a way to save or email user scores and answers? =
+= Why can't I see the quiz Preview?
 
-YES! As of version 1.1.0, you can now enable the saving of user scores! Visit the SlickQuiz Options page to turn saving on as well as to customize the user name input label.
+The quiz Preview opens in a popup window. You may need to allow popups for the domain in your browser. Check the URL bar for a popup-blocked indicator and click it for more information.
 
-Score saving is still in it's infancy, so I'd love your feedback on how it works and what features you'd like to see!
+= Why isn't the quiz showing up on my page? OR why is the quiz broken?
 
-= Is there any social integration? Twitter? Facebook? =
+There are a lot of reasons this could be happening - usually there is an issue with the theme or a conflict with another plugin. Here are a few things to look for:
 
-YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Facebook.  There is also an option to customize the Twitter share message.
+* Make sure your theme's `footer.php` template contains a call to `<%php wp_footer(); %>` - this ensures that plugins are able to add required files to the page.
+* Check your browser's Development Console for errors. Click [here](http://webmasters.stackexchange.com/questions/8525/how-to-open-the-javascript-console-in-different-browsers) for instructions on how to find to this panel in your browser (Note: if you're on a Mac, use the `Command ⌘` key in place of `CTRL`). Once you've got it open, look for anything in red - it will all look pretty foreign, but if you see anything in red, scan the text for keywords that might indicate the plugin the error is coming from. Try disabling those plugins and then see if the quiz loads.
+
+= Can I add pictures to my questions / answers / responses?
+
+Yes, you can place any HTML tags that you like within any of the content fields. For images, get the URL of the image you want to add, and use something like the following to add the image to a content area:
+
+`<img src="/uploads/2014/02/my_photo.jpg">`
+
+= Is there a way to email user scores and answers? =
+
+Not yet, but it's on the list of features to add. See the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-WordPress/issues) for a complete list of upcoming features and bug fixes, and feel free to add your own!
+
+= Can I put the same quiz on the same page multiple times?
+
+Nope, things will break.  This might happen if you place the same quiz within multiple blog posts and more than one of those posts is displayed on the page.
+
 
 == Screenshots ==
 
-1. The quiz management / listing interface
-2. Creating a quiz
-3. Adding quiz questions
+1. The quiz management / listing interface.
+2. Creating a quiz.
+3. Adding quiz questions.
 4. A quiz embedded in a post - your styles will vary depending on your theme and preferences.
 5. The plugin options allow you to alter messages and quiz features.
-6. When user score saving is enabled, the user will be prompted for their name before starting the quiz.
+6. When user score saving is enabled, the user will be prompted for their name before starting the quiz, unless they're already logged in.
 7. The listing of user scores when saving is enabled.
 
+
 == Changelog ==
+
+= 1.2.34 =
+* Added Share button to Facebook Like button
+* REMOVES single option to randomly sort questions and answers, instead you should use the individual "randomly sort questions" and "randomly sort answers" options.
+* Made "Back" button styles less prominent to avoid confusion
+* Added some cursor styles to checkboxes, radios, and labels to make them more user friendly
+* Bug fix: unpublishing works again!
+* Updated readme / FAQ documentation
 
 = 1.2.33 =
 * Made the "Preview" step optional when saving quizzes
@@ -180,7 +204,16 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 = 1.0 =
 This is the initial setup of the plugin.
 
+
 == Upgrade Notice ==
+
+= 1.2.34 =
+* Added Share button to Facebook Like button
+* REMOVES single option to randomly sort questions and answers, instead you should use the individual "randomly sort questions" and "randomly sort answers" options.
+* Made "Back" button styles less prominent to avoid confusion
+* Added some cursor styles to checkboxes, radios, and labels to make them more user friendly
+* Bug fix: unpublishing works again!
+* Updated readme / FAQ documentation
 
 = 1.2.33 =
 * Made the "Preview" step optional when saving quizzes

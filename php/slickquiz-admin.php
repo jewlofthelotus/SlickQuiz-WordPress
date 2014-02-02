@@ -72,7 +72,7 @@ if ( !class_exists( 'SlickQuizAdmin' ) ) {
             $quizRow .= '<td class="table_name">' . $quiz->name . '</td>';
             $quizRow .= '<td class="table_count">' . $qCount . '</td>';
             $quizRow .= '<td class="table_updated">' . $quiz->lastUpdatedDate . '</td>';
-            $quizRow .= '<td class="table_pubDate">' . $quiz->publishedDate . '</td>';
+            $quizRow .= '<td class="table_pubDate">' . ($status == self::PUBLISHED ? $quiz->publishedDate : '') . '</td>';
             $quizRow .= '<td class="table_status">' . $statusButton . '</td>';
             $quizRow .= '<td class="table_scores">' . $scoreLink . '</td>';
             $quizRow .= '<td class="table_actions">' . $actions . '</td>';

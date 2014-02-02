@@ -200,18 +200,6 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[random_sort]">Randomly sort questions AND answers?</label>
-                    </th>
-                    <td>
-                        <input type="radio" name="slickQuizOptions[random_sort]" value="0"
-                            <?php $slickQuizOptions->get_admin_option( 'random_sort' ) == '0' ? print_r('checked="checked"') : ''; ?> /> Default to above selections &nbsp;
-                        <input type="radio" name="slickQuizOptions[random_sort]" value="1"
-                            <?php $slickQuizOptions->get_admin_option( 'random_sort' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
-                        <br /><small><em>(<strong>NOTE:</strong> Selecting "Yes" will override the above selections to randomly sort ONLY questions or answers.)</em></small>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">
                         <label for="slickQuizOptions[disable_next]">Prevent submitting a question if no answers have been selected?</label>
                     </th>
                     <td>
