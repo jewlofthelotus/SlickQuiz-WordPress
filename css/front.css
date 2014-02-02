@@ -16,6 +16,10 @@
     background-color:darkslategray !important;
 }
 
+.slickQuizWrapper .button.backToQuestion {
+    background: #ccc;
+}
+
 .slickQuizWrapper .button.tryAgain {
     float: none;
 }
@@ -33,6 +37,17 @@
 
 .slickQuizWrapper .nameLabel {
     margin-top: 20px;
+}
+
+.slickQuizWrapper input,
+.slickQuizWrapper input + label {
+    cursor: pointer;
+}
+
+.slickQuizWrapper input:disabled,
+.slickQuizWrapper input:disabled + label {
+    opacity: .8;
+    cursor: not-allowed;
 }
 
 .quizArea, .quizResults {

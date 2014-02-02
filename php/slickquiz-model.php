@@ -228,13 +228,18 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
             $db_name = $wpdb->prefix . 'plugin_slickquiz';
 
             $set = array();
-
             $set['lastUpdatedDate']  = date( 'Y-m-d H:i:s' );
             $set['lastUpdatedBy']    = get_current_user_id();
-            $set['publishedQCount']  = null;
-            $set['publishedJson']    = null;
 
-            $wpdb->update( $db_name, $set, array( 'id' => $id ) );
+            $wpdb->query( $wpdb->prepare( "
+                UPDATE `$db_name`
+                SET 
+                  `lastUpdatedDate` = %s, 
+                  `lastUpdatedBy` = %d, 
+                  `publishedQCount` = NULL, 
+                  `publishedJson` = NULL
+                WHERE id = %d", 
+              $set['lastUpdatedDate'], $set['lastUpdatedBy'], $id ) );
         }
 
         function delete( $id )

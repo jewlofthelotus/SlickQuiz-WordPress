@@ -85,7 +85,6 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         skipStartButton:              ' . ( $this->get_admin_option( 'skip_start_button' ) == '1' ? 'true' : 'false' ) . ',
                                         randomSortQuestions:          ' . ( $this->get_admin_option( 'random_sort_questions' ) == '1' ? 'true' : 'false' ) . ',
                                         randomSortAnswers:            ' . ( $this->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) . ',
-                                        randomSort:                   ' . ( $this->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) . ',
                                         preventUnanswered:            ' . ( $this->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) . ',
                                         perQuestionResponseMessaging: ' . ( $this->get_admin_option( 'perquestion_responses' ) == '1' ? 'true' : 'false' ) . ',
                                         completionResponseMessaging:  ' . ( $this->get_admin_option( 'completion_responses' ) == '1' ? 'true' : 'false' ) . '
@@ -190,7 +189,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                             shareDiv.append($(twitterButton));
 
                                             var facebookButton = "<iframe"
-                                                + " src=\'//www.facebook.com/plugins/like.php?href=' . urlencode( $this->current_page_url() ) . '&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21&amp\'"
+                                                + " src=\'//www.facebook.com/plugins/like.php?href=' . urlencode( $this->current_page_url() ) . '&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;share=true&amp;height=21&amp\'"
                                                 + " scrolling=\'no\'"
                                                 + " frameborder=\'0\'"
                                                 + " style=\'border:none; overflow:hidden; width:450px; height:21px;\'"
