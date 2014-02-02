@@ -37,11 +37,17 @@ if ( !class_exists( 'SlickQuizEdit' ) ) {
             echo $quiz->workingJson;
         }
 
-        function show_revert_option()
+        function show_discard_option()
         {
             global $statusBtn;
             $pos = strpos( $statusBtn, "title='" . self::UNPUBLISHED_CHANGES . "'" );
             return ( $pos === false ? false : true );
+        }
+
+        function show_alert_messages()
+        {
+            if ( isset( $_GET['success'] ) )
+                echo '<p class="success">Your changes were saved.</p>';
         }
 
     }
@@ -55,6 +61,8 @@ if ( class_exists( 'SlickQuizEdit' ) ) {
 ?>
 
 <div class="wrap slickQuizWrapper">
+    <?php $slickQuizEdit->show_alert_messages(); ?>
+
     <div class="floatLeft">
         <h2 class="notPublished">Edit Quiz</h2>
 
@@ -67,9 +75,9 @@ if ( class_exists( 'SlickQuizEdit' ) ) {
 
     <div class="floatRight">
         <div class="top_button_bar">
-            <?php if ( $slickQuizEdit->show_revert_option() ) { ?>
-            <button class="button revert" title="Revert to previously published copy of the quiz (what is currently in Prod)" value="Revert to Published Copy">
-                <img alt="Revert" height="16" src="<?php echo plugins_url( '/images/arrow_undo.png' , dirname( __FILE__ ) ); ?>" width="16" /> Revert to Published Copy
+            <?php if ( $slickQuizEdit->show_discard_option() ) { ?>
+            <button class="button discard" title="Discard drafted changes" value="Discard drafted changes">
+                <img alt="Discard Draft" height="16" src="<?php echo plugins_url( '/images/arrow_undo.png' , dirname( __FILE__ ) ); ?>" width="16" /> Discard Draft
             </button>
             <?php } ?>
             <a class="button" href="<?php echo admin_url( 'admin.php?page=slickquiz' ); ?>" title="Cancel this action">
@@ -82,10 +90,21 @@ if ( class_exists( 'SlickQuizEdit' ) ) {
     </div>
 
     <div class="bottom_button_bar">
-        <button class="button preview" title="Don't save this quiz, but open a new window with a preview of the page using this content." value="Preview">
-            <img alt="Preview" height="16" src="<?php echo plugins_url( '/images/save.png' , dirname( __FILE__ ) ); ?>" width="16" /> Preview
+        <button class="button publish" title="Save this quiz and publish it." value="Publish">
+            <img alt="Publish" height="16" src="<?php echo plugins_url( '/images/save.png' , dirname( __FILE__ ) ); ?>" width="16"> Publish
         </button>
-        <p class="previewNote">Previewing will save all changes to the working copy.<br/><strong>You must <em>Preview</em> your changes in order to <em>Publish</em>.</strong></p>
+        <?php if ( $slickQuizEdit->show_discard_option() ) { ?>
+        <button class="button discard" title="Discard drafted changes" value="Discard drafted changes">
+            <img alt="Discard Draft" height="16" src="<?php echo plugins_url( '/images/arrow_undo.png' , dirname( __FILE__ ) ); ?>" width="16" /> Discard Draft
+        </button>
+        <?php } ?>
+        <button class="button draft" title="Save this quiz as a draft." value="Draft">
+            <img alt="Save Draft" height="16" src="<?php echo plugins_url( '/images/save.png' , dirname( __FILE__ ) ); ?>" width="16"> Save Draft
+        </button>
+        <button class="button preview" title="Save a draft and preview it." value="Preview">
+            <img alt="Preview" height="16" src="<?php echo plugins_url( '/images/view.png' , dirname( __FILE__ ) ); ?>" width="16" /> Preview
+        </button>
+        <p class="previewNote"><em>Previewing will save changes to a draft version.</em></p>
     </div>
 </div>
 

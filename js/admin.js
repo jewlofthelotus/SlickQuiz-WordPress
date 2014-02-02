@@ -320,10 +320,22 @@ jQuery(document).ready(function($) {
                     plugin.formListener.preview(this);
                 });
 
-                // Delegate "Revert" button
-                $(".top_button_bar").delegate('.revert', "click", function(e){
+                // Delegate "Publish" button
+                $('.bottom_button_bar').delegate('.publish', "click", function(e) {
                     e.preventDefault();
-                    plugin.formListener.revert(this);
+                    plugin.formListener.publish(this);
+                });
+
+                // Delegate "Draft" button
+                $('.bottom_button_bar').delegate('.draft', "click", function(e) {
+                    e.preventDefault();
+                    plugin.formListener.draft(this);
+                });
+
+                // Delegate "Discard" button
+                $(".top_button_bar").delegate('.discard', "click", function(e){
+                    e.preventDefault();
+                    plugin.formListener.discard(this);
                 });
             },
 
@@ -392,7 +404,7 @@ jQuery(document).ready(function($) {
                 });
             },
 
-            // Save working copy of quiz and preview it in new window
+            // Save draft and preview it in new window
             preview: function(element) {
                 var formValues = plugin.formHelper.getValidQuizJson();
 
@@ -401,56 +413,96 @@ jQuery(document).ready(function($) {
                     return false;
                 }
 
-                formJSON = JSON.stringify(formValues);
-                pubJSON  = JSON.stringify(quizValues);
+                var formJSON = JSON.stringify(formValues);
+                var pubJSON  = JSON.stringify(quizValues);
+                var location = window.location.pathname + window.location.search;
 
-                if ($('.revert').length == 0 && $('.notPublished').length == 0 && formJSON == pubJSON) {
-                    changeStr = 'You have not made any changes to this quiz.\n'
-                        + 'You must modify the quiz before you can preview the changes.\n\n'
-                        + 'If you\'d like to preview the published version of this quiz,'
-                        + ' you may do so from the main quiz listing.';
-
-                    alert(changeStr);
+                if (formJSON == pubJSON) {
+                    var previewUrl = location.replace('slickquiz-edit', 'slickquiz-preview');
+                    window.open(previewUrl, 'quizPreview', 'resizable=1,width=900,height=700,scrollbars=1');
                     return false;
                 }
 
-                var location = window.location.pathname + window.location.search;
-                var saveUrl  = location.replace('admin.php', 'admin-ajax.php');
+                var postAction = location.match('slickquiz-new') ? 'create_draft_quiz' : 'update_draft_quiz';
 
-                // Save working copy and open preview pane
-                $.ajax({
-                    type:     'POST',
-                    url:      saveUrl,
-                    data:     {
-                                action: location.match('slickquiz-new') ? 'create_quiz' : 'update_quiz',
-                                json: formJSON
-                              },
-                    dataType: 'text',
-                    async:    false, // for Safari
-                    success:  function(data) {
-                        if (location.match('slickquiz-new')) {
-                            window.location = location.replace('slickquiz-new', 'slickquiz-edit') + '&id=' + data;
-                            var previewUrl  = location.replace('slickquiz-new', 'slickquiz-preview') + '&id=' + data;
-                        } else {
-                            window.location.reload();
-                            var previewUrl  = location.replace('slickquiz-edit', 'slickquiz-preview');
-                        }
-                        window.open(previewUrl, 'quizPreview', 'resizable=1,width=900,height=700,scrollbars=1');
+                plugin.formHelper.saveQuiz(formJSON, postAction, false, function(data){
+                    if (location.match('slickquiz-new')) {
+                        window.location = location.replace('slickquiz-new', 'slickquiz-edit') + '&id=' + data;
+                        var previewUrl  = location.replace('slickquiz-new', 'slickquiz-preview') + '&id=' + data;
+                    } else {
+                        window.location.reload();
+                        var previewUrl  = location.replace('slickquiz-edit', 'slickquiz-preview');
+                    }
+                    window.open(previewUrl, 'quizPreview', 'resizable=1,width=900,height=700,scrollbars=1');
+                });
+            },
+
+            // Save draft
+            draft: function() {
+                var formValues = plugin.formHelper.getValidQuizJson();
+
+                if (!formValues) {
+                    alert('There were a few errors with your submission. Please fix them and try again.');
+                    return false;
+                }
+
+                var formJSON = JSON.stringify(formValues);
+                var pubJSON  = JSON.stringify(quizValues);
+                var location = window.location.pathname + window.location.search;
+
+                if (formJSON == pubJSON) {
+                    alert('There are no changes to save a draft of.')
+                    return false;
+                }
+
+                var postAction = location.match('slickquiz-new') ? 'create_draft_quiz' : 'update_draft_quiz';
+
+                plugin.formHelper.saveQuiz(formJSON, postAction, false, function(data){
+                    if (location.match('slickquiz-new')) {
+                        window.location = location.replace('slickquiz-new', 'slickquiz-edit') + '&id=' + data + '&success';
+                    } else {
+                        window.location = window.location + '&success';
                     }
                 });
             },
 
-            // Revert working copy of quiz and to published copy
-            revert: function(element) {
-                if (confirm('Are you sure you want to revert your unpublished changes?')) {
-                    revertUrl = (window.location.pathname + window.location.search).replace('admin.php', 'admin-ajax.php');
+            // Publish quiz
+            publish: function() {
+                var formValues = plugin.formHelper.getValidQuizJson();
+
+                if (!formValues) {
+                    alert('There were a few errors with your submission. Please fix them and try again.');
+                    return false;
+                }
+
+                var formJSON = JSON.stringify(formValues);
+                var pubJSON  = JSON.stringify(quizValues);
+
+                if ($('.notPublished').length == 0 && formJSON == pubJSON) {
+                    alert('There are no changes to publish.')
+                    return false;
+                }
+
+                var location   = window.location.pathname + window.location.search;
+                var postAction = location.match('slickquiz-new') ? 'create_published_quiz' : 'update_published_quiz';
+                var confirmStr = "Are you sure you want to publish this quiz?";
+
+                plugin.formHelper.saveQuiz(formJSON, postAction, confirmStr, function(data){
+                    window.location = adminPath + 'admin.php?page=slickquiz&success';
+                });
+            },
+
+            // Discard draft
+            discard: function(element) {
+                if (confirm('Are you sure you want to discard these drafted changes?')) {
+                    discardUrl = (window.location.pathname + window.location.search).replace('admin.php', 'admin-ajax.php');
 
                     $.ajax({
                         type:     'POST',
-                        url:      revertUrl,
-                        data:     {action: 'revert_quiz'},
+                        url:      discardUrl,
+                        data:     {action: 'discard_draft_quiz'},
                         success:  function(data) {
-                            window.location.reload();
+                            window.location = window.location + '&success';
                         }
                     });
                 }
@@ -606,6 +658,27 @@ jQuery(document).ready(function($) {
                 });
 
                 return !valid ? false : quizJson;
+            },
+
+            saveQuiz: function(formJSON, actionName, confirmMsg, callback) {
+                actionUrl = window.location.pathname
+                                .replace('admin.php', 'admin-ajax.php')
+                                .replace('slickquiz-preview', 'slickquiz-publish')
+                                + window.location.search;
+
+                if (confirmMsg ? confirm(confirmMsg) : true) {
+                    $.ajax({
+                        type: 'POST',
+                        url:  actionUrl,
+                        data: {
+                            action: actionName,
+                            json: formJSON
+                        },
+                        dataType: 'text',
+                        async:    false, // for Safari
+                        success:  function(data) { callback(data) }
+                    });
+                }
             },
 
             // Convert special characters to HTML entities
@@ -774,39 +847,9 @@ jQuery(document).ready(function($) {
         plugin.config = {}
         plugin.config = $.extend({}, options);
 
-        plugin.method = {
-            // Publish Quiz submission
-            publishQuiz: function() {
-                var confirmStr = "Are you ABSOLUTELY sure you want to publish this quiz?\n\n";
-                confirmStr    += "If it has been added to any posts or pages, it will become ";
-                confirmStr    += "immediately available.";
-
-                publishUrl = window.location.pathname
-                                .replace('admin.php', 'admin-ajax.php')
-                                .replace('slickquiz-preview', 'slickquiz-publish')
-                                + window.location.search;
-
-                if (confirm(confirmStr)) {
-                    $.ajax({
-                        type: 'POST',
-                        url:  publishUrl,
-                        data: {action: 'publish_quiz'},
-                        success: function(data) {
-                            window.opener.document.location = adminPath + 'admin.php?page=slickquiz&success';
-                            window.close();
-                        }
-                    });
-                }
-            }
-        }
+        plugin.method = {}
 
         plugin.init = function() {
-            // Bind "Publish" button (from preview pane)
-            $('.publish').bind('click', function(e) {
-                e.preventDefault();
-                plugin.method.publishQuiz();
-            });
-
             // Bind "Reload" button (from preview pane)
             $('.reload').bind('click', function(e) {
                 window.location.reload();
