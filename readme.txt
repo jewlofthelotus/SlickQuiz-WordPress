@@ -2,8 +2,8 @@
 Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, elearning, generator, manager, test
 Requires at least: 3.0
-Tested up to: 3.7.1
-Stable tag: 1.2.32
+Tested up to: 3.8.1
+Stable tag: 1.2.33
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -72,6 +72,10 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 7. The listing of user scores when saving is enabled.
 
 == Changelog ==
+
+= 1.2.32 =
+* Made the "Preview" step optional when saving quizzes
+* Added separate "Save Draft" and "Publish" options to simplify publishing
 
 = 1.2.32 =
 * Separate options to display per question response messages (enabled by default) and completion response messaging
