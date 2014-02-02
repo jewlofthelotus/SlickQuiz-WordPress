@@ -73,7 +73,7 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 
 == Changelog ==
 
-= 1.2.32 =
+= 1.2.33 =
 * Made the "Preview" step optional when saving quizzes
 * Added separate "Save Draft" and "Publish" options to simplify publishing
 
@@ -177,6 +177,10 @@ YES! As of version 1.1.4, you can now enable sharing buttons for Twitter and Fac
 This is the initial setup of the plugin.
 
 == Upgrade Notice ==
+
+= 1.2.33 =
+* Made the "Preview" step optional when saving quizzes
+* Added separate "Save Draft" and "Publish" options to simplify publishing
 
 = 1.2.32 =
 * Separate options to display per question response messages (enabled by default) and completion response messaging
