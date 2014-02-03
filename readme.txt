@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, elearning, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 1.2.34
+Stable tag: 1.2.35
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -50,18 +50,18 @@ The SlickQuiz WordPress Plugin is now open source - contribute on [Github](https
 
 == Frequently Asked Questions ==
 
-= Why can't I see the quiz Preview?
+= Why can't I see the quiz Preview? =
 
 The quiz Preview opens in a popup window. You may need to allow popups for the domain in your browser. Check the URL bar for a popup-blocked indicator and click it for more information.
 
-= Why isn't the quiz showing up on my page? OR why is the quiz broken?
+= Why isn't the quiz showing up on my page? OR why is the quiz broken? =
 
 There are a lot of reasons this could be happening - usually there is an issue with the theme or a conflict with another plugin. Here are a few things to look for:
 
 * Make sure your theme's `footer.php` template contains a call to `<%php wp_footer(); %>` - this ensures that plugins are able to add required files to the page.
 * Check your browser's Development Console for errors. Click [here](http://webmasters.stackexchange.com/questions/8525/how-to-open-the-javascript-console-in-different-browsers) for instructions on how to find to this panel in your browser (Note: if you're on a Mac, use the `Command ⌘` key in place of `CTRL`). Once you've got it open, look for anything in red - it will all look pretty foreign, but if you see anything in red, scan the text for keywords that might indicate the plugin the error is coming from. Try disabling those plugins and then see if the quiz loads.
 
-= Can I add pictures to my questions / answers / responses?
+= Can I add pictures to my questions / answers / responses? =
 
 Yes, you can place any HTML tags that you like within any of the content fields. For images, get the URL of the image you want to add, and use something like the following to add the image to a content area:
 
@@ -71,7 +71,7 @@ Yes, you can place any HTML tags that you like within any of the content fields.
 
 Not yet, but it's on the list of features to add. See the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-WordPress/issues) for a complete list of upcoming features and bug fixes, and feel free to add your own!
 
-= Can I put the same quiz on the same page multiple times?
+= Can I put the same quiz on the same page multiple times? =
 
 Nope, things will break.  This might happen if you place the same quiz within multiple blog posts and more than one of those posts is displayed on the page.
 
@@ -88,6 +88,10 @@ Nope, things will break.  This might happen if you place the same quiz within mu
 
 
 == Changelog ==
+
+= 1.2.35 =
+* Fixes readme syntax issues
+* Bug fix: resolved escaped apostrophe issue in option page inputs
 
 = 1.2.34 =
 * Added Share button to Facebook Like button
@@ -202,6 +206,10 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.2.35 =
+* Fixes readme syntax issues
+* Bug fix: resolved escaped apostrophe issue in option page inputs
 
 = 1.2.34 =
 * Added Share button to Facebook Like button
