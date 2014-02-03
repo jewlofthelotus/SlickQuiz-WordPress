@@ -19,7 +19,7 @@ if ( !class_exists( 'SlickQuizOptions' ) ) {
             $this->get_admin_options();
 
             if ( isset( $_POST['slickQuizOptions'] ) ) {
-                $this->adminOptions = array_merge( $this->adminOptions, $_POST['slickQuizOptions'] );
+                $this->adminOptions = array_merge( $this->adminOptions, stripslashes_deep( $_POST['slickQuizOptions'] ) );
                 update_option( $this->adminOptionsName, $this->adminOptions );
 
                 add_user_meta( $current_user->ID, 'slickquiz_ignore_notice_disabled', 'true', true );
@@ -48,7 +48,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
 <div class="wrap quizOptions">
     <?php $slickQuizOptions->show_alert_messages(); ?>
 
-    <h2>SlickQuiz Options</h2>
+    <h2>SlickQuiz Default Options</h2>
 
     <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
         <h3 class="title">Copy Settings</h3>
@@ -131,7 +131,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[missing_quiz_message]">Message to display if quiz is <em>MISSING</em>:</label>
+                        <label for="slickQuizOptions[missing_quiz_message]">Message to display if quiz has been <em>DELETED</em>:</label>
                     </th>
                     <td>
                         <input type="text" name="slickQuizOptions[missing_quiz_message]" class="large-text"
