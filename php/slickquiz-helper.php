@@ -23,7 +23,7 @@ if ( !class_exists( 'SlickQuizHelper' ) ) {
         // Set and return Admin Options
         function get_admin_options()
         {
-            $this->adminOptions = array(
+            $this->adminOptions = apply_filters( 'slickquiz_admin_options', array(
                 'disabled_quiz_message' => '<strong>Sorry.</strong> The requested quiz has been disabled.',
                 'missing_quiz_message'  => '<strong>Sorry.</strong> The requested quiz could not be found.',
                 'start_button_text'     => 'Get Started!',
@@ -46,7 +46,7 @@ if ( !class_exists( 'SlickQuizHelper' ) ) {
                 'share_links'           => '0',
                 'share_message'         => 'I\'m a [RANK]! I just scored [SCORE] on the [NAME] quiz!',
                 'twitter_account'       => ''
-            );
+            ) );
 
             $pluginOptions = get_option( $this->adminOptionsName );
 
