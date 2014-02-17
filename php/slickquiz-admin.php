@@ -81,10 +81,13 @@ if ( !class_exists( 'SlickQuizAdmin' ) ) {
             return $quizRow;
         }
 
-        function get_quiz_count()
+        function get_quiz_count( $ret = false )
         {
             global $quizzes;
-            echo count( $quizzes );
+            if ( $ret )
+                return count( $quizzes );
+            else
+                echo count( $quizzes );
         }
 
         function show_alert_messages()
@@ -140,6 +143,6 @@ if ( class_exists( 'SlickQuizAdmin' ) ) {
         </tbody>
     </table>
     <div class="tablenav bottom">
-        <div class="tablenav-pages one-page"><span class="displaying-num"><?php $slickQuizAdmin->get_quiz_count() ?> item</span>
+        <div class="tablenav-pages one-page"><span class="displaying-num"><?php $slickQuizAdmin->get_quiz_count() ?> <?php if ( $slickQuizAdmin->get_quiz_count(true) == 1 ) { ?>quiz<?php } else { ?>quizzes<?php } ?></span>
     </div>
 </div>

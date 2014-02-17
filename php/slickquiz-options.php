@@ -282,7 +282,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
             </tbody>
         </table>
 
-		<?php do_action( 'slickquiz_after_options', $slickQuizOptions ); ?>
+        <?php do_action( 'slickquiz_after_options', $slickQuizOptions ); ?>
 
         <p class="submit">
             <input type="submit" name="submit" id="submit" class="button-primary" value="<?php _e('Update Options', 'SlickQuizPlugin') ?>" />

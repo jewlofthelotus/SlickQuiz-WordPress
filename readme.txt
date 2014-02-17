@@ -3,7 +3,7 @@ Contributors: jewlofthelotus
 Tags: quiz, jquery, slickquiz, javascript, education, elearning, generator, manager, test
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 1.2.35
+Stable tag: 1.2.351
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -45,7 +45,25 @@ The SlickQuiz WordPress Plugin is now open source - contribute on [Github](https
 1. Activate the plugin through the "Plugins" menu in WordPress.
 1. Create / publish quizzes via the "SlickQuizzes" option in the WordPress sidebar.
 1. To add a quiz to a post or page, place `[slickquiz id=X]` the content area, where `X` is the ID of the quiz you created. The ID can be found in the main SlickQuiz listing.
-1. To use the `[slickquiz id=X]` shortcode in the sidebar Text widget, add `add_filter( 'widget_text', 'do_shortcode' )` to your theme.
+
+= Text Widget Setup =
+
+To use the `[slickquiz id=X]` shortcode in the sidebar Text widget, add the following to yours theme's `functions.php` file.
+
+`add_filter( 'widget_text', 'do_shortcode' )`
+
+= Developer Hooks =
+
+There are currently three filter actions that you may hook into:
+
+`slickquiz_admin_options` - This allows you to add custom admin options.
+
+`slickquiz_after_options` - This allows you to add custom markup to the bottom of SlickQuiz Options form (you would likely add data to your custom `slickquiz_admin_options` here).
+
+`slickquiz_after_result` - This allows you to add custom markup to the bottom of the quiz results area at the end of the quiz (you would likely output data from your custom `slickquiz_admin_options` here).
+
+For an example of how to utilize these hooks, see this
+[gist](https://gist.github.com/jewlofthelotus/9022902).
 
 
 == Frequently Asked Questions ==
@@ -88,6 +106,9 @@ Nope, things will break.  This might happen if you place the same quiz within mu
 
 
 == Changelog ==
+
+= 1.2.351 =
+* New developer hooks! See [Installation](http://wordpress.org/plugins/slickquiz/installation/) for more details. Thanks to [@phh](https://github.com/phh) for the contribution!
 
 = 1.2.35 =
 * Fixes readme syntax issues
@@ -206,6 +227,9 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.2.351 =
+* New developer hooks! See [Installation](http://wordpress.org/plugins/slickquiz/installation/) for more details. Thanks to [@phh](https://github.com/phh) for the contribution!
 
 = 1.2.35 =
 * Fixes readme syntax issues

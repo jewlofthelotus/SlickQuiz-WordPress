@@ -260,9 +260,13 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                     <div class="quizShare"></div>';
                     }
 
-                    $out .= '</div>';
-					$out .= apply_filters( 'slickquiz_after_result', $this );
-					$out .= '</div>
+                    $out .= '
+                                </div>';
+
+                    $out .= apply_filters( 'slickquiz_after_result', $this );
+
+                    $out .= '
+                            </div>
                         </div>';
                 }
             } else {
