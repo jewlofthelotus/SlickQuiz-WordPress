@@ -93,10 +93,10 @@ if ( !class_exists( 'SlickQuizAdmin' ) ) {
         function show_alert_messages()
         {
             if ( isset( $_GET['success'] ) )
-                echo '<p class="success">Your quiz has been published.</p>';
+                echo '<div id="message" class="updated"><p>Your quiz has been published.</p></div>';
 
-            if ( isset( $_GET['unpublished'] ) )
-                echo '<p class="success">Your quiz has been unpublished.</p>';
+            if ( isset( $_GET['unpublish'] ) )
+                echo '<div id="message" class="updated"><p>Your quiz has been unpublished.</p></div>';
         }
 
     }
@@ -109,10 +109,10 @@ if ( class_exists( 'SlickQuizAdmin' ) ) {
 
 ?>
 
-<div class="wrap quizList">
-    <?php $slickQuizAdmin->show_alert_messages(); ?>
-
+<div class="wrap slickQuiz quizList">
     <h2>SlickQuiz Management <?php if ( current_user_can( 'publish_pages' ) ) { // Editor or Admin Only  ?><a href="<?php echo admin_url( 'admin.php?page=slickquiz-new' ); ?>" class="add-new-h2" title="Create a new Quiz">Add New Quiz</a><?php } ?></h2>
+
+    <?php $slickQuizAdmin->show_alert_messages(); ?>
 
     <p>To place a quiz on a post, page, or in the sidebar text widget - insert the following into the content, where "X" is the ID of the quiz you want to display.</p>
 

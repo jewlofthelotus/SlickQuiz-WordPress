@@ -47,7 +47,7 @@ if ( !class_exists( 'SlickQuizEdit' ) ) {
         function show_alert_messages()
         {
             if ( isset( $_GET['success'] ) )
-                echo '<p class="success">Your changes were saved.</p>';
+                echo '<div id="message" class="updated"><p>Your changes were saved.</p></div>';
         }
 
     }
@@ -59,13 +59,12 @@ if ( class_exists( 'SlickQuizEdit' ) ) {
 }
 
 ?>
-
-<div class="wrap slickQuizWrapper">
+<div class="wrap slickQuiz slickQuizWrapper">
     <?php $slickQuizEdit->show_alert_messages(); ?>
 
-    <div class="floatLeft">
-        <h2 class="notPublished">Edit Quiz</h2>
+    <h2 class="notPublished">Edit Quiz</h2>
 
+    <div class="floatLeft">
         <p class="statusLegend">
             <strong>Status:</strong> &nbsp;&nbsp;&nbsp; <?php $slickQuizEdit->get_quiz_status_info(); ?>
         </p>

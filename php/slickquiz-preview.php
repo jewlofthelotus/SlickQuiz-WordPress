@@ -38,7 +38,7 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
 
 ?>
 
-<div id="preview" class="quizPreview slickQuizWrapper">
+<div id="preview" class="quizPreview slickQuiz slickQuizWrapper">
     <h1>Preview Quiz</h1>
     <p class="previewNote"><strong>Note:</strong> Your styles may vary.</p>
 

@@ -1,4 +1,4 @@
-/* base styles - overright these in your theme stylesheet */
+/* base styles - override these in your theme stylesheet */
 
 .slickQuizWrapper .button {
     float: left;
@@ -24,11 +24,11 @@
     float: none;
 }
 
-.buttonWrapper .button {
+.slickQuizWrapper .buttonWrapper .button {
     margin-top: 20px;
 }
 
-.buttonWrapper .button.disabled {
+.slickQuizWrapper .buttonWrapper .button.disabled {
     margin-top: 20px;
     cursor: default;
     background-color: #888;
@@ -50,30 +50,31 @@
     cursor: not-allowed;
 }
 
-.quizArea, .quizResults {
+.slickQuizWrapper .quizArea, .slickQuizWrapper .quizResults {
     margin-bottom: 40px;
 }
 
 /* clearfix */
-.quizArea, .quizResults {
+.slickQuizWrapper .quizArea, .slickQuizWrapper .quizResults {
     zoom: 1;
 }
-.quizArea:before, .quizArea:after, .quizResults:before, .quizResults:after {
+.slickQuizWrapper .quizArea:before, .slickQuizWrapper .quizArea:after,
+.slickQuizWrapper .quizResults:before, .slickQuizWrapper .quizResults:after {
     content: "\0020";
     display: block;
     height: 0;
     visibility: hidden;
     font-size: 0;
 }
-.quizArea:after, .quizResults:after {
+.slickQuizWrapper .quizArea:after, .slickQuizWrapper .quizResults:after {
     clear: both;
 }
 
-.questionCount {
+.slickQuizWrapper .questionCount {
     font-size: .9em;
     font-style: italic;
 }
-.questionCount span {
+.slickQuizWrapper .questionCount span {
     font-weight: bold;
 }
 
@@ -102,16 +103,59 @@
     color: #B5121B;
 }
 
-.quizResultsCopy h3 {
+.slickQuizWrapper .quizResultsCopy h3 {
     margin: 0;
 }
-.quizResultsCopy h3 span {
+.slickQuizWrapper .quizResultsCopy h3 span {
     font-weight: normal;
     font-style: italic;
 }
-.quizResultsCopy {
+.slickQuizWrapper .quizResultsCopy {
     margin-top: 20px;
 }
-.quizResultsCopy .quizShare {
+
+
+/* Share Buttons */
+
+.slickQuizWrapper .quizShare {
     margin: 1em 0;
+}
+
+.slickQuizWrapper .quizShare a {
+    display: inline-block;
+    background: #efefef;
+    color: #5993A8;
+    margin-right: 10px;
+    padding: 8px 12px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    transition-duration: 0;
+}
+
+.slickQuizWrapper .quizShare a:hover {
+    background: #e1e1e1;
+    border: none;
+    color: #4a4a4a;
+    text-decoration: none;
+}
+
+.slickQuizWrapper .quizShare a:hover i {
+    background-position: left -34px;
+}
+
+.slickQuizWrapper .quizShare i,
+.slickQuizWrapper .quizShare span {
+    display: inline-block;
+    height: 24px;
+    vertical-align: middle;
+}
+
+.slickQuizWrapper .quizShare i {
+    width: 24px;
+    margin: 0 3px 0 0;
+}
+
+.slickQuizWrapper .quizShare .facebook {
+    margin-right: 0;
 }

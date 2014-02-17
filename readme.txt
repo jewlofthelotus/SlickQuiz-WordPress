@@ -1,9 +1,10 @@
 === SlickQuiz ===
 Contributors: jewlofthelotus
-Tags: quiz, jquery, slickquiz, javascript, education, elearning, generator, manager, test
+Donate link: http://www.gofundme.com/slickquiz
+Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 1.2.351
+Stable tag: 1.2.36
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -34,7 +35,7 @@ More Features:
 * Prevent submitting questions without answers.
 * Allows multiple quizzes on the same page.
 
-Created by [Julie Cameron](http://juliecameron.com/) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI. Based off the [SlickQuiz jQuery plugin](https://github.com/JewlOfTheLotus/SlickQuiz).
+Created by [Julie Cameron](http://juliecameron.com/). Based off the [SlickQuiz jQuery plugin](https://github.com/JewlOfTheLotus/SlickQuiz).
 
 The SlickQuiz WordPress Plugin is now open source - contribute on [Github](https://github.com/JewlOfTheLotus/SlickQuiz-WordPress)
 
@@ -76,8 +77,12 @@ The quiz Preview opens in a popup window. You may need to allow popups for the d
 
 There are a lot of reasons this could be happening - usually there is an issue with the theme or a conflict with another plugin. Here are a few things to look for:
 
-* Make sure your theme's `footer.php` template contains a call to `<%php wp_footer(); %>` - this ensures that plugins are able to add required files to the page.
+* Make sure your theme's `footer.php` template contains the following code snippet - this ensures that plugins are able to add necessary code to the page.
+
+`<%php wp_footer(); %>`
+
 * Check your browser's Development Console for errors. Click [here](http://webmasters.stackexchange.com/questions/8525/how-to-open-the-javascript-console-in-different-browsers) for instructions on how to find to this panel in your browser (Note: if you're on a Mac, use the `Command ⌘` key in place of `CTRL`). Once you've got it open, look for anything in red - it will all look pretty foreign, but if you see anything in red, scan the text for keywords that might indicate the plugin the error is coming from. Try disabling those plugins and then see if the quiz loads.
+* Still having trouble? Create a new [support ticket](http://wordpress.org/support/plugin/slickquiz/) with the details of your issue.
 
 = Can I add pictures to my questions / answers / responses? =
 
@@ -87,11 +92,17 @@ Yes, you can place any HTML tags that you like within any of the content fields.
 
 = Is there a way to email user scores and answers? =
 
-Not yet, but it's on the list of features to add. See the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-WordPress/issues) for a complete list of upcoming features and bug fixes, and feel free to add your own!
+Yes, if you "Enable sharing buttons" from the SlickQuiz Options page, your users will have a button to email their results at the end of the quiz.  Currently, this feature does not capture all answers - only the user's overall score and ranking.
 
 = Can I put the same quiz on the same page multiple times? =
 
 Nope, things will break.  This might happen if you place the same quiz within multiple blog posts and more than one of those posts is displayed on the page.
+
+= I've got an idea for a feature or have a bug to report, what should I do? =
+
+Checkout the [SlickQuiz WordPress Support forum](http://wordpress.org/support/plugin/slickquiz/) to see if someone else has experienced your issue, the answer might already be there; if not - please create a new support ticket!
+
+Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-WordPress/issues) page on Github for a complete list of upcoming features and bug fixes, and feel free to add your own ideas!
 
 
 == Screenshots ==
@@ -107,8 +118,12 @@ Nope, things will break.  This might happen if you place the same quiz within mu
 
 == Changelog ==
 
-= 1.2.351 =
+= 1.2.36 =
+* Improved sharing buttons - now more stylistically customizable, facebook includes score and quiz information
+* "Email" button has been added to sharing buttons!
 * New developer hooks! See [Installation](http://wordpress.org/plugins/slickquiz/installation/) for more details. Thanks to [@phh](https://github.com/phh) for the contribution!
+* Increasing admin style specificity to avoid clashing with WP and other plugins
+* Standardized notification message styles
 
 = 1.2.35 =
 * Fixes readme syntax issues
@@ -228,8 +243,12 @@ This is the initial setup of the plugin.
 
 == Upgrade Notice ==
 
-= 1.2.351 =
+= 1.2.36 =
+* Improved sharing buttons - now more stylistically customizable, facebook includes score and quiz information
+* "Email" button has been added to sharing buttons!
 * New developer hooks! See [Installation](http://wordpress.org/plugins/slickquiz/installation/) for more details. Thanks to [@phh](https://github.com/phh) for the contribution!
+* Increasing admin style specificity to avoid clashing with WP and other plugins
+* Standardized notification message styles
 
 = 1.2.35 =
 * Fixes readme syntax issues

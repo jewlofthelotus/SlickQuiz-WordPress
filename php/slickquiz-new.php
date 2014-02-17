@@ -27,7 +27,7 @@ if ( class_exists( 'SlickQuizNew' ) ) {
 
 ?>
 
-<div class="wrap slickQuizWrapper">
+<div class="wrap slickQuiz slickQuizWrapper">
     <div class="floatLeft">
         <h2 class="notPublished">Create A New Quiz</h2>
         <p class="required">All fields marked with <img alt="*" height="16" src="<?php echo plugins_url( '/images/required.png' , dirname( __FILE__ ) ); ?>" width="16" /> are required.</p>

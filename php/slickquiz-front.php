@@ -70,7 +70,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                     $status = $quizStat[1];
 
                     if ( $status && $status != self::NOT_PUBLISHED ) {
-                        $out .='
+                        $out .= '
                             <script type="text/javascript">
                                 jQuery(document).ready(function($) {';
 
@@ -168,6 +168,12 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         setTimeout(addShareButtons' . $quiz->id . ', 2000);
                                     });
 
+                                    var sTop = window.screen.height/2-(218);
+                                    var sLeft = window.screen.width/2-(313);
+                                    var sqShareOptions = "height=400,width=580,toolbar=0,status=0,location=0,menubar=0,directories=0,scrollbars=0,top=" + sTop + ",left=" + sLeft;
+                                    var pageUrl = "' . $this->current_page_url() . '";
+                                    var pageUrlEncoded = encodeURIComponent(pageUrl);
+
                                     // updates the share buttons with score, rank, and quiz name details
                                     function addShareButtons' . $quiz->id . '() {
                                         var shareDiv = $("#slickQuiz' . $quiz->id . ' .quizShare");
@@ -175,30 +181,64 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         if (shareDiv.length > 0) {
                                             shareDiv.empty(); // in case Try Again is enabled, reset buttons / messages
 
-                                            var twitterButton = "<a href=\'https://twitter.com/share\'"
-                                                + " class=\'twitter-share-button\'"
-                                                + " data-url=\'' . $this->current_page_url() . '\'"
-                                                + " data-text=\\"' . $this->get_admin_option( 'share_message' ) . '\\""
-                                                + " data-via=\'' . $this->get_admin_option( 'twitter_account' ) . '\'>Tweet</a>";
+                                            var sharePrep = "<style type=\'text/css\'>"
+                                                + ".slickQuizWrapper .quizShare .facebook { background: url(' . plugins_url( '/images/facebook.png' , dirname( __FILE__ ) ) . ') left top no-repeat; } "
+                                                + ".slickQuizWrapper .quizShare .twitter { background: url(' . plugins_url( '/images/twitter.png' , dirname( __FILE__ ) ) . ') left top no-repeat; } "
+                                                + ".slickQuizWrapper .quizShare .email { background: url(' . plugins_url( '/images/email.png' , dirname( __FILE__ ) ) . ') left top no-repeat; } "
+                                                + "</style>"
+                                            shareDiv.append($(sharePrep));
 
-                                            twitterButton = twitterButton
-                                                .replace(/\[NAME\]/, $("#slickQuiz' . $quiz->id . ' .quizName").html())
+                                            var name = $("#slickQuiz' . $quiz->id . ' .quizName").html();
+                                            var desc = $("#slickQuiz' . $quiz->id . ' .quizDescription").html();
+                                            var copy = encodeURIComponent("' . $this->get_admin_option( 'share_message' ) . '"
+                                                .replace(/\[NAME\]/, name)
                                                 .replace(/\[SCORE\]/, $("#slickQuiz' . $quiz->id . ' .quizScore span").html())
-                                                .replace(/\[RANK\]/, $("#slickQuiz' . $quiz->id . ' .quizLevel span").html());
+                                                .replace(/\[RANK\]/, $("#slickQuiz' . $quiz->id . ' .quizLevel span").html()));
 
+                                            var twitterButton = "<a class=\'twitterButton\' href=\'#\'><i class=\'twitter\'></i><span>Tweet</span></a>";
                                             shareDiv.append($(twitterButton));
+                                            $("#slickQuiz' . $quiz->id . ' .twitterButton").on("click", function(e) {
+                                                e.preventDefault();
+                                                slickQuizTwitter(copy);
+                                            });
 
-                                            var facebookButton = "<iframe"
-                                                + " src=\'//www.facebook.com/plugins/like.php?href=' . urlencode( $this->current_page_url() ) . '&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;share=true&amp;height=21&amp\'"
-                                                + " scrolling=\'no\'"
-                                                + " frameborder=\'0\'"
-                                                + " style=\'border:none; overflow:hidden; width:450px; height:21px;\'"
-                                                + " allowTransparency=\'true\'></iframe>";
-
+                                            var facebookButton = "<a class=\'facebookButton\' href=\'#\'><i class=\'facebook\'></i><span>Facebook</span></a>";
                                             shareDiv.append($(facebookButton));
+                                            $("#slickQuiz' . $quiz->id . ' .facebookButton").on("click", function(e) {
+                                                e.preventDefault();
+                                                slickQuizFacebook(copy, encodeURIComponent(desc));
+                                            });
 
-                                            twttr.widgets.load();
+                                            var emailCopy = copy + encodeURIComponent("\n\n" + pageUrl);
+                                            var emailUrl  = "mailto:?subject=" + encodeURIComponent(name) + "&amp;body=" + emailCopy;
+                                            var emailButton = "<a class=\"emailButton\" href=\"" + emailUrl + "\"><i class=\"email\"></i><span>Email</span></a>";
+                                            shareDiv.append($(emailButton));
                                         }
+                                    }
+
+                                    function slickQuizTwitter(copy) {
+                                        var name = "' . $this->get_admin_option( 'twitter_account' ) . '".replace(/@/, \'\');
+
+                                        var twitterUrl = "https://twitter.com/intent/tweet?"
+                                            + "url=" + pageUrlEncoded + "&"
+                                            + "text=" + copy + "&"
+                                            + "via=" + name;
+
+                                        window.open(twitterUrl, "twitterShare", sqShareOptions);
+                                        return false;
+                                    }
+
+                                    function slickQuizFacebook(copy, desc) {
+                                        var facebookUrl = "https://www.facebook.com/dialog/feed?"
+                                            + "display=popup&"
+                                            + "app_id=225454720972262&"
+                                            + "link=" + pageUrlEncoded + "&"
+                                            + "name=" + copy + "&"
+                                            + "description=" + desc + "&"
+                                            + "redirect_uri=http://slickquiz.com/close.html";
+
+                                        window.open(facebookUrl, "facebookShare", sqShareOptions);
+                                        return false;
                                     }
                             ';
                         }
@@ -263,7 +303,9 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                     $out .= '
                                 </div>';
 
-                    $out .= apply_filters( 'slickquiz_after_result', $this );
+                    if ( has_action( 'slickquiz_after_result' ) ) {
+                        $out .= apply_filters( 'slickquiz_after_result', $this );
+                    }
 
                     $out .= '
                             </div>

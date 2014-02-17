@@ -71,7 +71,7 @@ if ( class_exists( 'SlickQuizScores' ) ) {
 
 ?>
 
-<div class="wrap scoreList">
+<div class="wrap slickQuiz scoreList">
     <h2>SlickQuiz Scores for "<?php $slickQuizScores->quiz_name(); ?>"</h2>
 
     <table id="record_view" class="wp-list-table widefat quiz_scores">

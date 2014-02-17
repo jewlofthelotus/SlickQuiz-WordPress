@@ -795,9 +795,9 @@ jQuery(document).ready(function($) {
             },
 
             clearSuccessMessage: function() {
-                if ($('.success')) {
-                    setTimeout("jQuery(document).ready(function($) {$('.success').fadeOut(1000)})", 5000);
-                    setTimeout("jQuery(document).ready(function($) {$('.success').remove()})", 10000);
+                if ($('#message')) {
+                    setTimeout("jQuery(document).ready(function($) {$('#message').fadeOut(1000)})", 5000);
+                    setTimeout("jQuery(document).ready(function($) {$('#message').remove()})", 10000);
                 }
             }
         }

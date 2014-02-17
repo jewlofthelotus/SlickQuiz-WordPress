@@ -32,7 +32,7 @@ if ( !class_exists( 'SlickQuizOptions' ) ) {
         {
             global $updated;
             if ( $updated )
-                echo '<p class="success">Your quiz options have been updated.</p>';
+                echo '<div id="message" class="updated"><p>Your quiz options have been updated.</p></div>';
         }
 
     }
@@ -45,7 +45,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
 
 ?>
 
-<div class="wrap quizOptions">
+<div class="wrap slickQuiz quizOptions">
     <?php $slickQuizOptions->show_alert_messages(); ?>
 
     <h2>SlickQuiz Default Options</h2>
@@ -251,7 +251,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
             <tbody>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[share_links]">Enable sharing (twitter and facebook) buttons?</label>
+                        <label for="slickQuizOptions[share_links]">Enable sharing (twitter, facebook, and email) buttons?</label>
                     </th>
                     <td>
                         <input type="radio" name="slickQuizOptions[share_links]" value="0"
@@ -277,6 +277,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                     <td>
                         <input type="text" name="slickQuizOptions[twitter_account]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'twitter_account' ) ), 'SlickQuizPlugin' ); ?>" />
+                        <br /><small><em>You do NOT need to include the @ symbol.</em></small>
                     </td>
                 </tr>
             </tbody>
