@@ -52,7 +52,7 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
             $order_by = $order_by ? $order_by : 'createdDate DESC';
             $limit = $limit ? $limit : '';
 
-            $scoreResults = $wpdb->get_results( "SELECT id, name, score, quiz_id, createdDate FROM $db_name WHERE quiz_id = " . $quiz_id . " ORDER BY $order_by $limit" );
+            $scoreResults = $wpdb->get_results( "SELECT id, name, email, score, quiz_id, createdDate FROM $db_name WHERE quiz_id = " . $quiz_id . " ORDER BY $order_by $limit" );
 
             return $scoreResults;
         }
@@ -233,12 +233,12 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
 
             $wpdb->query( $wpdb->prepare( "
                 UPDATE `$db_name`
-                SET 
-                  `lastUpdatedDate` = %s, 
-                  `lastUpdatedBy` = %d, 
-                  `publishedQCount` = NULL, 
+                SET
+                  `lastUpdatedDate` = %s,
+                  `lastUpdatedBy` = %d,
+                  `publishedQCount` = NULL,
                   `publishedJson` = NULL
-                WHERE id = %d", 
+                WHERE id = %d",
               $set['lastUpdatedDate'], $set['lastUpdatedBy'], $id ) );
         }
 
@@ -248,6 +248,9 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
             $db_name = $wpdb->prefix . 'plugin_slickquiz';
             $wpdb->query( "DELETE FROM $db_name WHERE id = $id" );
         }
+
+
+        // Score Methods
 
         function save_score( $json, $user_id = null )
         {
@@ -260,6 +263,7 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
             $user_id = $user_id ? $user_id : get_current_user_id();
 
             $set['name']        = $data->name;
+            $set['email']       = $data->email;
             $set['score']       = $data->score;
             $set['quiz_id']     = $data->quiz_id;
             $set['createdBy']   = $user_id;
@@ -268,6 +272,12 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
             $wpdb->insert( $db_name, $set );
         }
 
+        function delete_score( $id )
+        {
+            global $wpdb, $data;
+            $db_name = $wpdb->prefix . 'plugin_slickquiz_scores';
+            $wpdb->query( "DELETE FROM $db_name WHERE id = $id" );
+        }
     }
 }
 

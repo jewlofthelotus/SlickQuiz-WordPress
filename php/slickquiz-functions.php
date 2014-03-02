@@ -20,6 +20,7 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
             add_action( 'wp_ajax_discard_draft_quiz', array( &$this, 'discard_draft_quiz' ) );
             add_action( 'wp_ajax_unpublish_quiz', array( &$this, 'unpublish_quiz' ) );
             add_action( 'wp_ajax_delete_quiz', array( &$this, 'delete_quiz' ) );
+            add_action( 'wp_ajax_delete_quiz_score', array( &$this, 'delete_quiz_score' ) );
 
             // Front End
             add_action( 'wp_ajax_save_quiz_score', array( &$this, 'save_quiz_score' ) );
@@ -90,6 +91,12 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
         function delete_quiz()
         {
             $this->delete( $_GET['id'] );
+            die();
+        }
+
+        function delete_quiz_score()
+        {
+            $this->delete_score( $_GET['id'] );
             die();
         }
 

@@ -4,6 +4,13 @@ jQuery(document).ready(function($) {
     var adminPath = location.pathname.replace(/wp-admin.*/, 'wp-admin/');
     var imagePath = location.pathname.replace(/wp-admin.*/, 'wp-content/plugins/slickquiz/images/');
 
+    var clearSuccessMessage = function() {
+        if ($('#message')) {
+            setTimeout("jQuery(document).ready(function($) {$('#message').fadeOut(1000)})", 5000);
+            setTimeout("jQuery(document).ready(function($) {$('#message').remove()})", 10000);
+        }
+    }
+
     // Setup Quiz Form
     $.setupQuizForm = function(element, options) {
         var $element = $(element),
@@ -792,13 +799,6 @@ jQuery(document).ready(function($) {
                         }
                     });
                 }
-            },
-
-            clearSuccessMessage: function() {
-                if ($('#message')) {
-                    setTimeout("jQuery(document).ready(function($) {$('#message').fadeOut(1000)})", 5000);
-                    setTimeout("jQuery(document).ready(function($) {$('#message').remove()})", 10000);
-                }
             }
         }
 
@@ -820,11 +820,6 @@ jQuery(document).ready(function($) {
                 e.preventDefault();
                 plugin.method.deleteQuiz(this);
             });
-
-            // Clear success message on load
-            $(window).load(function() {
-                plugin.method.clearSuccessMessage();
-            });
         }
 
         plugin.init();
@@ -834,6 +829,51 @@ jQuery(document).ready(function($) {
             if (undefined == $(this).data('setupQuizList')) {
                 var plugin = new $.setupQuizList(this, options);
                 $(this).data('setupQuizList', plugin);
+            }
+        });
+    }
+
+    // Setup Score List
+    $.setupScoreList = function(element, options) {
+        var $element = $(element),
+             element = element;
+
+        var plugin = this;
+        plugin.config = {}
+        plugin.config = $.extend({}, options);
+
+        plugin.method = {
+            deleteScore: function(element) {
+                deleteMsg = 'Are you sure you want to delete this score?';
+
+                if (confirm(deleteMsg)) {
+                    $.ajax({
+                        type:     'POST',
+                        data:     {action: 'delete_quiz_score'},
+                        url:      $(element).attr('href'),
+                        success:  function(data) {
+                          window.location = window.location + '&success';
+                        }
+                    });
+                }
+            }
+        }
+
+        plugin.init = function() {
+            // Bind "Delete" button
+            $('.delete').bind('click', function(e) {
+                e.preventDefault();
+                plugin.method.deleteScore(this);
+            });
+        }
+
+        plugin.init();
+    }
+    $.fn.setupScoreList = function(options) {
+        return this.each(function() {
+            if (undefined == $(this).data('setupScoreList')) {
+                var plugin = new $.setupScoreList(this, options);
+                $(this).data('setupScoreList', plugin);
             }
         });
     }
@@ -874,6 +914,12 @@ jQuery(document).ready(function($) {
 
     $('.quizFormWrapper').setupQuizForm();
     $('.quizList, .quizOptions').setupQuizList();
+    $('.scoreList').setupScoreList();
     $('.quizPreview').setupQuizPreview();
+
+    // Clear success message on load
+    $(window).load(function() {
+        clearSuccessMessage();
+    });
 
 });

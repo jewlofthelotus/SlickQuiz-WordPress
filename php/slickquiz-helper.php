@@ -43,6 +43,7 @@ if ( !class_exists( 'SlickQuizHelper' ) ) {
                 'completion_responses'  => '0',
                 'save_scores'           => '0',
                 'name_label'            => 'Your Name:',
+                'email_label'           => '',
                 'share_links'           => '0',
                 'share_message'         => 'I\'m a [RANK]! I just scored [SCORE] on the [NAME] quiz!',
                 'twitter_account'       => ''

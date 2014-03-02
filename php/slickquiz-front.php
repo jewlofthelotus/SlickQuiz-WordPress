@@ -93,18 +93,20 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                         if ( $this->get_admin_option( 'save_scores' ) == '1' ) {
                             $current_user = wp_get_current_user();
                             $name = '';
+                            $email = '';
 
                             if ( ( $current_user instanceof WP_User ) ) {
                                 $username = $current_user->user_login;
                                 $fullname = trim($current_user->user_firstname . ' ' . $current_user->user_lastname);
                                 $name = $fullname ? $fullname : $username;
+                                $email = $current_user->user_email;
                             }
 
                             $out .= '
                                     // get the start button
                                     var button' . $quiz->id . ' = $("#slickQuiz' . $quiz->id . ' .buttonWrapper a");';
 
-                            // hide the name field if a user is logged in
+                            // hide the user fields if a user is logged in
                             $display = $name ? 'style=\"display: none;\"' : '';
 
                             $out .= '
@@ -113,14 +115,32 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         "<div class=\"nameLabel\" ' . $display . '>"
                                         + "<label>' . $this->get_admin_option( 'name_label' ) . '</label>"
                                         + "<input type=\"text\" value=\"' . $name . '\" /></div>"
-                                    );
+                                    );';
+
+                            if ( $this->get_admin_option( 'email_label' ) != '' ) {
+                                $out .= '
+                                    // insert a email field before the button
+                                    $("#slickQuiz' . $quiz->id . ' .buttonWrapper").before(
+                                        "<div class=\"emailLabel\" ' . $display . '>"
+                                        + "<label>' . $this->get_admin_option( 'email_label' ) . '</label>"
+                                        + "<input type=\"email\" value=\"' . $email . '\" /></div>"
+                                    );';
+                            }
+
+                            $out .='
+                                    var nameLabel = $("#slickQuiz' . $quiz->id . ' .nameLabel input");
+                                    var emailLabel = $("#slickQuiz' . $quiz->id . ' .emailLabel input");
 
                                     // when starting quiz, hide name field
                                     $("#slickQuiz' . $quiz->id . ' .button.startQuiz").on("click", function(e) {
-                                        if ($(this).hasClass("disabled")) {
+                                        var start = $(this);
+
+                                        if (start.hasClass("disabled")) {
                                             e.stopPropagation();
                                         } else {
-                                            $("#slickQuiz' . $quiz->id . ' .nameLabel").hide();
+                                            nameLabel.parent().hide();
+                                            emailLabel.parent().hide();
+                                            start.hide();
                                         }
                                     });
 
@@ -132,7 +152,8 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                     // submit scores to wordpress db
                                     function submitScore' . $quiz->id . '() {
                                         var json = {
-                                            name: $("#slickQuiz' . $quiz->id . ' .nameLabel input").val(),
+                                            name: nameLabel.val(),
+                                            email: emailLabel ? emailLabel.val() : "",
                                             score: $("#slickQuiz' . $quiz->id . ' .correctResponse").length + " / " + $("#slickQuiz' . $quiz->id . ' .question").length,
                                             quiz_id: ' . $quiz->id . '
                                         };
@@ -151,8 +172,17 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         button' . $quiz->id . '.addClass("disabled");
 
                                         // when name is entered, enable start button
-                                        $("#slickQuiz' . $quiz->id . ' .nameLabel input").on("change keyup", function() {
-                                            if ($(this).val() !== "") {
+                                        $("#slickQuiz' . $quiz->id . '").on("change keyup", ".nameLabel input, .emailLabel input", function() {
+                                            var namePass = nameLabel.val() !== "";
+                                            var emailPass = true;
+
+                                            if (emailLabel) {
+                                              emailPass = false;
+                                              emailPass = emailLabel.val() !== "";
+                                              emailPass = /\S+@\S+\.\S+/.test(emailLabel.val());
+                                            }
+
+                                            if (namePass && emailPass) {
                                                 button' . $quiz->id . '.removeClass("disabled");
                                             } else {
                                                 button' . $quiz->id . '.addClass("disabled");

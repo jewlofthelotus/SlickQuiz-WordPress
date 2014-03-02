@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 1.2.36
+Stable tag: 1.2.37
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -34,6 +34,7 @@ More Features:
 * Load a set number of questions from a larger group.
 * Prevent submitting questions without answers.
 * Allows multiple quizzes on the same page.
+* Save user emails along with quiz scores.
 
 Created by [Julie Cameron](http://juliecameron.com/). Based off the [SlickQuiz jQuery plugin](https://github.com/JewlOfTheLotus/SlickQuiz).
 
@@ -117,6 +118,10 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.2.37 =
+* Added the ability to delete saved scores.
+* NEW option to save email addresses with scores.
 
 = 1.2.36 =
 * Improved sharing buttons - now more stylistically customizable, facebook includes score and quiz information
@@ -242,6 +247,10 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.2.37 =
+* Added the ability to delete saved scores.
+* NEW option to save email addresses with scores.
 
 = 1.2.36 =
 * Improved sharing buttons - now more stylistically customizable, facebook includes score and quiz information

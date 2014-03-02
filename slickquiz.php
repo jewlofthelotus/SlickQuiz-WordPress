@@ -4,7 +4,7 @@
 Plugin Name: SlickQuiz
 Plugin URI: http://github.com/jewlofthelotus/SlickQuiz-WordPress
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.2.36
+Version: 1.2.37
 Author: Julie Cameron
 Author URI: http://juliecameron.com
 License: GPLv3 or later
@@ -128,7 +128,7 @@ if ( !class_exists( 'SlickQuiz' ) ) {
             add_submenu_page( 'slickquiz', 'Add Quiz', 'Add Quiz', 'publish_pages', 'slickquiz-new', array( &$this, 'direct_route') );
 
             // Accessible to Admins
-            add_submenu_page( 'slickquiz', 'Default Options', 'Default Options', 'manage_options', 'slickquiz-options', array( &$this, 'direct_route') );
+            add_submenu_page( 'slickquiz', 'Options', 'Options', 'manage_options', 'slickquiz-options', array( &$this, 'direct_route') );
         }
 
         // Register Non-Menu Pages
@@ -240,6 +240,7 @@ if ( !class_exists( 'SlickQuiz' ) ) {
             $sql = "CREATE TABLE $table_name (
                 id bigint(20) NOT NULL AUTO_INCREMENT,
                 name varchar(255) NOT NULL,
+                email varchar(255) NOT NULL,
                 score varchar(50) NOT NULL,
                 quiz_id bigint(20) unsigned NOT NULL DEFAULT '0',
                 createdBy bigint(20) unsigned NOT NULL DEFAULT '0',

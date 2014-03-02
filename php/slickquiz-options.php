@@ -48,7 +48,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
 <div class="wrap slickQuiz quizOptions">
     <?php $slickQuizOptions->show_alert_messages(); ?>
 
-    <h2>SlickQuiz Default Options</h2>
+    <h2>SlickQuiz Options</h2>
 
     <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
         <h3 class="title">Copy Settings</h3>
@@ -89,7 +89,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                     <td>
                         <input type="text" name="slickQuizOptions[back_button_text]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'back_button_text' ) ), 'SlickQuizPlugin' ); ?>" /><br />
-                        <small><em>(If left blank, no BACK buttons will be displayed.)</em></small></label>
+                        <small><em>If left blank, no BACK buttons will be displayed.</em></small></label>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -99,7 +99,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                     <td>
                         <input type="text" name="slickQuizOptions[try_again_text]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'try_again_text' ) ), 'SlickQuizPlugin' ); ?>" /><br />
-                        <small><em>(If left blank, no TRY AGAIN buttons will be displayed.)</em></small></label>
+                        <small><em>If left blank, no TRY AGAIN buttons will be displayed.</em></small></label>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -138,15 +138,6 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'missing_quiz_message' ) ), 'SlickQuizPlugin' ); ?>" />
                     </td>
                 </tr>
-                <tr valign="top">
-                    <th scope="row">
-                        <label for="slickQuizOptions[name_label]"><em>USER NAME</em> label text (if saving scores is enabled below and user is not logged in)</label>
-                    </th>
-                    <td>
-                        <input type="text" name="slickQuizOptions[name_label]" class="regular-text"
-                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'name_label' ) ), 'SlickQuizPlugin' ); ?>" />
-                    </td>
-                </tr>
             </tbody>
         </table>
 
@@ -161,8 +152,8 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                     <td>
                         <input type="text" name="slickQuizOptions[number_of_questions]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'number_of_questions' ) ), 'SlickQuizPlugin' ); ?>" />
-                        <br /><small><em>(<strong>NOTE:</strong> Leave blank to load all questions.<br />
-                            If set, you may want to also enable random (question) sorting to ensure that you get a mixed set of questions each page load.)</em></small>
+                        <br /><small><em>Leave blank to load all questions.<br />
+                            If set, you may want to also enable random (question) sorting to ensure that you get a mixed set of questions each page load.</em></small>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -231,6 +222,12 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                             <?php $slickQuizOptions->get_admin_option( 'completion_responses' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
                     </td>
                 </tr>
+            </tbody>
+        </table>
+
+        <h3 class="title">Score Saving Options</h3>
+        <table class="form-table">
+            <tbody>
                 <tr valign="top">
                     <th scope="row">
                         <label for="slickQuizOptions[save_scores]">Save user scores?</label>
@@ -240,7 +237,28 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                             <?php $slickQuizOptions->get_admin_option( 'save_scores' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
                         <input type="radio" name="slickQuizOptions[save_scores]" value="1"
                             <?php $slickQuizOptions->get_admin_option( 'save_scores' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
-                        <br /><small><em>(<strong>NOTE:</strong> Selecting "Yes" will require users who are not logged in to enter their name before proceeding with the quiz.)</em></small>
+                        <br /><small><em>Selecting "Yes" will require users who are not logged in to enter their name before proceeding with the quiz.</em></small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[name_label]"><em>User NAME</em> label text</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[name_label]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'name_label' ) ), 'SlickQuizPlugin' ); ?>" />
+                        <br /><small><em>This field will only display if saving scores is enabled and the user is not logged in.</em></small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[email_label]"><em>User EMAIL</em> label text</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[email_label]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'email_label' ) ), 'SlickQuizPlugin' ); ?>" />
+                        <br /><small><em>If left blank, no EMAIL field will be displayed and email addresses will NOT be stored.<br/>
+                            This field will only display if saving scores is enabled and the user is not logged in.</em></small>
                     </td>
                 </tr>
             </tbody>
@@ -267,7 +285,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                     <td>
                         <input type="text" name="slickQuizOptions[share_message]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'share_message' ) ), 'SlickQuizPlugin' ); ?>" />
-                        <br /><small><em>(<strong>NOTE:</strong> You can use the following shortcodes to insert the quiz name [NAME], score [SCORE], and rank [RANK].</em></small>
+                        <br /><small><em>You can use the following shortcodes to insert the quiz name [NAME], score [SCORE], and rank [RANK].</em></small>
                     </td>
                 </tr>
                 <tr valign="top">

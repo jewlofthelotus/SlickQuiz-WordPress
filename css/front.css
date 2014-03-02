@@ -35,7 +35,7 @@
     opacity: 0.5;
 }
 
-.slickQuizWrapper .nameLabel {
+.slickQuizWrapper .nameLabel, .slickQuizWrapper .emailLabel {
     margin-top: 20px;
 }
 
