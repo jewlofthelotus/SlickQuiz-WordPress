@@ -48,7 +48,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
 <div class="wrap slickQuiz quizOptions">
     <?php $slickQuizOptions->show_alert_messages(); ?>
 
-    <h2>SlickQuiz Options</h2>
+    <h2>SlickQuiz Default Options</h2>
 
     <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
         <h3 class="title">Copy Settings</h3>
