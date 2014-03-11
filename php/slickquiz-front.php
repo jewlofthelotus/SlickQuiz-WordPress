@@ -176,7 +176,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                             var namePass = nameLabel.val() !== "";
                                             var emailPass = true;
 
-                                            if (emailLabel) {
+                                            if (emailLabel.length > 0) {
                                               emailPass = false;
                                               emailPass = emailLabel.val() !== "";
                                               emailPass = /\S+@\S+\.\S+/.test(emailLabel.val());

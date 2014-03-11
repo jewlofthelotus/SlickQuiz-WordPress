@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 1.2.37
+Stable tag: 1.2.371
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -118,6 +118,9 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.2.371 =
+* BUG FIX: Some users experienced issues with the "Start" button not enabling after entering their name in the input for storage. This resolves that issue.
 
 = 1.2.37 =
 * Added the ability to delete saved scores.
@@ -247,6 +250,9 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.2.371 =
+* BUG FIX: Some users experienced issues with the "Start" button not enabling after entering their name in the input for storage. This resolves that issue.
 
 = 1.2.37 =
 * Added the ability to delete saved scores.
