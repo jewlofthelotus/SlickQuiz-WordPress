@@ -194,7 +194,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                         if ( $this->get_admin_option( 'share_links' ) == '1' ) {
                             $out .= '
                                     // watch final check answer button and wait for result calculation before submitting
-                                    $("#slickQuiz' . $quiz->id . ' .button.checkAnswer").last().on("click", function() {
+                                    $("#slickQuiz' . $quiz->id . ' .button.nextQuestion").last().on("click", function() {
                                         setTimeout(addShareButtons' . $quiz->id . ', 2000);
                                     });
 
@@ -218,22 +218,26 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                                 + "</style>"
                                             shareDiv.append($(sharePrep));
 
-                                            var name = $("#slickQuiz' . $quiz->id . ' .quizName").html();
-                                            var desc = $("#slickQuiz' . $quiz->id . ' .quizDescription").html();
+                                            var name  = $("#slickQuiz' . $quiz->id . ' .quizName").text();
+                                            var desc  = $("#slickQuiz' . $quiz->id . ' .quizDescription").text();
+                                            var score = $("#slickQuiz' . $quiz->id . ' .quizScore span").text();
+                                            var rank  = $("#slickQuiz' . $quiz->id . ' .quizLevel span").text();
+
                                             var copy = encodeURIComponent("' . $this->get_admin_option( 'share_message' ) . '"
-                                                .replace(/\[NAME\]/, name)
-                                                .replace(/\[SCORE\]/, $("#slickQuiz' . $quiz->id . ' .quizScore span").html())
-                                                .replace(/\[RANK\]/, $("#slickQuiz' . $quiz->id . ' .quizLevel span").html()));
+                                                            .replace(/\[NAME\]/, name)
+                                                            .replace(/\[SCORE\]/, score)
+                                                            .replace(/\[RANK\]/, rank)
+                                                        );
 
                                             var twitterButton = "<a class=\'twitterButton\' href=\'#\'><i class=\'twitter\'></i><span>Tweet</span></a>";
-                                            shareDiv.append($(twitterButton));
+                                            shareDiv.append($(twitterButton).css("opacity",0).animate({opacity:1}));
                                             $("#slickQuiz' . $quiz->id . ' .twitterButton").on("click", function(e) {
                                                 e.preventDefault();
                                                 slickQuizTwitter(copy);
                                             });
 
                                             var facebookButton = "<a class=\'facebookButton\' href=\'#\'><i class=\'facebook\'></i><span>Facebook</span></a>";
-                                            shareDiv.append($(facebookButton));
+                                            shareDiv.append($(facebookButton).css("opacity",0).animate({opacity:1}));
                                             $("#slickQuiz' . $quiz->id . ' .facebookButton").on("click", function(e) {
                                                 e.preventDefault();
                                                 slickQuizFacebook(copy, encodeURIComponent(desc));
@@ -242,7 +246,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                             var emailCopy = copy + encodeURIComponent("\n\n" + pageUrl);
                                             var emailUrl  = "mailto:?subject=" + encodeURIComponent(name) + "&amp;body=" + emailCopy;
                                             var emailButton = "<a class=\"emailButton\" href=\"" + emailUrl + "\"><i class=\"email\"></i><span>Email</span></a>";
-                                            shareDiv.append($(emailButton));
+                                            shareDiv.append($(emailButton).css("opacity",0).animate({opacity:1}));
                                         }
                                     }
 
