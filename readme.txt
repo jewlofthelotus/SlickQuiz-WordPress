@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 1.2.372
+Stable tag: 1.2.373
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -118,6 +118,10 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.2.373 =
+* BUG FIX: Some users experienced issues with the Score Widget not sorting the rankings properly. This resolves that issue. Thanks to [@Ciao121](http://wordpress.org/support/profile/ciao121) for suggesting a fix!
+* Updating SlickQuiz jQuery lib
 
 = 1.2.372 =
 * BUG FIX: Some users experienced issues with the Score and Ranking values missing form share verbiage. This resolves that issue.
@@ -253,6 +257,9 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+* BUG FIX: Some users experienced issues with the Score Widget not sorting the rankings properly. This resolves that issue. Thanks to [@Ciao121](http://wordpress.org/support/profile/ciao121) for suggesting a fix!
+* Updating SlickQuiz jQuery lib
 
 = 1.2.372 =
 * BUG FIX: Some users experienced issues with the Score and Ranking values missing form share verbiage. This resolves that issue.

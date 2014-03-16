@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated February 16, 2014
- * @version 1.5.14
+ * @updated March 16, 2014
+ * @version 1.5.141
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -311,19 +311,19 @@
                         var answer = answers[i];
 
                         if (answer.correct) {
-                            trueAnswers.push($('<div />').html(answer.option).text());
+                            trueAnswers.push(parseInt(i, 10));
                         }
                     }
                 }
 
-                // NOTE: Collecting .text() for comparison aims to ensure that HTML entities
-                // and HTML elements that may be modified by the browser match up
+                // NOTE: Collecting answer index for comparison aims to ensure that HTML entities
+                // and HTML elements that may be modified by the browser / other scrips match up
 
                 // Collect the answers submitted
                 var selectedAnswers = [];
                 answerInputs.each( function() {
-                    var inputValue = $(this).next('label').text();
-                    selectedAnswers.push(inputValue);
+                    var id = $(this).attr('id');
+                    selectedAnswers.push(parseInt(id.replace(/(question\d{1,}_)/, ''), 10));
                 });
 
                 if (plugin.config.preventUnanswered && selectedAnswers.length === 0) {
