@@ -36,7 +36,7 @@ if ( !class_exists( 'SlickQuizScoreWidget' ) ) {
             // Main Widget Content
             if ( $instance['quiz_id'] ) {
                 $quizModel = new SlickQuizModel;
-                $scores    = $quizModel->get_all_scores( $instance['quiz_id'], 'score DESC, createdDate ASC', "LIMIT " . $instance['score_count'] );
+                $scores    = $quizModel->get_all_scores( $instance['quiz_id'], 'convert(score, decimal) DESC, createdDate ASC', "LIMIT " . $instance['score_count'] );
 
                 if (count($scores) > 0) {
                     ?>
