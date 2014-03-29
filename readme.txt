@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 1.2.373
+Stable tag: 1.2.374
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -48,6 +48,10 @@ The SlickQuiz WordPress Plugin is now open source - contribute on [Github](https
 1. Create / publish quizzes via the "SlickQuizzes" option in the WordPress sidebar.
 1. To add a quiz to a post or page, place `[slickquiz id=X]` the content area, where `X` is the ID of the quiz you created. The ID can be found in the main SlickQuiz listing.
 
+= Dynamic URL Shortcode Setup =
+
+You may also dynamically render a quiz by setting the shortcode to `[slickquiz id=url]`.  This will tell the plugin to look for an ID at **the end of the page URL** and select the quiz with that ID. Note: additional query string parameters will not interfere.
+
 = Text Widget Setup =
 
 To use the `[slickquiz id=X]` shortcode in the sidebar Text widget, add the following to yours theme's `functions.php` file.
@@ -80,7 +84,7 @@ There are a lot of reasons this could be happening - usually there is an issue w
 
 * Make sure your theme's `footer.php` template contains the following code snippet - this ensures that plugins are able to add necessary code to the page.
 
-`<%php wp_footer(); %>`
+`<?php wp_footer(); ?>`
 
 * Check your browser's Development Console for errors. Click [here](http://webmasters.stackexchange.com/questions/8525/how-to-open-the-javascript-console-in-different-browsers) for instructions on how to find to this panel in your browser (Note: if you're on a Mac, use the `Command ⌘` key in place of `CTRL`). Once you've got it open, look for anything in red - it will all look pretty foreign, but if you see anything in red, scan the text for keywords that might indicate the plugin the error is coming from. Try disabling those plugins and then see if the quiz loads.
 * Still having trouble? Create a new [support ticket](http://wordpress.org/support/plugin/slickquiz/) with the details of your issue.
@@ -118,6 +122,9 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.2.374 =
+* Thanks to [@nfreear](https://github.com/nfreear) - you can now tell SlickQuiz to dynamically render a quiz based off an ID in the URL via `[slickquiz id=url]`
 
 = 1.2.373 =
 * BUG FIX: Some users experienced issues with the Score Widget not sorting the rankings properly. This resolves that issue. Thanks to [@Ciao121](http://wordpress.org/support/profile/ciao121) for suggesting a fix!
@@ -258,6 +265,10 @@ This is the initial setup of the plugin.
 
 == Upgrade Notice ==
 
+= 1.2.374 =
+* Thanks to [@nfreear](https://github.com/nfreear) - you can now tell SlickQuiz to dynamically render a quiz based off an ID in the URL via `[slickquiz id=url]`
+
+= 1.2.373 =
 * BUG FIX: Some users experienced issues with the Score Widget not sorting the rankings properly. This resolves that issue. Thanks to [@Ciao121](http://wordpress.org/support/profile/ciao121) for suggesting a fix!
 * Updating SlickQuiz jQuery lib
 
