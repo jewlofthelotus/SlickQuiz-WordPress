@@ -293,6 +293,17 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                 'id' => 0,
             ), $atts ) );
 
+            // Optionally, extract quiz ID from the URL [Ticket #2180]
+            if ( 'url' == $id || 'uri' == $id || -1 == $id ) {
+                $regex = '@'. basename( get_permalink() ) .'\/(\d+)\/?@';
+
+                if ( preg_match($regex, $_SERVER['REQUEST_URI'], $matches) ) {
+                    $id = $matches[1];
+                }
+            }
+            // Guard against mis-spellings (plus security).
+            $id = intval( $id );
+
             $out = $this->show_slickquiz( $id );
 
             return $out;
