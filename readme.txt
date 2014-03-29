@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 1.2.374
+Stable tag: 1.2.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -123,8 +123,11 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 == Changelog ==
 
-= 1.2.374 =
+= 1.2.4 =
+* NEW option to toggle question count ("Question x of X") on and off.
+* NEW option to toggle question number (the "1." in "1. What is the first question?") on and off. Thanks to [@PhilKershaw](https://github.com/PhilKershaw)
 * Thanks to [@nfreear](https://github.com/nfreear) - you can now tell SlickQuiz to dynamically render a quiz based off an ID in the URL via `[slickquiz id=url]`
+* New logo!!
 
 = 1.2.373 =
 * BUG FIX: Some users experienced issues with the Score Widget not sorting the rankings properly. This resolves that issue. Thanks to [@Ciao121](http://wordpress.org/support/profile/ciao121) for suggesting a fix!
@@ -265,8 +268,11 @@ This is the initial setup of the plugin.
 
 == Upgrade Notice ==
 
-= 1.2.374 =
+= 1.2.4 =
+* NEW option to toggle question count ("Question x of X") on and off.
+* NEW option to toggle question number (the "1." in "1. What is the first question?") on and off. Thanks to [@PhilKershaw](https://github.com/PhilKershaw)
 * Thanks to [@nfreear](https://github.com/nfreear) - you can now tell SlickQuiz to dynamically render a quiz based off an ID in the URL via `[slickquiz id=url]`
+* New logo!!
 
 = 1.2.373 =
 * BUG FIX: Some users experienced issues with the Score Widget not sorting the rankings properly. This resolves that issue. Thanks to [@Ciao121](http://wordpress.org/support/profile/ciao121) for suggesting a fix!

@@ -4,7 +4,7 @@
 Plugin Name: SlickQuiz
 Plugin URI: http://github.com/jewlofthelotus/SlickQuiz-WordPress
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.2.374
+Version: 1.2.4
 Author: Julie Cameron
 Author URI: http://juliecameron.com
 License: GPLv3 or later
