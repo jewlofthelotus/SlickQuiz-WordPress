@@ -41,6 +41,8 @@ if ( !class_exists( 'SlickQuizHelper' ) ) {
                 'disable_next'          => '0',
                 'perquestion_responses' => '1',
                 'completion_responses'  => '0',
+                'question_count'        => '1',
+                'question_number'       => '1',
                 'save_scores'           => '0',
                 'name_label'            => 'Your Name:',
                 'email_label'           => '',

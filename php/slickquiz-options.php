@@ -56,7 +56,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
         <table class="form-table">
             <tbody>
                 <tr valign="top">
-                    <th scope="row">
+                    <th scope="row" style="width: 250px;">
                         <label for="slickQuizOptions[start_button_text]"><em>START</em> button text</label>
                     </th>
                     <td>
@@ -146,7 +146,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
         <table class="form-table">
             <tbody>
                 <tr valign="top">
-                    <th scope="row">
+                    <th scope="row" style="width: 250px;">
                         <label for="slickQuizOptions[number_of_questions]">Number of questions to display?</label>
                     </th>
                     <td>
@@ -222,6 +222,30 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                             <?php $slickQuizOptions->get_admin_option( 'completion_responses' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
                     </td>
                 </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[question_count]">Display the question count?</label>
+                        <br /><small><em>ie. "Question 3 of 10"</em></small>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[question_count]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'question_count' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[question_count]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'question_count' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[question_number]">Display the question number?</label>
+                        <br /><small><em>ie. the "1." in "1. What color is displayed?"</em></small>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[question_number]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'question_number' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[question_number]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'question_number' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -229,7 +253,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
         <table class="form-table">
             <tbody>
                 <tr valign="top">
-                    <th scope="row">
+                    <th scope="row" style="width: 250px;">
                         <label for="slickQuizOptions[save_scores]">Save user scores?</label>
                     </th>
                     <td>
@@ -268,7 +292,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
         <table class="form-table">
             <tbody>
                 <tr valign="top">
-                    <th scope="row">
+                    <th scope="row" style="width: 250px;">
                         <label for="slickQuizOptions[share_links]">Enable sharing (twitter, facebook, and email) buttons?</label>
                     </th>
                     <td>
