@@ -294,7 +294,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             ), $atts ) );
 
             // Optionally, extract quiz ID from the URL [Ticket #2180]
-            if ( 'url' == $id || 'uri' == $id || -1 == $id ) {
+            if ( $id == 'url' || $id == 'uri' || $id == -1 ) {
                 $regex = '@'. basename( get_permalink() ) .'\/(\d+)\/?@';
 
                 if ( preg_match($regex, $_SERVER['REQUEST_URI'], $matches) ) {
