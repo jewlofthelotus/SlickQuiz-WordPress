@@ -11,6 +11,11 @@ jQuery(document).ready(function($) {
         }
     }
 
+
+    // #58: Optional callback (maybe this should be in "defaults" and/or "plugin.config").
+    var preSaveQuizCallback;
+
+
     // Setup Quiz Form
     $.setupQuizForm = function(element, options) {
         var $element = $(element),
@@ -35,6 +40,7 @@ jQuery(document).ready(function($) {
             toggleQuestionSet:  'a.toggleQuestionSet',
             toggleQuestionSets: 'a.toggleQuestionSets',
             requiredString:     '<img alt="*" height="16" src="' + imagePath + 'required.png" width="16"> ',
+
             fields:             [
                 {
                     "q":          "Quiz Title",
@@ -420,6 +426,8 @@ jQuery(document).ready(function($) {
                     return false;
                 }
 
+                formValues.extra = callPreSaveQuiz();
+
                 var formJSON = JSON.stringify(formValues);
                 var pubJSON  = JSON.stringify(quizValues);
                 var location = window.location.pathname + window.location.search;
@@ -453,6 +461,8 @@ jQuery(document).ready(function($) {
                     return false;
                 }
 
+                formValues.extra = callPreSaveQuiz();
+
                 var formJSON = JSON.stringify(formValues);
                 var pubJSON  = JSON.stringify(quizValues);
                 var location = window.location.pathname + window.location.search;
@@ -481,6 +491,8 @@ jQuery(document).ready(function($) {
                     alert('There were a few errors with your submission. Please fix them and try again.');
                     return false;
                 }
+
+                formValues.extra = callPreSaveQuiz();
 
                 var formJSON = JSON.stringify(formValues);
                 var pubJSON  = JSON.stringify(quizValues);
@@ -911,6 +923,21 @@ jQuery(document).ready(function($) {
             }
         });
     }
+
+
+    // #58: Set and call an optional callback.
+
+    $.fn.setPreSaveQuiz = function (callback) {
+        preSaveQuizCallback = callback;
+    };
+
+    function callPreSaveQuiz() {
+        //Not required: if("function" == typeof preSaveQuizCallback)
+        var extra_data = preSaveQuizCallback && preSaveQuizCallback();
+        window.console && console.log("preSaveQuiz callback", extra_data);
+        return extra_data || null;
+    }
+
 
     $('.quizFormWrapper').setupQuizForm();
     $('.quizList, .quizOptions').setupQuizList();

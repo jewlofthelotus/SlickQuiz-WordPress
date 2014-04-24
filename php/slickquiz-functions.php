@@ -9,6 +9,9 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
     class SlickQuizFunctions extends SlickQuizModel
     {
 
+        const SAVE_ACTION = 'slickquiz_save_quiz';
+
+
         // Constructor
         function __construct()
         {
@@ -32,6 +35,9 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
             if ( isset( $_POST['json'] ) ) {
                 $this->create_draft( $_POST['json'] );
                 $quiz = $this->get_last_quiz_by_user( get_current_user_id() );
+
+                // #58: Action for each of the four create/ update Ajax responders.
+                do_action(self::SAVE_ACTION, $quiz, 'create_draft');
                 echo $quiz->id;
             } else {
                 echo 'Something went wrong, please try again.';
@@ -44,6 +50,8 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
             if ( isset( $_POST['json'] ) ) {
                 $this->create_published( $_POST['json'] );
                 $quiz = $this->get_last_quiz_by_user( get_current_user_id() );
+
+                do_action(self::SAVE_ACTION, $quiz, 'create_published');
                 echo $quiz->id;
             } else {
                 echo 'Something went wrong, please try again.';
@@ -56,6 +64,8 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
             if ( isset( $_POST['json'] ) ) {
                 $quiz = $this->get_quiz_by_id( $_GET['id'] );
                 $this->update_draft( $_POST['json'], $quiz->id );
+
+                do_action(self::SAVE_ACTION, $quiz, 'update_draft');
                 echo $quiz->id;
             } else {
                 echo 'Something went wrong, please try again.';
@@ -68,6 +78,8 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
             if ( isset( $_POST['json'] ) ) {
                 $quiz = $this->get_quiz_by_id( $_GET['id'] );
                 $this->update_published( $_POST['json'], $quiz->id );
+
+                do_action(self::SAVE_ACTION, $quiz, 'update_published');
                 echo $quiz->id;
             } else {
                 echo 'Something went wrong, please try again.';
