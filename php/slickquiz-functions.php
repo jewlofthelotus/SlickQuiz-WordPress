@@ -36,6 +36,7 @@ if ( !class_exists( 'SlickQuizFunctions' ) ) {
                 $this->create_draft( $_POST['json'] );
                 $quiz = $this->get_last_quiz_by_user( get_current_user_id() );
 
+                // #58: Action for each of the four create/ update Ajax responders.
                 do_action(self::SAVE_ACTION, $quiz, 'create_draft');
                 echo $quiz->id;
             } else {
