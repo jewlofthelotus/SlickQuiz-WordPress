@@ -3,8 +3,8 @@ Contributors: jewlofthelotus
 Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
-Tested up to: 3.8.1
-Stable tag: 1.3
+Tested up to: 3.9
+Stable tag: 1.3.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -122,6 +122,9 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.3.1 =
+* SECURITY FIX!! Updating a few queries to prevent SQL injection.
 
 = 1.3 =
 * NEW option to toggle question count ("Question x of X") on and off.
@@ -267,6 +270,9 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.3.1 =
+* SECURITY FIX!! Updating a few queries to prevent SQL injection.
 
 = 1.3 =
 * NEW option to toggle question count ("Question x of X") on and off.

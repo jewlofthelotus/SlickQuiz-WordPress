@@ -246,7 +246,8 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
         {
             global $wpdb, $data;
             $db_name = $wpdb->prefix . 'plugin_slickquiz';
-            $wpdb->query( "DELETE FROM $db_name WHERE id = $id" );
+            $wpdb->query( $wpdb->prepare(
+                "DELETE FROM `$db_name` WHERE `id` = %d", $id ) );
         }
 
 
@@ -276,7 +277,8 @@ if ( !class_exists( 'SlickQuizModel' ) ) {
         {
             global $wpdb, $data;
             $db_name = $wpdb->prefix . 'plugin_slickquiz_scores';
-            $wpdb->query( "DELETE FROM $db_name WHERE id = $id" );
+            $wpdb->query( $wpdb->prepare(
+                "DELETE FROM $db_name WHERE id = %d", $id ) );
         }
     }
 }
