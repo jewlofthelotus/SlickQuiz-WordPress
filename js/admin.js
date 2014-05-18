@@ -11,11 +11,6 @@ jQuery(document).ready(function($) {
         }
     }
 
-
-    // #58: Optional callback (maybe this should be in "defaults" and/or "plugin.config").
-    var preSaveQuizCallback;
-
-
     // Setup Quiz Form
     $.setupQuizForm = function(element, options) {
         var $element = $(element),
@@ -926,15 +921,14 @@ jQuery(document).ready(function($) {
 
 
     // #58: Set and call an optional callback.
+    var preSaveQuizCallback;
 
     $.fn.setPreSaveQuiz = function (callback) {
         preSaveQuizCallback = callback;
     };
 
     function callPreSaveQuiz() {
-        //Not required: if("function" == typeof preSaveQuizCallback)
         var extra_data = preSaveQuizCallback && preSaveQuizCallback();
-        window.console && console.log("preSaveQuiz callback", extra_data);
         return extra_data || null;
     }
 
