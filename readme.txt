@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 3.9
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -62,14 +62,46 @@ To use the `[slickquiz id=X]` shortcode in the sidebar Text widget, add the foll
 
 There are currently three filter actions that you may hook into:
 
-`slickquiz_admin_options` - This allows you to add custom admin options.
+`slickquiz_admin_options` This allows you to add custom admin options.
 
-`slickquiz_after_options` - This allows you to add custom markup to the bottom of SlickQuiz Options form (you would likely add data to your custom `slickquiz_admin_options` here).
+`slickquiz_after_options` This allows you to add custom markup to the bottom of SlickQuiz Options form (you would likely add data to your custom `slickquiz_admin_options` here).
 
-`slickquiz_after_result` - This allows you to add custom markup to the bottom of the quiz results area at the end of the quiz (you would likely output data from your custom `slickquiz_admin_options` here).
+`slickquiz_after_result` This allows you to add custom markup to the bottom of the quiz results area at the end of the quiz (you would likely output data from your custom `slickquiz_admin_options` here).
 
 For an example of how to utilize these hooks, see this
 [gist](https://gist.github.com/jewlofthelotus/9022902).
+
+= Saving Additional Quiz Data =
+
+It is possible to store extra data along with the main quiz JSON object. This would be useful if you're extending the quiz or integrating it with another plugin.
+
+There is currently one JavaScript callback that you may use to add data when a quiz is saved to a draft or published. It will save extra data to an attribute named "extra" in the quiz JSON object. You would call it like below:
+
+`jQuery(document).ready(function($) {
+  $.fn.setPreSaveQuiz(function () {
+    // Append some "extra" data to the SlickQuiz POST.
+    return { some: 'data', another: 'piece of data' };
+  });
+});`
+
+There is also a `slickquiz_save_quiz` WordPress action you can use to grab the quiz and extract the "extra" data when the quiz is saved to a draft or published. You might set up something like this:
+
+`class YourCustomClass {
+  function __construct()
+  {
+    add_action('slickquiz_save_quiz', array( &$this, 'custom_quiz_data_action' ));
+  }
+
+  function custom_quiz_data_action( $quiz, $mode = 'create_draft' )
+  {
+      $data  = json_decode( $_POST['json'] );
+      $extra = $data->extra;
+      // Do custom stuff
+  }
+}`
+
+Note, the `$mode` option will return one of the following values: 'create_draft', 'create_published', 'update_draft', 'update_published'
+
 
 
 == Frequently Asked Questions ==
@@ -122,6 +154,9 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.3.2 =
+* NEW developer methods for saving extra data along with the quiz via JavaScript and WordPress. See [Installation](http://wordpress.org/plugins/slickquiz/installation/) for more details. Thanks to [@nfreear](https://github.com/nfreear) for the contribution!
 
 = 1.3.1 =
 * SECURITY FIX!! Updating a few queries to prevent SQL injection.
@@ -270,6 +305,9 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.3.2 =
+* NEW developer methods for saving extra data along with the quiz via JavaScript and WordPress. See [Installation](http://wordpress.org/plugins/slickquiz/installation/) for more details. Thanks to [@nfreear](https://github.com/nfreear) for the contribution!
 
 = 1.3.1 =
 * SECURITY FIX!! Updating a few queries to prevent SQL injection.
