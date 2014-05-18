@@ -12,8 +12,8 @@ jQuery(document).ready(function($) {
     }
 
 
-//NDF: this should be in "defaults" and/or "plugin.config"?!
-    var preSaveQuiz_callback = function () {};
+    // #58: Optional callback (maybe this should be in "defaults" and/or "plugin.config").
+    var preSaveQuizCallback;
 
 
     // Setup Quiz Form
@@ -40,10 +40,6 @@ jQuery(document).ready(function($) {
             toggleQuestionSet:  'a.toggleQuestionSet',
             toggleQuestionSets: 'a.toggleQuestionSets',
             requiredString:     '<img alt="*" height="16" src="' + imagePath + 'required.png" width="16"> ',
-
-//NDF:
-            // This option needs to get into "plugin.config" - how?
-            preSaveQuiz:        function () {},
 
             fields:             [
                 {
@@ -430,7 +426,6 @@ jQuery(document).ready(function($) {
                     return false;
                 }
 
-//NDF:
                 formValues.extra = callPreSaveQuiz();
 
                 var formJSON = JSON.stringify(formValues);
@@ -465,7 +460,7 @@ jQuery(document).ready(function($) {
                     alert('There were a few errors with your submission. Please fix them and try again.');
                     return false;
                 }
-//NDF:
+
                 formValues.extra = callPreSaveQuiz();
 
                 var formJSON = JSON.stringify(formValues);
@@ -496,7 +491,7 @@ jQuery(document).ready(function($) {
                     alert('There were a few errors with your submission. Please fix them and try again.');
                     return false;
                 }
-//NDF:
+
                 formValues.extra = callPreSaveQuiz();
 
                 var formJSON = JSON.stringify(formValues);
@@ -930,19 +925,17 @@ jQuery(document).ready(function($) {
     }
 
 
-//NDF:
-    // Set an optional callback.
+    // #58: Set and call an optional callback.
+
     $.fn.setPreSaveQuiz = function (callback) {
-        preSaveQuiz_callback = callback;
-        //plugin.config.preSaveQuiz = callback;
+        preSaveQuizCallback = callback;
     };
 
     function callPreSaveQuiz() {
-        var extra_data = preSaveQuiz_callback();
+        //Not required: if("function" == typeof preSaveQuizCallback)
+        var extra_data = preSaveQuizCallback && preSaveQuizCallback();
         window.console && console.log("preSaveQuiz callback", extra_data);
-        return extra_data;
-
-        //return plugin.config.preSaveQuiz();
+        return extra_data || null;
     }
 
 
