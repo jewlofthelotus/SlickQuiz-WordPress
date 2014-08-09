@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 3.9
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -154,6 +154,13 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.3.3 =
+* NEW option for questions with single answers - force the answers to use checkboxes to obscure the fact that there is only one answer from the user.
+* NEW option to display answer options along with response messaging after each question.
+* NEW option to prevent the score from displaying with the results.
+* NEW option to prevent the ranking level from displaying with the results (also makes ranking levels optional in quiz forms).
+* Adjusted how email saving works: if score saving is enabled and a user is logged in, an email will always be saved for them (regardless of whether or not there is a value in the Email field is set to display.)
 
 = 1.3.2 =
 * NEW developer methods for saving extra data along with the quiz via JavaScript and WordPress. See [Installation](http://wordpress.org/plugins/slickquiz/installation/) for more details. Thanks to [@nfreear](https://github.com/nfreear) for the contribution!
@@ -305,6 +312,13 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.3.3 =
+* NEW option for questions with single answers - force the answers to use checkboxes to obscure the fact that there is only one answer from the user.
+* NEW option to display answer options along with response messaging after each question.
+* NEW option to prevent the score from displaying with the results.
+* NEW option to prevent the ranking level from displaying with the results (also makes ranking levels optional in quiz forms).
+* Adjusted how email saving works: if score saving is enabled and a user is logged in, an email will always be saved for them (regardless of whether or not there is a value in the Email field is set to display.)
 
 = 1.3.2 =
 * NEW developer methods for saving extra data along with the quiz via JavaScript and WordPress. See [Installation](http://wordpress.org/plugins/slickquiz/installation/) for more details. Thanks to [@nfreear](https://github.com/nfreear) for the contribution!

@@ -1,4 +1,3 @@
-// Mortgage Knowledge Quiz
 jQuery(document).ready(function($) {
 
     var adminPath = location.pathname.replace(/wp-admin.*/, 'wp-admin/');
@@ -22,6 +21,9 @@ jQuery(document).ready(function($) {
 
         // If editing a quiz, quizJSON will exist
         var quizValues = (typeof quizJSON != 'undefined' ? quizJSON : null);
+
+        // See if we need to hide and unrequire the ranking levels
+        var rankingDisabled = (typeof disableRanking != 'undefined' ? disableRanking : null);
 
         var defaults = {
             quizArea:           'div.quizFormWrapper',
@@ -127,13 +129,18 @@ jQuery(document).ready(function($) {
             addDefaultFields: function(fieldset) {
                 for (f in defaults.fields) {
                     // get field info - if quizJSON exists, use quizJSON data
-                    field     = defaults.fields[f];
+                    field = defaults.fields[f];
                     inputName = field.q.replace(/\W/g,'');
-                    required  = field.required ? defaults.requiredString : '';
                     nameAndId = 'name="' + inputName + '" id="' + inputName + '"';
                     placeholder = field.placeholder ? 'placeholder="' + field.placeholder + '"' : '';
+                    required  = field.required ? defaults.requiredString : '';
 
-                    if (quizValues != null) {
+                    if (rankingDisabled && /^level/.test(field.jsonName)) {
+                        required = '';
+                        field.required = false;
+                    }
+
+                    if (quizValues != null && quizValues.info[field.jsonName]) {
                         value = plugin.formHelper.htmlspecialchars(quizValues.info[field.jsonName]);
                     } else {
                         value = '';
@@ -142,7 +149,7 @@ jQuery(document).ready(function($) {
                     // Setup Field Container
                     defaultQuestionHTML = $('<div class="question ' + inputName + '"></div>');
 
-                    // Add Input Group Label (e.g. "Knowledge Levels")
+                    // Add Input Group Label (e.g. "Ranking Levels")
                     if (field.label) {
                         defaultQuestionHTML.append('<label class="main">' + field.label + '</label>');
                     }
@@ -150,6 +157,10 @@ jQuery(document).ready(function($) {
                     // Add Group Description
                     if (field.descGroup) {
                         defaultQuestionHTML.append('<small class="desc">' + field.descGroup + '</small>');
+                    }
+
+                    if (rankingDisabled && /^level1/.test(field.jsonName)) {
+                        defaultQuestionHTML.append('<p><small class="desc" style="color: goldenrod;">Ranking levels are currently disabled and will not appear in the quiz.</small></p>');
                     }
 
                     // Add Input Label
@@ -220,11 +231,14 @@ jQuery(document).ready(function($) {
                         plugin.formBuilder.addAnswer(newAnswerHTML, fieldGroup.a[f]);
                     }
 
+                    plugin.formBuilder.addForceCheckbox(newAnswerHTML, fieldGroup);
                     plugin.formBuilder.addSelectAny(newAnswerHTML, fieldGroup);
+
                 } else { // Add blank answers to NEW quiz form question
                     plugin.formBuilder.addAnswer(newAnswerHTML.children('a')[0]);
                     plugin.formBuilder.addAnswer(newAnswerHTML.children('a')[0]);
 
+                    plugin.formBuilder.addForceCheckbox(newAnswerHTML.children('a')[0]);
                     plugin.formBuilder.addSelectAny(newAnswerHTML.children('a')[0]);
                 }
 
@@ -252,13 +266,27 @@ jQuery(document).ready(function($) {
                 addAnswerLink = fieldGroup ? $(element) : $(element).parent();
 
                 var anyAnswerHTML = '<div class="question selectAny">'
-                    + '<input type="checkbox" name="select_any"' + (fieldGroup && fieldGroup.select_any ? ' checked="checked"' : '') + ' /> '
-                    + '<label>Selecting any <strong>single</strong> correct answer is valid</label><br /> '
-                    + '<small class="desc">If you have more than one correct answer for this quesiton, by default the user must choose all correct answers to pass.</small><br />'
+                    + '<label><input type="checkbox" name="select_any"' + (fieldGroup && fieldGroup.select_any ? ' checked="checked"' : '') + ' /> '
+                    + 'Selecting any <strong>single</strong> correct answer is valid</label><br /> '
+                    + '<small class="desc">If you have more than one correct answer for this question, by default the user must choose all correct answers to pass.</small><br />'
                     + '<small class="desc">Checking this box will change the question so that choosing any single correct answer will result in a correct response.</small> '
                     + '</div>';
 
                 addAnswerLink.after($(anyAnswerHTML).hide().fadeIn(800));
+            },
+
+            // Adds "force checkbox" answer option to the selected question
+            addForceCheckbox: function(element, fieldGroup) {
+                addAnswerLink = fieldGroup ? $(element) : $(element).parent();
+
+                var forceCheckboxHTML = '<div class="question forceCheckbox">'
+                    + '<label><input type="checkbox" name="force_checkbox"' + (fieldGroup && fieldGroup.force_checkbox ? ' checked="checked"' : '') + ' /> '
+                    + '<strong>Use checkboxes</strong> even if the question only has one correct answer</label><br /> '
+                    + '<small class="desc">If you only have one correct answer for this quesiton, by default the quiz will display radio buttons (which only allow a single selection).</small><br />'
+                    + '<small class="desc">Checking this box will force the question to display checkboxes, which obscures the fact that there is a single answer from the user.</small> '
+                    + '</div>';
+
+                addAnswerLink.after($(forceCheckboxHTML).hide().fadeIn(800));
             },
 
             // Return toggle elements
@@ -630,6 +658,7 @@ jQuery(document).ready(function($) {
                     incorrectResponse = $($(questionSet).children('.incorrect').children('textarea')[0]);
                     answers           = $($(questionSet).children('.answer'));
                     selectAny         = $($(questionSet).find('.selectAny input[type="checkbox"]')[0]).attr('checked');
+                    forceCheckbox     = $($(questionSet).find('.forceCheckbox input[type="checkbox"]')[0]).attr('checked');
                     question          = {"a": []};
                     correctAnswers    = false;
 
@@ -663,10 +692,11 @@ jQuery(document).ready(function($) {
                     if ($.inArray(false, questionValidations) > -1) {
                         valid = false;
                     } else {
-                        question["q"]         = questionInput.attr('value');
-                        question["correct"]   = correctResponse.attr('value');
-                        question["incorrect"] = incorrectResponse.attr('value');
-                        question["select_any"] = selectAny ? true : false;
+                        question["q"]              = questionInput.attr('value');
+                        question["correct"]        = correctResponse.attr('value');
+                        question["incorrect"]      = incorrectResponse.attr('value');
+                        question["select_any"]     = selectAny ? true : false;
+                        question["force_checkbox"] = forceCheckbox ? true : false;
                         quizJson["questions"].push(question);
                     }
                 });

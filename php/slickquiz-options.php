@@ -19,6 +19,11 @@ if ( !class_exists( 'SlickQuizOptions' ) ) {
             $this->get_admin_options();
 
             if ( isset( $_POST['slickQuizOptions'] ) ) {
+                // Handle checkboxes
+                if ( isset( $_POST['slickQuizOptions']['perquestion_response_answers'] ) != true ) {
+                    $_POST['slickQuizOptions']['perquestion_response_answers'] = '0';
+                }
+
                 $this->adminOptions = array_merge( $this->adminOptions, stripslashes_deep( $_POST['slickQuizOptions'] ) );
                 update_option( $this->adminOptionsName, $this->adminOptions );
 
@@ -69,7 +74,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                         <label for="slickQuizOptions[check_answer_text]"><em>CHECK ANSWER</em> button text</label>
                     </th>
                     <td>
-                        <input type="text" name="slickQuizOptions[check_answer_text]" class="regular-text"
+                        <input type="text" name="slickQuizOptions[check_answer_text]" class="regular-text" required
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'check_answer_text' ) ), 'SlickQuizPlugin' ); ?>" />
                     </td>
                 </tr>
@@ -78,7 +83,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                         <label for="slickQuizOptions[next_question_text]"><em>NEXT QUESTION</em> button text</label>
                     </th>
                     <td>
-                        <input type="text" name="slickQuizOptions[next_question_text]" class="regular-text"
+                        <input type="text" name="slickQuizOptions[next_question_text]" class="regular-text" required
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'next_question_text' ) ), 'SlickQuizPlugin' ); ?>" />
                     </td>
                 </tr>
@@ -202,13 +207,17 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr id="responses" valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[completion_responses]">Display correct / incorrect response messaging <em>after each question</em>?</label>
+                        <label for="slickQuizOptions[perquestion_responses]">Display correct / incorrect response messaging <em>after each question</em>?</label>
                     </th>
                     <td>
                         <input type="radio" name="slickQuizOptions[perquestion_responses]" value="0"
                             <?php $slickQuizOptions->get_admin_option( 'perquestion_responses' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
                         <input type="radio" name="slickQuizOptions[perquestion_responses]" value="1"
                             <?php $slickQuizOptions->get_admin_option( 'perquestion_responses' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                        &nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="slickQuizOptions[perquestion_response_answers]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'perquestion_response_answers' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Also display answer options
+                        <br /><small><em>Selecting "Yes" will display result messaging after submitting each answer.<br />
+                            When enabled, additionally enabling "Also display answer options" will include the answer options with results.</em></small>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -220,6 +229,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                             <?php $slickQuizOptions->get_admin_option( 'completion_responses' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
                         <input type="radio" name="slickQuizOptions[completion_responses]" value="1"
                             <?php $slickQuizOptions->get_admin_option( 'completion_responses' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                        <br /><small><em>Selecting "Yes" will display the answer options along with result messaging at the end of the quiz.</em></small>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -244,6 +254,30 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                             <?php $slickQuizOptions->get_admin_option( 'question_number' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
                         <input type="radio" name="slickQuizOptions[question_number]" value="1"
                             <?php $slickQuizOptions->get_admin_option( 'question_number' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[disable_score]">Prevent the score from displaying with the results?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[disable_score]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'disable_score' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[disable_score]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'disable_score' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                        <br /><small><em>Note: Scores will still be saved, if "Save user scores?" is enabled.</em></small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[disable_ranking]">Prevent the ranking level from displaying with the results?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[disable_ranking]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'disable_ranking' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[disable_ranking]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'disable_ranking' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                        <br /><small><em>Note: If disabled, ranking levels will no longer be required during quiz creation.</em></small>
                     </td>
                 </tr>
             </tbody>
@@ -271,7 +305,8 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                     <td>
                         <input type="text" name="slickQuizOptions[name_label]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'name_label' ) ), 'SlickQuizPlugin' ); ?>" />
-                        <br /><small><em>This field will only display if saving scores is enabled and the user is not logged in.</em></small>
+                        <br /><small><em>This field will only display if saving scores is enabled and the user is not logged in.<br />
+                            User names will ALWAYS be saved for logged in users if score saving is enabled.</em></small>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -281,8 +316,8 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                     <td>
                         <input type="text" name="slickQuizOptions[email_label]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'email_label' ) ), 'SlickQuizPlugin' ); ?>" />
-                        <br /><small><em>If left blank, no EMAIL field will be displayed and email addresses will NOT be stored.<br/>
-                            This field will only display if saving scores is enabled and the user is not logged in.</em></small>
+                        <br /><small><em>This field will only display if saving scores is enabled and the user is not logged in.<br />
+                            Email addresses will ALWAYS be saved for logged in users if score saving is enabled.</em></small>
                     </td>
                 </tr>
             </tbody>

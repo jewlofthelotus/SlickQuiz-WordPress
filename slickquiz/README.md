@@ -16,9 +16,12 @@ To initialize your quiz:
     });
 
 
-### Available Options
+## Available Options
 
 **`json`** (JSON Object) - your quiz JSON, pass this instead of setting quizJSON outside of the plugin (see js/slickQuiz-config.js)
+
+
+#### Text Options
 
 **`checkAnswerText`** (String) *Default: 'Check My Answer!';* - the text to use on the check answer button
 
@@ -27,6 +30,19 @@ To initialize your quiz:
 **`backButtonText`** (String) *Default: '';* - the text to use on the back button; if left null / blank (default) - no back button will be displayed
 
 **`tryAgainText`** (String) *Default: '';* - the text to use on the try again button; if left null / blank - no try again button will be displayed
+
+**`preventUnansweredText`** (String) *Defaut: 'You must select at least one answer.';* - the text to display if a user submits a blank answer while <code>preventUnanswered</code> is enabled
+
+**`questionCountText`** (String) *Defaut: 'Question %current of %total';* - if <code>displayQuestionCount</code> is enabled, this will format that text using the string provided. <code>%current</code> and <code>%total</code> are placeholders that will output the appropriate values. Note: <code>displayQuestionCount</code> may eventually be deprecated in favor of this option
+
+**`questionTemplateText`** (String) *Defaut:  '%count. %text';* - if <code>displayQuestionNumber</code> is enabled, this will format that question number and question using the string provided. <code>%count</code> and <code>%text</code> are placeholders that will output the appropriate values. Note: <code>displayQuestionNumber</code> may eventually be deprecated in favor of this option
+
+**`scoreTemplateText`** (String) *Defaut: '%score / %total';* - the format of the final score text. <code>%score</code> and <code>%total</code> are placeholders that will output the appropriate values
+
+**`nameTemplateText`** (String) *Defaut:  '&lt;span&gt;Quiz: &lt;/span&gt;%name';* - the format of the quiz name; <code>%name</code> is a placeholder that will output the quiz name. Note: the "Quiz" span in the default value is used to enhance accessibility, it will not display on the screen.
+
+
+#### Functionality Options
 
 **`skipStartButton`** (Boolean) *Default: false;* - whether or not to skip the quiz "start" button
 
@@ -40,21 +56,36 @@ To initialize your quiz:
 
 **`perQuestionResponseMessaging`** (Boolean) *Default: true;* - Displays correct / incorrect response messages after each question is submitted.
 
-**`completionResponseMessaging`** (Boolean) *Default: false;* - Displays all questions and selected answers with correct or incorrect response messages when the quiz is completed.
+**`perquestionResponseAnswers`** (Boolean) *Default: false;* - Keeps the answer options in display after the question is submitted. Note: this should be used in tandem with <code>perQuestionResponseMessaging</code>
 
-**`displayQuestionCount`** (Boolean) *Default: true;* - whether or not to display the number of questions and which question the user is on, for example "Question 3 of 10"
+**`completionResponseMessaging`** (Boolean) *Default: false;* - Displays all questions and answers with correct or incorrect response messages when the quiz is completed.
 
-**`displayQuestionNumber`** (Boolean) *Default: true;* - whether or not to display the number of the question along side the question itself, for example, the "1." in "1. What is the first letter of the alphabet?"
+**`displayQuestionCount`** (Boolean) *Default: true;* - whether or not to display the number of questions and which question the user is on, for example "Question 3 of 10". Note: this may eventually be deprecated in favor of <code>questionCountText</code>
+
+**`displayQuestionNumber`** (Boolean) *Default: true;* - whether or not to display the number of the question along side the question itself, for example, the "1." in "1. What is the first letter of the alphabet?" Note: this may eventually be deprecated in favor of <code>questionTemplateText</code>
+
+**`disableScore`** (Boolean) *Default: false;* - Removes the score from the final results display. Eliminates the need for an element with class <code>quizScore</code> in the markup.
+
+**`disableRanking`** (Boolean) *Default: false;* - Removes the ranking leve from the final results display. Eliminates the need for an element with class <code>quizLevel</code> in the markup, as well as the need for JSON values for <code>level1</code> through <code>level5</code>.
 
 
-### Event Options
+#### Question Options
+
+*See "Base Config Options" below for examples*
+
+**`select_any`** (Boolean) *Optional*  - Use if there is more than one true answer and when submitting any single true answer should be considered correct.  (Select ANY that apply vs. Select ALL that apply)
+
+**`force_checkbox`** (Boolean) *Optional* - Set this to `true` if you want to render checkboxes instead of radios even if the question only has one true answer.
+
+
+#### Event Options
 
 **`events.onStartQuiz`** (function) *Default: empty;* - a function to be executed once the quiz has started.
 
 **`events.onCompleteQuiz`** (function) *Default: empty;* - a function to be executed the quiz has completed; the function will be passed two arguments in an object: <code>options.questionCount</code>, <code>options.score</code>
 
 
-### Animation Callback Options
+#### Animation Callback Options
 
 **`animationCallbacks.setupQuiz`** (function) *Default: empty;* - a function to be executed once all jQuery animations have completed in the <code>setupQuiz</code> method
 
@@ -136,13 +167,13 @@ See `js/slickQuiz-config.js`
                     {"option": "a correct answer",          "correct": true},
                     {"option": "another correct answer",    "correct": true}
                 ],
-                "select_any": false, // optional, see below
                 "correct": "The Correct Response Message",
-                "incorrect": "The Incorrect Response Message"
+                "incorrect": "The Incorrect Response Message",
+                "select_any": false, // optional, see "Question Options" above
+                "force_checkbox": false // optional, see "Question Options" above
             }
         ]
     }
 
-Note: `select_any` is used if there is more than one true answer and when submitting any single true answer is considered correct.  (Select ANY that apply vs. Select ALL that apply)
 
 Created by [Julie Cameron](http://juliecameron.com) while previously employed at [Quicken Loans](http://quickenloans.com), Detroit, MI

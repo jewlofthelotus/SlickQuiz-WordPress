@@ -89,9 +89,12 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
                 randomSort:                   <?php echo( $slickQuizPreview->get_admin_option( 'random_sort' ) == '1' ? 'true' : 'false' ) ?>,
                 preventUnanswered:            <?php echo( $slickQuizPreview->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) ?>,
                 perQuestionResponseMessaging: <?php echo( $slickQuizPreview->get_admin_option( 'perquestion_responses' ) == '1' ? 'true' : 'false' ) ?>,
+                perQuestionResponseAnswers:   <?php echo( $slickQuizPreview->get_admin_option( 'perquestion_response_answers' ) == '1' ? 'true' : 'false' ) ?>,
                 completionResponseMessaging:  <?php echo( $slickQuizPreview->get_admin_option( 'completion_responses' ) == '1' ? 'true' : 'false' ) ?>,
                 displayQuestionCount:         <?php echo( $slickQuizPreview->get_admin_option( 'question_count' ) == '1' ? 'true' : 'false' ) ?>,
-                displayQuestionNumber:        <?php echo( $slickQuizPreview->get_admin_option( 'question_number' ) == '1' ? 'true' : 'false' ) ?>
+                displayQuestionNumber:        <?php echo( $slickQuizPreview->get_admin_option( 'question_number' ) == '1' ? 'true' : 'false' ) ?>,
+                disableScore:                 <?php echo( $slickQuizPreview->get_admin_option( 'disable_score' ) == '1' ? 'true' : 'false' ) ?>,
+                disableRanking:               <?php echo( $slickQuizPreview->get_admin_option( 'disable_ranking' ) == '1' ? 'true' : 'false' ) ?>
             });
         });
     </script>

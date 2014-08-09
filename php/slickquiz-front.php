@@ -87,9 +87,12 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         randomSortAnswers:            ' . ( $this->get_admin_option( 'random_sort_answers' ) == '1' ? 'true' : 'false' ) . ',
                                         preventUnanswered:            ' . ( $this->get_admin_option( 'disable_next' ) == '1' ? 'true' : 'false' ) . ',
                                         perQuestionResponseMessaging: ' . ( $this->get_admin_option( 'perquestion_responses' ) == '1' ? 'true' : 'false' ) . ',
+                                        perQuestionResponseAnswers:   ' . ( $this->get_admin_option( 'perquestion_response_answers' ) == '1' ? 'true' : 'false' ) . ',
                                         completionResponseMessaging:  ' . ( $this->get_admin_option( 'completion_responses' ) == '1' ? 'true' : 'false' ) . ',
                                         displayQuestionCount:         ' . ( $this->get_admin_option( 'question_count' ) == '1' ? 'true' : 'false' ) . ',
-                                        displayQuestionNumber:        ' . ( $this->get_admin_option( 'question_number' ) == '1' ? 'true' : 'false' ) . '
+                                        displayQuestionNumber:        ' . ( $this->get_admin_option( 'question_number' ) == '1' ? 'true' : 'false' ) . ',
+                                        disableScore:                 ' . ( $this->get_admin_option( 'disable_score' ) == '1' ? 'true' : 'false' ) . ',
+                                        disableRanking:               ' . ( $this->get_admin_option( 'disable_ranking' ) == '1' ? 'true' : 'false' ) . '
                                     });';
 
                         if ( $this->get_admin_option( 'save_scores' ) == '1' ) {
@@ -119,7 +122,9 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         + "<input type=\"text\" value=\"' . $name . '\" /></div>"
                                     );';
 
-                            if ( $this->get_admin_option( 'email_label' ) != '' ) {
+                            if ( $name || $this->get_admin_option( 'email_label' ) != '') {
+                                $display = $name ? 'style=\"display: none;\"' : '';
+
                                 $out .= '
                                     // insert a email field before the button
                                     $("#slickQuiz' . $quiz->id . ' .buttonWrapper").before(

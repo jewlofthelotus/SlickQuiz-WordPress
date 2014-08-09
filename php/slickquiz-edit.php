@@ -16,7 +16,10 @@ if ( !class_exists( 'SlickQuizEdit' ) ) {
         // Constructor
         function __construct()
         {
-            global $quiz;
+            global $quiz, $pluginOptions;
+
+            $this->get_admin_options();
+
             $quiz = $this->get_quiz_by_id( $_GET['id'] );
 
             // Add Form JS
@@ -109,4 +112,5 @@ if ( class_exists( 'SlickQuizEdit' ) ) {
 
 <script type="text/javascript">
     var quizJSON = <?php $slickQuizEdit->get_quiz_json(); ?>;
+    var disableRanking = <?php echo( $slickQuizEdit->get_admin_option( 'disable_ranking' ) == '1' ? 'true' : 'false' ); ?>;
 </script>

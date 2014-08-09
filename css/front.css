@@ -96,6 +96,8 @@
     display: block;
     font-weight: bold;
 }
+
+.slickQuizWrapper ul.answers li.correct,
 .slickQuizWrapper ul.responses li.correct p span {
     color: #6C9F2E;
 }

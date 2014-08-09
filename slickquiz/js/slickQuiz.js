@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated March 23, 2014
- * @version 1.5.15
+ * @updated August 9, 2014
+ * @version 1.5.164
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -21,15 +21,23 @@
                 nextQuestionText: 'Next &raquo;',
                 backButtonText: '',
                 tryAgainText: '',
+                questionCountText: 'Question %current of %total',
+                preventUnansweredText: 'You must select at least one answer.',
+                questionTemplateText:  '%count. %text',
+                scoreTemplateText: '%score / %total',
+                nameTemplateText:  '<span>Quiz: </span>%name',
                 skipStartButton: false,
                 numberOfQuestions: null,
                 randomSortQuestions: false,
                 randomSortAnswers: false,
                 preventUnanswered: false,
+                disableScore: false,
+                disableRanking: false,
                 perQuestionResponseMessaging: true,
+                perQuestionResponseAnswers: false,
                 completionResponseMessaging: false,
-                displayQuestionCount: true,
-                displayQuestionNumber: true,
+                displayQuestionCount: true,   // Deprecate?
+                displayQuestionNumber: true,  // Deprecate?
                 animationCallbacks: { // only for the methods that have jQuery animations offering callback
                     setupQuiz: function () {},
                     startQuiz: function () {},
@@ -52,10 +60,12 @@
             answersClass           = 'answers',
             responsesClass         = 'responses',
             correctClass           = 'correctResponse',
+            incorrectClass         = 'incorrectResponse',
             correctResponseClass   = 'correct',
             incorrectResponseClass = 'incorrect',
             checkAnswerClass       = 'checkAnswer',
             nextQuestionClass      = 'nextQuestion',
+            lastQuestionClass      = 'lastQuestion',
             backToQuestionClass    = 'backToQuestion',
             tryAgainClass          = 'tryAgain',
 
@@ -64,7 +74,9 @@
             _questions             = '.' + questionGroupClass,
             _question              = '.' + questionClass,
             _answers               = '.' + answersClass,
+            _answer                = '.' + answersClass + ' li',
             _responses             = '.' + responsesClass,
+            _response              = '.' + responsesClass + ' li',
             _correct               = '.' + correctClass,
             _correctResponse       = '.' + correctResponseClass,
             _incorrectResponse     = '.' + incorrectResponseClass,
@@ -155,31 +167,30 @@
 
         // some special private/internal methods
         var internal = {method: {
+            // get a key whose notches are "resolved jQ deferred" objects; one per notch on the key
+            // think of the key as a house key with notches on it
+            getKey: function (notches) { // returns [], notches >= 1
+                var key = [];
+                for (i=0; i<notches; i++) key[i] = $.Deferred ();
+                return key;
+            },
 
-                // get a key whose notches are "resolved jQ deferred" objects; one per notch on the key
-                // think of the key as a house key with notches on it
-                getKey: function (notches) { // returns [], notches >= 1
-                    var key = [];
-                    for (i=0; i<notches; i++) key[i] = $.Deferred ();
-                    return key;
-                },
+            // put the key in the door, if all the notches pass then you can turn the key and "go"
+            turnKeyAndGo: function (key, go) { // key = [], go = function ()
+                // when all the notches of the key are accepted (resolved) then the key turns and the engine (callback/go) starts
+                $.when.apply (null, key). then (function () {
+                    go ();
+                });
+            },
 
-                // put the key in the door, if all the notches pass then you can turn the key and "go"
-                turnKeyAndGo: function (key, go) { // key = [], go = function ()
-                    // when all the notches of the key are accepted (resolved) then the key turns and the engine (callback/go) starts
-                    $.when.apply (null, key). then (function () {
-                        go ();
-                    });
-                },
-
-                // get one jQ
-                getKeyNotch: function (key, notch) { // notch >= 1, key = []
-                    // key has several notches, numbered as 1, 2, 3, ... (no zero notch)
-                    // we resolve and return the "jQ deferred" object at specified notch
-                    return function () {
-                        key[notch-1].resolve (); // it is ASSUMED that you initiated the key with enough notches
-                    };
-                }
+            // get one jQ
+            getKeyNotch: function (key, notch) { // notch >= 1, key = []
+                // key has several notches, numbered as 1, 2, 3, ... (no zero notch)
+                // we resolve and return the "jQ deferred" object at specified notch
+                return function () {
+                    key[notch-1].resolve (); // it is ASSUMED that you initiated the key with enough notches
+                };
+            }
         }};
 
         plugin.method = {
@@ -190,7 +201,8 @@
                 keyNotch = internal.method.getKeyNotch; // a function that returns a jQ animation callback function
                 kN = keyNotch; // you specify the notch, you get a callback function for your animation
 
-                $quizName.hide().html(quizValues.info.name).fadeIn(1000, kN(key,1));
+                $quizName.hide().html(plugin.config.nameTemplateText
+                    .replace('%name', quizValues.info.name) ).fadeIn(1000, kN(key,1));
                 $quizHeader.hide().prepend($('<div class="quizDescription">' + quizValues.info.main + '</div>')).fadeIn(1000, kN(key,2));
                 $quizResultsCopy.append(quizValues.info.results);
 
@@ -211,14 +223,21 @@
                         var questionHTML = $('<li class="' + questionClass +'" id="question' + (count - 1) + '"></li>');
 
                         if (plugin.config.displayQuestionCount) {
-                            questionHTML.append('<div class="' + questionCountClass + '">Question <span class="current">' + count + '</span> of <span class="total">' + questionCount + '</span></div>');
+                            questionHTML.append('<div class="' + questionCountClass + '">' +
+                                plugin.config.questionCountText
+                                    .replace('%current', '<span class="current">' + count + '</span>')
+                                    .replace('%total', '<span class="total">' +
+                                        questionCount + '</span>') + '</div>');
                         }
 
-                        var questionNumber = '';
+                        var formatQuestion = '';
                         if (plugin.config.displayQuestionNumber) {
-                            questionNumber += count + '. ';
+                            formatQuestion = plugin.config.questionTemplateText
+                                .replace('%count', count).replace('%text', question.q);
+                        } else {
+                            formatQuestion = question.q;
                         }
-                        questionHTML.append('<h3>' + questionNumber + question.q + '</h3>');
+                        questionHTML.append('<h3>' + formatQuestion + '</h3>');
 
                         // Count the number of true values
                         var truths = 0;
@@ -240,9 +259,15 @@
                             question.a;
 
                         // prepare a name for the answer inputs based on the question
-                        var selectAny  = question.select_any ? question.select_any : false,
-                            inputName  = 'question' + (count - 1),
-                            inputType  = (truths > 1 && !selectAny ? 'checkbox' : 'radio');
+                        var selectAny     = question.select_any ? question.select_any : false,
+                            forceCheckbox = question.force_checkbox ? question.force_checkbox : false,
+                            checkbox      = (truths > 1 && !selectAny) || forceCheckbox,
+                            inputName     = 'question' + (count - 1),
+                            inputType     = checkbox ? 'checkbox' : 'radio';
+
+                        if( count == quizValues.questions.length ) {
+                            nextQuestionClass = nextQuestionClass + ' ' + lastQuestionClass;
+                        }
 
                         for (i in answers) {
                             if (answers.hasOwnProperty(i)) {
@@ -354,12 +379,12 @@
                     $(_element + ' input').prop('checked', false).prop('disabled', false);
 
                     $quizLevel.attr('class', 'quizLevel');
-                    $(_element + ' ' + _correct).removeClass(correctClass);
+                    $(_element + ' ' + _question).removeClass(correctClass).removeClass(incorrectClass);
+                    $(_element + ' ' + _answer).removeClass(correctResponseClass).removeClass(incorrectResponseClass);
 
                     $(_element + ' ' + _question          + ',' +
                       _element + ' ' + _responses         + ',' +
-                      _element + ' ' + _correctResponse   + ',' +
-                      _element + ' ' + _incorrectResponse + ',' +
+                      _element + ' ' + _response          + ',' +
                       _element + ' ' + _nextQuestionBtn   + ',' +
                       _element + ' ' + _prevQuestionBtn
                     ).hide();
@@ -387,35 +412,43 @@
                 kN = keyNotch; // you specify the notch, you get a callback function for your animation
 
                 var questionLI    = $($(checkButton).parents(_question)[0]),
-                    answerInputs  = questionLI.find('input:checked'),
+                    answerLIs     = questionLI.find(_answers + ' li'),
+                    answerSelects = answerLIs.find('input:checked'),
                     questionIndex = parseInt(questionLI.attr('id').replace(/(question)/, ''), 10),
                     answers       = questions[questionIndex].a,
                     selectAny     = questions[questionIndex].select_any ? questions[questionIndex].select_any : false;
+
+                answerLIs.addClass(incorrectResponseClass);
 
                 // Collect the true answers needed for a correct response
                 var trueAnswers = [];
                 for (i in answers) {
                     if (answers.hasOwnProperty(i)) {
-                        var answer = answers[i];
+                        var answer = answers[i],
+                            index  = parseInt(i, 10);
 
                         if (answer.correct) {
-                            trueAnswers.push(parseInt(i, 10));
+                            trueAnswers.push(index);
+                            answerLIs.eq(index).removeClass(incorrectResponseClass).addClass(correctResponseClass);
                         }
                     }
                 }
+
+                // TODO: Now that we're marking answer LIs as correct / incorrect, we might be able
+                // to do all our answer checking at the same time
 
                 // NOTE: Collecting answer index for comparison aims to ensure that HTML entities
                 // and HTML elements that may be modified by the browser / other scrips match up
 
                 // Collect the answers submitted
                 var selectedAnswers = [];
-                answerInputs.each( function() {
+                answerSelects.each( function() {
                     var id = $(this).attr('id');
                     selectedAnswers.push(parseInt(id.replace(/(question\d{1,}_)/, ''), 10));
                 });
 
                 if (plugin.config.preventUnanswered && selectedAnswers.length === 0) {
-                    alert('You must select at least one answer.');
+                    alert(plugin.config.preventUnansweredText);
                     return false;
                 }
 
@@ -424,6 +457,8 @@
 
                 if (correctResponse) {
                     questionLI.addClass(correctClass);
+                } else {
+                    questionLI.addClass(incorrectClass);
                 }
 
                 // Toggle appropriate response (either for display now and / or on completion)
@@ -432,7 +467,9 @@
                 // If perQuestionResponseMessaging is enabled, toggle response and navigation now
                 if (plugin.config.perQuestionResponseMessaging) {
                     $(checkButton).hide();
-                    questionLI.find(_answers).hide();
+                    if (!plugin.config.perQuestionResponseAnswers) {
+                        questionLI.find(_answers).hide();
+                    }
                     questionLI.find(_responses).show();
                     questionLI.find(_nextQuestionBtn).fadeIn(300, kN(key,1));
                     questionLI.find(_prevQuestionBtn).fadeIn(300, kN(key,2));
@@ -490,7 +527,7 @@
                     var prevQuestion = questionLI.prev(_question);
 
                     questionLI.fadeOut(300, function() {
-                        prevQuestion.removeClass(correctClass);
+                        prevQuestion.removeClass(correctClass).removeClass(incorrectClass);
                         prevQuestion.find(_responses + ', ' + _responses + ' li').hide();
                         prevQuestion.find(_answers).show();
                         prevQuestion.find(_checkAnswerBtn).show();
@@ -508,7 +545,7 @@
                 // Back to question from responses
                 } else {
                     questionLI.find(_responses).fadeOut(300, function(){
-                        questionLI.removeClass(correctClass);
+                        questionLI.removeClass(correctClass).removeClass(incorrectClass);
                         questionLI.find(_responses + ' li').hide();
                         answers.fadeIn(500, kN(key,1)); // 1st notch on key must be on both sides of if/else, otherwise key won't turn
                         questionLI.find(_checkAnswerBtn).fadeIn(500, kN(key,2));
@@ -533,20 +570,31 @@
                 keyNotch = internal.method.getKeyNotch; // a function that returns a jQ animation callback function
                 kN = keyNotch; // you specify the notch, you get a callback function for your animation
 
-                var levels    = [
-                                    quizValues.info.level1, // 80-100%
-                                    quizValues.info.level2, // 60-79%
-                                    quizValues.info.level3, // 40-59%
-                                    quizValues.info.level4, // 20-39%
-                                    quizValues.info.level5  // 0-19%
-                                ],
-                    score     = $(_element + ' ' + _correct).length,
-                    levelRank = plugin.method.calculateLevel(score),
-                    levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
+                var score = $(_element + ' ' + _correct).length;
 
-                $(_quizScore + ' span').html(score + ' / ' + questionCount);
-                $(_quizLevel + ' span').html(levelText);
-                $(_quizLevel).addClass('level' + levelRank);
+                if (plugin.config.disableScore) {
+                    $(_quizScore).remove()
+                } else {
+                    $(_quizScore + ' span').html(plugin.config.scoreTemplateText
+                        .replace('%score', score).replace('%total', questionCount));
+                }
+
+                if (plugin.config.disableRanking) {
+                    $(_quizLevel).remove()
+                } else {
+                    var levels    = [
+                                        quizValues.info.level1, // 80-100%
+                                        quizValues.info.level2, // 60-79%
+                                        quizValues.info.level3, // 40-59%
+                                        quizValues.info.level4, // 20-39%
+                                        quizValues.info.level5  // 0-19%
+                                    ],
+                        levelRank = plugin.method.calculateLevel(score),
+                        levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
+
+                    $(_quizLevel + ' span').html(levelText);
+                    $(_quizLevel).addClass('level' + levelRank);
+                }
 
                 $quizArea.fadeOut(300, function() {
                     // If response messaging is set to show upon quiz completion, show it now
@@ -643,6 +691,17 @@
                 e.preventDefault();
                 plugin.method.nextQuestion(this, {callback: plugin.config.animationCallbacks.nextQuestion});
             });
+
+            // Accessibility (WAI-ARIA).
+            var _qnid = $element.attr('id') + '-name';
+            $quizName.attr('id', _qnid);
+            $element.attr({
+              'aria-labelledby': _qnid,
+              'aria-live': 'polite',
+              'aria-relevant': 'additions',
+              'role': 'form'
+            });
+            $(_quizStarter + ', [href = "#"]').attr('role', 'button');
         };
 
         plugin.init();

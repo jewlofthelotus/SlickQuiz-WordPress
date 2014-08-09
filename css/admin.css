@@ -75,7 +75,8 @@
 .slickQuiz .quizFormWrapper .question label {
     display: block;
 }
-.slickQuiz .quizFormWrapper .selectAny label {
+.slickQuiz .quizFormWrapper .selectAny label,
+.slickQuiz .quizFormWrapper .forceCheckbox label {
     display: inline-block;
 }
 

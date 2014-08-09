@@ -12,6 +12,10 @@ if ( !class_exists( 'SlickQuizNew' ) ) {
         // Constructor
         function __construct()
         {
+            global $pluginOptions;
+
+            $this->get_admin_options();
+
             // Add Form JS
             // wp_enqueue_script( 'tiny_mce' );
             // the_editor('', 'quizContent');
@@ -58,3 +62,7 @@ if ( class_exists( 'SlickQuizNew' ) ) {
         <p class="previewNote"><em>Previewing will save changes to a draft version.</em></p>
     </div>
 </div>
+
+<script type="text/javascript">
+    var disableRanking = <?php echo( $slickQuizNew->get_admin_option( 'disable_ranking' ) == '1' ? 'true' : 'false' ); ?>;
+</script>
