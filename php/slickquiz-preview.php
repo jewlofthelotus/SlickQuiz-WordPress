@@ -80,6 +80,7 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
                 json:                         <?php $slickQuizPreview->get_quiz_json(); ?>,
                 checkAnswerText:              "<?php $slickQuizPreview->get_admin_option( 'check_answer_text', true ) ?>",
                 nextQuestionText:             "<?php $slickQuizPreview->get_admin_option( 'next_question_text', true ) ?>",
+                completeQuizText:             "<?php $slickQuizPreview->get_admin_option( 'complete_button_text', true ) ?>",
                 backButtonText:               "<?php $slickQuizPreview->get_admin_option( 'back_button_text', true ) ?>",
                 tryAgainText:                 "<?php $slickQuizPreview->get_admin_option( 'try_again_text', true ) ?>",
                 skipStartButton:              <?php echo( $slickQuizPreview->get_admin_option( 'skip_start_button' ) == '1' ? 'true' : 'false' ) ?>,

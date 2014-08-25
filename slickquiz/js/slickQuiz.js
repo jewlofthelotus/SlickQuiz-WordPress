@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated August 9, 2014
- * @version 1.5.164
+ * @updated August 24, 2014
+ * @version 1.5.165
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -20,6 +20,7 @@
                 checkAnswerText:  'Check My Answer!',
                 nextQuestionText: 'Next &raquo;',
                 backButtonText: '',
+                completeQuizText: '',
                 tryAgainText: '',
                 questionCountText: 'Question %current of %total',
                 preventUnansweredText: 'You must select at least one answer.',
@@ -306,11 +307,16 @@
                             questionHTML.append('<a href="#" class="button ' + backToQuestionClass + '">' + plugin.config.backButtonText + '</a>');
                         }
 
+                        var nextText = plugin.config.nextQuestionText;
+                        if (plugin.config.completeQuizText && count == questionCount) {
+                            nextText = plugin.config.completeQuizText;
+                        }
+
                         // If we're not showing responses per question, show next question button and make it check the answer too
                         if (!plugin.config.perQuestionResponseMessaging) {
-                            questionHTML.append('<a href="#" class="button ' + nextQuestionClass + ' ' + checkAnswerClass + '">' + plugin.config.nextQuestionText + '</a>');
+                            questionHTML.append('<a href="#" class="button ' + nextQuestionClass + ' ' + checkAnswerClass + '">' + nextText + '</a>');
                         } else {
-                            questionHTML.append('<a href="#" class="button ' + nextQuestionClass + '">' + plugin.config.nextQuestionText + '</a>');
+                            questionHTML.append('<a href="#" class="button ' + nextQuestionClass + '">' + nextText + '</a>');
                             questionHTML.append('<a href="#" class="button ' + checkAnswerClass + '">' + plugin.config.checkAnswerText + '</a>');
                         }
 
@@ -470,6 +476,7 @@
                     if (!plugin.config.perQuestionResponseAnswers) {
                         questionLI.find(_answers).hide();
                     }
+                    questionLI.find('input').prop('disabled', true);
                     questionLI.find(_responses).show();
                     questionLI.find(_nextQuestionBtn).fadeIn(300, kN(key,1));
                     questionLI.find(_prevQuestionBtn).fadeIn(300, kN(key,2));
@@ -520,16 +527,39 @@
                 kN = keyNotch; // you specify the notch, you get a callback function for your animation
 
                 var questionLI = $($(backButton).parents(_question)[0]),
-                    answers    = questionLI.find(_answers);
+                    responses  = questionLI.find(_responses);
+
+                // Back to question from responses
+                if (responses.css('display') === 'block' ) {
+                    questionLI.find(_responses).fadeOut(300, function(){
+                        questionLI.removeClass(correctClass).removeClass(incorrectClass);
+                        questionLI.find(_responses + ', ' + _response).hide();
+                        questionLI.find(_answers).show();
+                        questionLI.find(_answer).removeClass(correctResponseClass).removeClass(incorrectResponseClass);
+                        questionLI.find('input').prop('disabled', false);
+                        questionLI.find(_answers).fadeIn(500, kN(key,1)); // 1st notch on key must be on both sides of if/else, otherwise key won't turn
+                        questionLI.find(_checkAnswerBtn).fadeIn(500, kN(key,2));
+                        questionLI.find(_nextQuestionBtn).hide();
+
+                        // if question is first, don't show back button on question
+                        if (questionLI.attr('id') != 'question0') {
+                            questionLI.find(_prevQuestionBtn).show();
+                        } else {
+                            questionLI.find(_prevQuestionBtn).hide();
+                        }
+                    });
 
                 // Back to previous question
-                if (answers.css('display') === 'block' ) {
+                } else {
                     var prevQuestion = questionLI.prev(_question);
 
                     questionLI.fadeOut(300, function() {
                         prevQuestion.removeClass(correctClass).removeClass(incorrectClass);
-                        prevQuestion.find(_responses + ', ' + _responses + ' li').hide();
+                        prevQuestion.find(_responses + ', ' + _response).hide();
                         prevQuestion.find(_answers).show();
+                        prevQuestion.find(_answer).removeClass(correctResponseClass).removeClass(incorrectResponseClass);
+                        prevQuestion.find('input').prop('disabled', false);
+                        prevQuestion.find(_nextQuestionBtn).hide();
                         prevQuestion.find(_checkAnswerBtn).show();
 
                         if (prevQuestion.attr('id') != 'question0') {
@@ -540,23 +570,6 @@
 
                         prevQuestion.fadeIn(500, kN(key,1));
                         kN(key,2).apply (null, []); // 2nd notch on key must be on both sides of if/else, otherwise key won't turn
-                    });
-
-                // Back to question from responses
-                } else {
-                    questionLI.find(_responses).fadeOut(300, function(){
-                        questionLI.removeClass(correctClass).removeClass(incorrectClass);
-                        questionLI.find(_responses + ' li').hide();
-                        answers.fadeIn(500, kN(key,1)); // 1st notch on key must be on both sides of if/else, otherwise key won't turn
-                        questionLI.find(_checkAnswerBtn).fadeIn(500, kN(key,2));
-                        questionLI.find(_nextQuestionBtn).hide();
-
-                        // if question is first, don't show back button on question
-                        if (questionLI.attr('id') != 'question0') {
-                            questionLI.find(_prevQuestionBtn).show();
-                        } else {
-                            questionLI.find(_prevQuestionBtn).hide();
-                        }
                     });
                 }
 
@@ -599,7 +612,6 @@
                 $quizArea.fadeOut(300, function() {
                     // If response messaging is set to show upon quiz completion, show it now
                     if (plugin.config.completionResponseMessaging) {
-                        $(_element + ' input').prop('disabled', true);
                         $(_element + ' .button:not(' + _tryAgainBtn + '), ' + _element + ' ' + _questionCount).hide();
                         $(_element + ' ' + _question + ', ' + _element + ' ' + _answers + ', ' + _element + ' ' + _responses).show();
                         $quizResults.append($(_element + ' ' + _questions)).fadeIn(500, kN(key,1));

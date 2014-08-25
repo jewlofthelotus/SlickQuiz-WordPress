@@ -79,6 +79,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         json:                         ' . $quiz->publishedJson . ',
                                         checkAnswerText:              "' . $this->get_admin_option( 'check_answer_text' ) . '",
                                         nextQuestionText:             "' . $this->get_admin_option( 'next_question_text' ) . '",
+                                        completeQuizText:             "' . $this->get_admin_option( 'complete_button_text' ) . '",
                                         backButtonText:               "' . $this->get_admin_option( 'back_button_text' ) . '",
                                         tryAgainText:                 "' . $this->get_admin_option( 'try_again_text' ) . '",
                                         numberOfQuestions:            ' . ( $this->get_admin_option( 'number_of_questions' ) != '' ? $this->get_admin_option( 'number_of_questions' ) : 'null' ) . ',

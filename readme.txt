@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 3.9
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -121,7 +121,15 @@ There are a lot of reasons this could be happening - usually there is an issue w
 * Check your browser's Development Console for errors. Click [here](http://webmasters.stackexchange.com/questions/8525/how-to-open-the-javascript-console-in-different-browsers) for instructions on how to find to this panel in your browser (Note: if you're on a Mac, use the `Command ⌘` key in place of `CTRL`). Once you've got it open, look for anything in red - it will all look pretty foreign, but if you see anything in red, scan the text for keywords that might indicate the plugin the error is coming from. Try disabling those plugins and then see if the quiz loads.
 * Still having trouble? Create a new [support ticket](http://wordpress.org/support/plugin/slickquiz/) with the details of your issue.
 
-= Can I add pictures to my questions / answers / responses? =
+= Why does my quiz have weird spacing or strange colors? =
+
+You may have pasted the shortcode into the "Visual" mode of the page / post text editor, which may have wrapped the shortcode in extra, unnecessary `code` tags.
+
+To check for this, go to the edit view of the post or page where you entered the shortcode and toggle the editor to "Text" mode (this option is the 2nd tab in the upper right of the text editor). Now, look for your shortcode and remove any `<code>` tags that may be surrounding it.
+
+If you do not find any `code` tags, there may be other CSS conflicts with your theme to address. Please create a new [support ticket](http://wordpress.org/support/plugin/slickquiz/) with the details of your issue.
+
+= Can I add pictures / videos / media / HTML to my questions / answers / responses? =
 
 Yes, you can place any HTML tags that you like within any of the content fields. For images, get the URL of the image you want to add, and use something like the following to add the image to a content area:
 
@@ -130,6 +138,14 @@ Yes, you can place any HTML tags that you like within any of the content fields.
 = Is there a way to email user scores and answers? =
 
 Yes, if you "Enable sharing buttons" from the SlickQuiz Options page, your users will have a button to email their results at the end of the quiz.  Currently, this feature does not capture all answers - only the user's overall score and ranking.
+
+= How do I make sure Facebook share includes my quiz image? =
+
+To customize Facebook share content, it's best to use a plugin like: [Add Meta Tags](http://wordpress.org/plugins/add-meta-tags/) to set [Facebook's Open Graph meta](https://developers.facebook.com/docs/plugins/checklist/) data on a page by page basis.
+
+Each Facebook Open Graph meta data tag that you enter should look something like this:
+
+`<meta property="og:image" content="http://www.xxx.com/images/xxx.jpg" />`
 
 = Can I put the same quiz on the same page multiple times? =
 
@@ -154,6 +170,12 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.3.4 =
+* NEW option to customize the text of the final button before displaying results
+* BUG FIX: disables answer inputs when displayed with response messaging (thanks @mirgcire!)
+* BUG FIX: fixes some toggling issues when using the "Back" button while "Also display answer options" is enabled
+* Added documentation around Facebook share customizations and styling issues
 
 = 1.3.3 =
 * NEW option for questions with single answers - force the answers to use checkboxes to obscure the fact that there is only one answer from the user.
@@ -312,6 +334,12 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.3.4 =
+* NEW option to customize the text of the final button before displaying results
+* BUG FIX: disables answer inputs when displayed with response messaging (thanks @mirgcire!)
+* BUG FIX: fixes some toggling issues when using the "Back" button while "Also display answer options" is enabled
+* Added documentation around Facebook share customizations and styling issues
 
 = 1.3.3 =
 * NEW option for questions with single answers - force the answers to use checkboxes to obscure the fact that there is only one answer from the user.

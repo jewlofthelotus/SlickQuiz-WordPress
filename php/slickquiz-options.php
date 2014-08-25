@@ -99,6 +99,17 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
+                        <label for="slickQuizOptions[complete_button_text]"><em>COMPLETE QUIZ</em> button text</label><br/>
+                        <small><em>ex. "Get Your Results!"</em></small></label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[complete_button_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'complete_button_text' ) ), 'SlickQuizPlugin' ); ?>" /><br />
+                        <small><em>If left blank, the "NEXT QUESTION" value will be used.</em></small></label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
                         <label for="slickQuizOptions[try_again_text]"><em>TRY AGAIN</em> button text</label>
                     </th>
                     <td>

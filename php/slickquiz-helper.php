@@ -29,6 +29,7 @@ if ( !class_exists( 'SlickQuizHelper' ) ) {
                 'start_button_text'            => 'Get Started!',
                 'check_answer_text'            => 'Check My Answer!',
                 'next_question_text'           => 'Next &raquo;',
+                'complete_button_text'         => '',
                 'back_button_text'             => '',
                 'try_again_text'               => '',
                 'your_score_text'              => 'Your Score:',
