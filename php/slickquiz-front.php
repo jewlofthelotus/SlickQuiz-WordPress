@@ -15,7 +15,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
 
         // Constructor
-        function __construct()
+        public function __construct()
         {
             global $pluginOptions;
 
@@ -32,8 +32,8 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             add_filter( 'wp_footer', array( &$this, 'load_quiz_script' ), 5000 );
         }
 
-        // Add Admin JS and styles
-        function load_resources( $content )
+        // WP action. Add Admin JS and styles
+        public function load_resources( $content )
         {
             // Only load resources when a shortcode is on the page
             if ( strpos( $content, '[slickquiz' ) === false ) {
@@ -57,7 +57,8 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             return $content;
         }
 
-        function load_quiz_script()
+        // WP action (wp_footer)
+        public function load_quiz_script()
         {
             global $pageQuizzes;
 
@@ -76,7 +77,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
                         $out .= '
                                     $("#slickQuiz' . $quiz->id . '").slickQuiz({
-                                        json:                         ' . $quiz->publishedJson . ',
+                                        json:                         ' . $this->filter_quiz( $quiz->publishedJson ) . ',
                                         checkAnswerText:              "' . $this->get_admin_option( 'check_answer_text' ) . '",
                                         nextQuestionText:             "' . $this->get_admin_option( 'next_question_text' ) . '",
                                         backButtonText:               "' . $this->get_admin_option( 'back_button_text' ) . '",
@@ -289,7 +290,8 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             echo $out;
         }
 
-        function show_slickquiz_handler( $atts )
+        // WP shortcode [slickquiz]
+        public function show_slickquiz_handler( $atts )
         {
             extract( shortcode_atts( array(
                 'id' => 0,
@@ -311,7 +313,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             return $out;
         }
 
-        function show_slickquiz( $id )
+        protected function show_slickquiz( $id )
         {
             global $quiz, $status, $pageQuizzes;
 
@@ -365,7 +367,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             return $out;
         }
 
-        function current_page_url()
+        protected function current_page_url()
         {
             $pageURL = 'http';
 
@@ -382,6 +384,48 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             }
 
             return $pageURL;
+        }
+
+        /**
+         * Apply WordPress filters to SlickQuiz JSON on output.
+         *
+         * @link http://codex.wordpress.org/Data_Validation
+         * @link http://codex.wordpress.org/Plugin_API/Filter_Reference
+         * @link https://github.com/jewlofthelotus/SlickQuiz/blob/master/js/slickQuiz-config.js
+         */
+        protected function filter_quiz( $quiz_json )
+        {
+            // Double negative!
+            if ($this->get_admin_option( 'no_filter_quizzes' ))
+            {
+                return $quiz_json;
+            }
+
+            $quiz = json_decode( $quiz_json );
+            $this->filter_short( $quiz->info->name );
+            $this->filter_body( $quiz->info->main );
+            $this->filter_body( $quiz->info->results );
+
+            foreach ($quiz->questions as $question) {
+                $this->filter_body( $question->q );
+                $this->filter_body( $question->correct );
+                $this->filter_body( $question->incorrect );
+            }
+            return json_encode( $quiz );
+        }
+
+        // Filter "body"-type/ <textarea> content in a quiz.
+        protected function filter_body( & $data )
+        {
+            $data = wp_kses_post( $data );
+            $data = apply_filters( 'the_content', $data );
+            return $data;
+        }
+
+        // Filter "title"/ short content in a quiz.
+        protected function filter_short( & $data )
+        {
+            $data = wp_kses_data( $data );
         }
 
     }

@@ -67,10 +67,12 @@ if ( !class_exists( 'SlickQuizHelper' ) ) {
         // Get requested admin option
         function get_admin_option( $option, $echo = false )
         {
+            $value = isset($this->adminOptions[$option])
+                ? $this->adminOptions[$option] : NULL;
             if ( $echo ) {
-                echo $this->adminOptions[$option];
+                echo $value;
             } else {
-                return $this->adminOptions[$option];
+                return $value;
             }
         }
 
