@@ -78,6 +78,9 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
         jQuery(document).ready(function($) {
             $('.SlickQuiz').slickQuiz({
                 json:                         <?php $slickQuizPreview->get_quiz_json(); ?>,
+                questionCountText:            "<?php $slickQuizPreview->get_admin_option( 'question_count_text', true ) ?>",
+                questionTemplateText:         "<?php $slickQuizPreview->get_admin_option( 'question_template_text', true ) ?>",
+                scoreTemplateText:            "<?php $slickQuizPreview->get_admin_option( 'score_template_text', true ) ?>",
                 checkAnswerText:              "<?php $slickQuizPreview->get_admin_option( 'check_answer_text', true ) ?>",
                 nextQuestionText:             "<?php $slickQuizPreview->get_admin_option( 'next_question_text', true ) ?>",
                 completeQuizText:             "<?php $slickQuizPreview->get_admin_option( 'complete_button_text', true ) ?>",
@@ -95,7 +98,8 @@ if ( class_exists( 'SlickQuizPreview' ) ) {
                 displayQuestionCount:         <?php echo( $slickQuizPreview->get_admin_option( 'question_count' ) == '1' ? 'true' : 'false' ) ?>,
                 displayQuestionNumber:        <?php echo( $slickQuizPreview->get_admin_option( 'question_number' ) == '1' ? 'true' : 'false' ) ?>,
                 disableScore:                 <?php echo( $slickQuizPreview->get_admin_option( 'disable_score' ) == '1' ? 'true' : 'false' ) ?>,
-                disableRanking:               <?php echo( $slickQuizPreview->get_admin_option( 'disable_ranking' ) == '1' ? 'true' : 'false' ) ?>
+                disableRanking:               <?php echo( $slickQuizPreview->get_admin_option( 'disable_ranking' ) == '1' ? 'true' : 'false' ) ?>,
+                scoreAsPercentage:            <?php echo( $slickQuizPreview->get_admin_option( 'score_as_percentage' ) == '1' ? 'true' : 'false' ) ?>
             });
         });
     </script>

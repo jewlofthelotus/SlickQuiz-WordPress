@@ -3,8 +3,8 @@ Contributors: jewlofthelotus
 Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
-Tested up to: 3.9
-Stable tag: 1.3.4
+Tested up to: 4.0
+Stable tag: 1.3.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -171,6 +171,13 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 == Changelog ==
 
+= 1.3.5 =
+* NEW option to display score as percentage
+* NEW option to adjust score formatting
+* NEW option to adjust current question label
+* NEW option to adjust question formatting
+* BUG FIX: hides "Quiz: " prefix from question name
+
 = 1.3.4 =
 * NEW option to customize the text of the final button before displaying results
 * BUG FIX: disables answer inputs when displayed with response messaging (thanks @mirgcire!)
@@ -334,6 +341,13 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.3.5 =
+* NEW option to display score as percentage
+* NEW option to adjust score formatting
+* NEW option to adjust current question label
+* NEW option to adjust question formatting
+* BUG FIX: hides "Quiz: " prefix from question name
 
 = 1.3.4 =
 * NEW option to customize the text of the final button before displaying results

@@ -77,6 +77,9 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                         $out .= '
                                     $("#slickQuiz' . $quiz->id . '").slickQuiz({
                                         json:                         ' . $quiz->publishedJson . ',
+                                        questionCountText:            "' . $this->get_admin_option( 'question_count_text' ) . '",
+                                        questionTemplateText:         "' . $this->get_admin_option( 'question_template_text' ) . '",
+                                        scoreTemplateText:            "' . $this->get_admin_option( 'score_template_text' ) . '",
                                         checkAnswerText:              "' . $this->get_admin_option( 'check_answer_text' ) . '",
                                         nextQuestionText:             "' . $this->get_admin_option( 'next_question_text' ) . '",
                                         completeQuizText:             "' . $this->get_admin_option( 'complete_button_text' ) . '",
@@ -93,7 +96,8 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                                         displayQuestionCount:         ' . ( $this->get_admin_option( 'question_count' ) == '1' ? 'true' : 'false' ) . ',
                                         displayQuestionNumber:        ' . ( $this->get_admin_option( 'question_number' ) == '1' ? 'true' : 'false' ) . ',
                                         disableScore:                 ' . ( $this->get_admin_option( 'disable_score' ) == '1' ? 'true' : 'false' ) . ',
-                                        disableRanking:               ' . ( $this->get_admin_option( 'disable_ranking' ) == '1' ? 'true' : 'false' ) . '
+                                        disableRanking:               ' . ( $this->get_admin_option( 'disable_ranking' ) == '1' ? 'true' : 'false' ) . ',
+                                        scoreAsPercentage:            ' . ( $this->get_admin_option( 'score_as_percentage' ) == '1' ? 'true' : 'false' ) . '
                                     });';
 
                         if ( $this->get_admin_option( 'save_scores' ) == '1' ) {

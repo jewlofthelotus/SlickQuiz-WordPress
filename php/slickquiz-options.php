@@ -23,6 +23,9 @@ if ( !class_exists( 'SlickQuizOptions' ) ) {
                 if ( isset( $_POST['slickQuizOptions']['perquestion_response_answers'] ) != true ) {
                     $_POST['slickQuizOptions']['perquestion_response_answers'] = '0';
                 }
+                if ( isset( $_POST['slickQuizOptions']['score_as_percentage'] ) != true ) {
+                    $_POST['slickQuizOptions']['score_as_percentage'] = '0';
+                }
 
                 $this->adminOptions = array_merge( $this->adminOptions, stripslashes_deep( $_POST['slickQuizOptions'] ) );
                 update_option( $this->adminOptionsName, $this->adminOptions );
@@ -67,6 +70,28 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                     <td>
                         <input  type="text" name="slickQuizOptions[start_button_text]" class="regular-text"
                             value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'start_button_text' ) ), 'SlickQuizPlugin' ); ?>" />
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row" style="width: 250px;">
+                        <label for="slickQuizOptions[question_count_text]"><em>QUESTION COUNT</em> label</label>
+                    </th>
+                    <td>
+                        <input  type="text" name="slickQuizOptions[question_count_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'question_count_text' ) ), 'SlickQuizPlugin' ); ?>" />
+                            <br /><small><em>The format of the question number and question. <code>%current</code> and <code>%total</code> are placeholders that will output the appropriate values.
+                            <br />Will only display if "Display the question count?" is enabled.</em></small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row" style="width: 250px;">
+                        <label for="slickQuizOptions[question_template_text]"><em>QUESTION TEMPLATE</em> text</label>
+                    </th>
+                    <td>
+                        <input  type="text" name="slickQuizOptions[question_template_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'question_template_text' ) ), 'SlickQuizPlugin' ); ?>" />
+                            <br /><small><em>The format of the question number and question. <code>%count</code> and <code>%text</code> are placeholders that will output the appropriate values.
+                            <br /><code>%count</code> will only be available if "Display the question number?" is enabled</em></small>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -120,7 +145,7 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[your_score_text]"><em>SCORE</em> result text</label>
+                        <label for="slickQuizOptions[your_score_text]"><em>SCORE</em> result label</label>
                     </th>
                     <td>
                         <input type="text" name="slickQuizOptions[your_score_text]" class="regular-text"
@@ -129,7 +154,21 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="slickQuizOptions[your_ranking_text]"><em>RANKING</em> result text</label>
+                        <label for="slickQuizOptions[score_template_text]"><em>SCORE TEMPLATE</em> text</label>
+                    </th>
+                    <td>
+                        <input type="text" name="slickQuizOptions[score_template_text]" class="regular-text"
+                            value="<?php _e( apply_filters( 'format_to_edit', $slickQuizOptions->get_admin_option( 'score_template_text' ) ), 'SlickQuizPlugin' ); ?>" />
+                            &nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="slickQuizOptions[score_as_percentage]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'score_as_percentage' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Display score as percentage
+                            <br /><small><em>The format of the final score text. <code>%score</code> and <code>%total</code> are placeholders that will output the appropriate values.<br/>
+                            If you enable "Display score as percentage," you will likely want to adjust the SCORE TEMPLATE text appropriately.</em></small>
+</em></small>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="slickQuizOptions[your_ranking_text]"><em>RANKING</em> result label</label>
                     </th>
                     <td>
                         <input type="text" name="slickQuizOptions[your_ranking_text]" class="regular-text"
