@@ -4,7 +4,7 @@
 Plugin Name: SlickQuiz
 Plugin URI: http://github.com/jewlofthelotus/SlickQuiz-WordPress
 Description: Plugin for displaying and managing pretty, dynamic quizzes.
-Version: 1.3.5
+Version: 1.3.6
 Author: Julie Cameron
 Author URI: http://juliecameron.com
 License: GPLv3 or later
@@ -122,7 +122,7 @@ if ( !class_exists( 'SlickQuiz' ) ) {
         function add_menu()
         {
             // Accessible to Authors, Editors, and Admins
-            add_menu_page( 'SlickQuizzes', 'SlickQuizzes', 'publish_posts', 'slickquiz', array( &$this, 'direct_route' ) );
+            add_menu_page( 'SlickQuiz', 'SlickQuiz', 'publish_posts', 'slickquiz', array( &$this, 'direct_route' ), 'dashicons-awards' );
 
             // Accessible to Editors and Admins
             add_submenu_page( 'slickquiz', 'Add Quiz', 'Add Quiz', 'publish_pages', 'slickquiz-new', array( &$this, 'direct_route') );

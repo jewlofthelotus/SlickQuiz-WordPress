@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 1.3.5
+Stable tag: 1.3.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -170,6 +170,13 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.3.6 =
+* NEW: applies WordPress filters to quiz fields - allowing for shortcodes in quiz content!! Thanks [@nfreear](https://github.com/nfreear)!
+* BUG FIX: no more flash of correct answers when validating!
+* BUG FIX: "Quiz:" accessibility label is now properly hidden
+* BUG FIX: answer inputs are now tied directly to the quiz, allowing for radio button answer selection across multiple active quizzes
+* BUG FIX: removed conditional script loading since it's difficult to predict where quizzes will be loaded, this should fix A LOT of "quiz not working" issues.
 
 = 1.3.5 =
 * NEW option to display score as percentage
@@ -341,6 +348,13 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.3.6 =
+* NEW: applies WordPress filters to quiz fields - allowing for shortcodes in quiz content!! Thanks [@nfreear](https://github.com/nfreear)!
+* BUG FIX: no more flash of correct answers when validating!
+* BUG FIX: "Quiz:" accessibility label is now properly hidden
+* BUG FIX: answer inputs are now tied directly to the quiz, allowing for radio button answer selection across multiple active quizzes
+* BUG FIX: removed conditional script loading since it's difficult to predict where quizzes will be loaded, this should fix A LOT of "quiz not working" issues.
 
 = 1.3.5 =
 * NEW option to display score as percentage

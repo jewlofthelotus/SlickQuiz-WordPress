@@ -2,8 +2,8 @@
  * SlickQuiz jQuery Plugin
  * http://github.com/jewlofthelotus/SlickQuiz
  *
- * @updated September 14, 2014
- * @version 1.5.166
+ * @updated October 25, 2014
+ * @version 1.5.19
  *
  * @author Julie Cameron - http://www.juliecameron.com
  * @copyright (c) 2013 Quicken Loans - http://www.quickenloans.com
@@ -61,6 +61,7 @@
             questionClass          = 'question',
             answersClass           = 'answers',
             responsesClass         = 'responses',
+            completeClass          = 'complete',
             correctClass           = 'correctResponse',
             incorrectClass         = 'incorrectResponse',
             correctResponseClass   = 'correct',
@@ -264,7 +265,7 @@
                         var selectAny     = question.select_any ? question.select_any : false,
                             forceCheckbox = question.force_checkbox ? question.force_checkbox : false,
                             checkbox      = (truths > 1 && !selectAny) || forceCheckbox,
-                            inputName     = 'question' + (count - 1),
+                            inputName     = $element.attr('id') + '_question' + (count - 1),
                             inputType     = checkbox ? 'checkbox' : 'radio';
 
                         if( count == quizValues.questions.length ) {
@@ -386,7 +387,7 @@
                     $(_element + ' input').prop('checked', false).prop('disabled', false);
 
                     $quizLevel.attr('class', 'quizLevel');
-                    $(_element + ' ' + _question).removeClass(correctClass).removeClass(incorrectClass);
+                    $(_element + ' ' + _question).removeClass(correctClass).removeClass(incorrectClass).remove(completeClass);
                     $(_element + ' ' + _answer).removeClass(correctResponseClass).removeClass(incorrectResponseClass);
 
                     $(_element + ' ' + _question          + ',' +
@@ -451,7 +452,7 @@
                 var selectedAnswers = [];
                 answerSelects.each( function() {
                     var id = $(this).attr('id');
-                    selectedAnswers.push(parseInt(id.replace(/(question\d{1,}_)/, ''), 10));
+                    selectedAnswers.push(parseInt(id.replace(/(.*\_question\d{1,}_)/, ''), 10));
                 });
 
                 if (plugin.config.preventUnanswered && selectedAnswers.length === 0) {
@@ -475,7 +476,14 @@
                 if (plugin.config.perQuestionResponseMessaging) {
                     $(checkButton).hide();
                     if (!plugin.config.perQuestionResponseAnswers) {
-                        questionLI.find(_answers).hide();
+                        // Make sure answers don't highlight for a split second before they hide
+                        questionLI.find(_answers).hide({
+                            complete: function() {
+                                questionLI.addClass(completeClass);
+                            }
+                        });
+                    } else {
+                        questionLI.addClass(completeClass);
                     }
                     questionLI.find('input').prop('disabled', true);
                     questionLI.find(_responses).show();
@@ -533,7 +541,7 @@
                 // Back to question from responses
                 if (responses.css('display') === 'block' ) {
                     questionLI.find(_responses).fadeOut(300, function(){
-                        questionLI.removeClass(correctClass).removeClass(incorrectClass);
+                        questionLI.removeClass(correctClass).removeClass(incorrectClass).removeClass(completeClass);
                         questionLI.find(_responses + ', ' + _response).hide();
                         questionLI.find(_answers).show();
                         questionLI.find(_answer).removeClass(correctResponseClass).removeClass(incorrectResponseClass);
@@ -555,7 +563,7 @@
                     var prevQuestion = questionLI.prev(_question);
 
                     questionLI.fadeOut(300, function() {
-                        prevQuestion.removeClass(correctClass).removeClass(incorrectClass);
+                        prevQuestion.removeClass(correctClass).removeClass(incorrectClass).removeClass(completeClass);
                         prevQuestion.find(_responses + ', ' + _response).hide();
                         prevQuestion.find(_answers).show();
                         prevQuestion.find(_answer).removeClass(correctResponseClass).removeClass(incorrectResponseClass);

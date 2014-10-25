@@ -78,6 +78,11 @@
     font-weight: bold;
 }
 
+.slickQuizWrapper .question > h3 p {
+    display: inline-block;
+    margin: 0;
+}
+
 .slickQuizWrapper ul.responses,
 .slickQuizWrapper ol.questions,
 .slickQuizWrapper ol.questions li {
