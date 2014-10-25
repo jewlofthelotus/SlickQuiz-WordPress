@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 1.3.6
+Stable tag: 1.3.6.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -170,6 +170,10 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.3.6.1 =
+* BUG FIX: Answer toggling should not animate
+* BUG FIX: When "Display score as percentage", ranking should still work
 
 = 1.3.6 =
 * NEW: applies WordPress filters to quiz fields - allowing for shortcodes in quiz content!! Thanks [@nfreear](https://github.com/nfreear)!
@@ -348,6 +352,10 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.3.6.1 =
+* BUG FIX: Answer toggling should not animate
+* BUG FIX: When "Display score as percentage", ranking should still work
 
 = 1.3.6 =
 * NEW: applies WordPress filters to quiz fields - allowing for shortcodes in quiz content!! Thanks [@nfreear](https://github.com/nfreear)!
