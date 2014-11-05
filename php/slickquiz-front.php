@@ -387,53 +387,6 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
 
             return $pageURL;
         }
-
-        /**
-         * Apply WordPress filters to SlickQuiz JSON on output.
-         *
-         * @link http://codex.wordpress.org/Data_Validation
-         * @link http://codex.wordpress.org/Plugin_API/Filter_Reference
-         * @link https://github.com/jewlofthelotus/SlickQuiz/blob/master/js/slickQuiz-config.js
-         */
-        protected function filter_quiz( $quiz_json )
-        {
-            // Double negative!
-            if ( $this->get_admin_option( 'no_filter_quizzes' ) ) {
-                return $quiz_json;
-            }
-
-            $quiz = json_decode( $quiz_json );
-            $this->filter_short( $quiz->info->name );
-            $this->filter_body( $quiz->info->main );
-            $this->filter_body( $quiz->info->results );
-
-            foreach ( $quiz->questions as $question ) {
-                $this->filter_body( $question->q );
-                $this->filter_body( $question->correct );
-                $this->filter_body( $question->incorrect );
-
-                foreach ( $question->a as $answer ) {
-                    $this->filter_short( $answer->option );
-                }
-            }
-
-            return json_encode( $quiz );
-        }
-
-        // Filter "body"-type/ <textarea> content in a quiz.
-        protected function filter_body( & $data )
-        {
-            $data = wp_kses_post( $data );
-            $data = apply_filters( 'the_content', $data );
-            return $data;
-        }
-
-        // Filter "title"/ short content in a quiz.
-        protected function filter_short( & $data )
-        {
-            $data = wp_kses_data( $data );
-        }
-
     }
 }
 

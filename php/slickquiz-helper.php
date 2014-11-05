@@ -56,7 +56,8 @@ if ( !class_exists( 'SlickQuizHelper' ) ) {
                 'email_label'                  => '',
                 'share_links'                  => '0',
                 'share_message'                => 'I\'m a [RANK]! I just scored [SCORE] on the [NAME] quiz!',
-                'twitter_account'              => ''
+                'twitter_account'              => '',
+                'no_filter_quizzes'            => '1'
             ) );
 
             $pluginOptions = get_option( $this->adminOptionsName );

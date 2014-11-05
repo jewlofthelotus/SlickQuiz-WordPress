@@ -410,6 +410,25 @@ if ( class_exists( 'SlickQuizOptions' ) ) {
             </tbody>
         </table>
 
+        <h3 class="title">Other</h3>
+        <table class="form-table">
+            <tbody>
+                <tr valign="top">
+                    <th scope="row" style="width: 250px;">
+                        <label for="slickQuizOptions[no_filter_quizzes]">Enable WordPress Filters on quiz content?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="slickQuizOptions[no_filter_quizzes]" value="0"
+                            <?php $slickQuizOptions->get_admin_option( 'no_filter_quizzes' ) == '0' ? print_r('checked="checked"') : ''; ?> /> No &nbsp;
+                        <input type="radio" name="slickQuizOptions[no_filter_quizzes]" value="1"
+                            <?php $slickQuizOptions->get_admin_option( 'no_filter_quizzes' ) == '1' ? print_r('checked="checked"') : ''; ?> /> Yes
+                        <br /><small><em>Enabling fitlers allows for the inclusion of shortcodes and other plugin hooks.<br/>
+                                        You should disable this if you're seeing strange output in your quiz.</em></small>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
         <?php do_action( 'slickquiz_after_options', $slickQuizOptions ); ?>
 
         <p class="submit">

@@ -23,9 +23,11 @@ if ( !class_exists( 'SlickQuizPreview' ) ) {
 
         function get_quiz_json()
         {
-            $quiz = $this->get_quiz_by_id( $_GET['id'] );
+            $quiz      = $this->get_quiz_by_id( $_GET['id'] );
             $published = $this->get_quiz_status( $quiz ) == self::NOT_PUBLISHED ? false : true;
-            echo !isset( $_GET['readOnly'] ) || !$published ? $quiz->workingJson : $quiz->publishedJson;
+            $json      = !isset( $_GET['readOnly'] ) || !$published ? $quiz->workingJson : $quiz->publishedJson;
+            $json      = $this->filter_quiz( $json );
+            echo $json;
         }
 
     }
