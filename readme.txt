@@ -4,7 +4,7 @@ Donate link: http://www.gofundme.com/slickquiz
 Tags: quiz, test, jquery, javascript, education, elearning, generator, manager, question, answer, score, rank
 Requires at least: 3.0
 Tested up to: 4.1
-Stable tag: 1.3.7
+Stable tag: 1.3.7.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -170,6 +170,9 @@ Also, see the [SlickQuiz Issues](https://github.com/jewlofthelotus/SlickQuiz-Wor
 
 
 == Changelog ==
+
+= 1.3.7.1 =
+* Confirmed WordPress 4.1 compatibility
 
 = 1.3.7 =
 * NEW option to disable WordPress filters on SlickQuiz content areas
@@ -356,6 +359,9 @@ This is the initial setup of the plugin.
 
 
 == Upgrade Notice ==
+
+= 1.3.7.1 =
+* Confirmed WordPress 4.1 compatibility
 
 = 1.3.7 =
 * NEW option to disable WordPress filters on SlickQuiz content areas
