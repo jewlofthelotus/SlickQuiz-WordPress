@@ -25,10 +25,10 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             add_shortcode( 'slickquiz', array( &$this, 'show_slickquiz_handler' ) );
 
             // We don't know where the quiz is going to end up, so just always load the resources :()
-            add_filter( 'wp_footer', array( &$this, 'load_resources' ) );
+            add_action( 'wp_enqueue_scripts', array( &$this, 'load_resources' ) );
 
             // Make sure dynamic quiz scripts gets loaded below jQuery
-            add_filter( 'wp_footer', array( &$this, 'load_quiz_script' ), 5000 );
+            add_action( 'wp_footer', array( &$this, 'load_quiz_script' ), 5000 );
         }
 
         // WP action. Add Admin JS and styles
