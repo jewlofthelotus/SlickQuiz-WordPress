@@ -307,6 +307,13 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
                     $id = $matches[1];
                 }
             }
+            
+            // Optionally, extract quiz ID from a custom field 
+            if ($id == 'custom'){
+                $custom_value = get_post_meta(get_the_id(), 'slickquiz', 'true');
+                $id = $custom_value;
+            }
+
             // Guard against mis-spellings (plus security).
             $id = intval( $id );
 
