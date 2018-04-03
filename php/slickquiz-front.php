@@ -41,7 +41,7 @@ if ( !class_exists( 'SlickQuizFront' ) ) {
             wp_enqueue_script( 'slickquiz_js', plugins_url( '/slickquiz/js/slickQuiz.js', $mainPluginFile ) );
 
             if ( $this->get_admin_option( 'share_links' ) == '1' ) {
-                wp_enqueue_script( 'twitter-widget', 'http://platform.twitter.com/widgets.js' );
+                wp_enqueue_script( 'twitter-widget', set_url_scheme( 'http://platform.twitter.com/widgets.js' ) );
             }
 
             // Styles
